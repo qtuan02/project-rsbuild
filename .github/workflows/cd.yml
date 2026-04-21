@@ -1,4 +1,4 @@
-name: Deploy Manual
+name: CD
 
 on:
   workflow_dispatch:
