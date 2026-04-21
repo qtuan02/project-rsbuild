@@ -37,7 +37,7 @@ jobs:
         run: bun run lint
 
       - name: Format check
-        run: bunx biome format --check .
+        run: bun run format
 
       - name: Typecheck
         run: bun run typecheck
