@@ -1,4 +1,4 @@
-import type { Room } from './room-columns';
+import type { Room } from '@/types/room';
 
 export const mockRooms: Room[] = [
   {

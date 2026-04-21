@@ -1,53 +1,17 @@
 import { Download, Plus } from 'lucide-react';
-import * as React from 'react';
 
 import { DataTable } from '@/components/shared/table';
-import type {
-  DataTableFilterableColumn,
-  DataTableSearchableColumn,
-} from '@/components/shared/table';
 import { Button } from '@/components/ui/button';
 
-import { mockRooms } from '../components/mock-data';
-import {
-  columns,
-  statusFilterOptions,
-  typeFilterOptions,
-  type Room,
-} from '../components/room-columns';
-
-const searchableColumns: DataTableSearchableColumn<Room>[] = [
-  { id: 'name', title: 'tên phòng' },
-];
-
-const filterableColumns: DataTableFilterableColumn<Room>[] = [
-  {
-    id: 'status',
-    title: 'Trạng thái',
-    options: statusFilterOptions,
-  },
-  {
-    id: 'type',
-    title: 'Loại phòng',
-    options: typeFilterOptions,
-  },
-];
+import { columns } from '../components/room-columns';
+import { useRoomList } from '../hooks/use-room-list';
 
 export const RoomListPage = () => {
-  const [data, setData] = React.useState<Room[]>(mockRooms);
-
-  const handleRowReorder = (oldIndex: number, newIndex: number) => {
-    setData((prev) => {
-      const result = Array.from(prev);
-      const [removed] = result.splice(oldIndex, 1);
-      result.splice(newIndex, 0, removed);
-      return result;
-    });
-  };
+  const { data, searchableColumns, filterableColumns, onRowReorder } =
+    useRoomList();
 
   return (
     <div className="space-y-6">
-      {/* Page header */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h2 className="text-2xl font-bold tracking-tight">
@@ -69,7 +33,6 @@ export const RoomListPage = () => {
         </div>
       </div>
 
-      {/* Data table */}
       <DataTable
         columns={columns}
         data={data}
@@ -77,7 +40,7 @@ export const RoomListPage = () => {
         filterableColumns={filterableColumns}
         enableRowDrag
         getRowId={(row) => row.id}
-        onRowReorder={handleRowReorder}
+        onRowReorder={onRowReorder}
       />
     </div>
   );
