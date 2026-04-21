@@ -9,15 +9,13 @@ export const DashboardLayout = () => {
     <div className="bg-background flex h-dvh w-full">
       <SidebarProvider defaultOpen>
         <AppSidebar />
-        <SidebarInset className="min-h-0 ">
-          <div className="flex h-full flex-col overflow-hidden">
-            <AppHeader />
-            <main className="flex-1 overflow-auto">
-              <div className="mx-auto flex w-full max-w-7xl flex-col p-4 lg:p-6">
-                <Outlet />
-              </div>
-            </main>
-          </div>
+        <SidebarInset className="size-full overflow-hidden">
+          <AppHeader />
+          <main className="flex-1 overflow-auto">
+            <div className="mx-auto flex max-w-7xl flex-col p-4 lg:p-6">
+              <Outlet />
+            </div>
+          </main>
         </SidebarInset>
       </SidebarProvider>
     </div>

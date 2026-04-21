@@ -39,8 +39,7 @@ export const AppHeader = () => {
   const isCollapsed = state === 'collapsed';
 
   return (
-    <header className="sticky top-0 z-10 flex h-14 items-center gap-3 border-b border-border bg-background/80 px-4 backdrop-blur-md lg:h-[60px] lg:px-6">
-      {/* Left: Toggle + Breadcrumb */}
+    <header className="sticky top-0 z-10 flex h-15 items-center gap-3 border-b border-border bg-background/80 px-4 backdrop-blur-md lg:h-[60px] lg:px-6">
       <div className="flex items-center gap-3">
         <Button
           variant="ghost"
@@ -57,7 +56,10 @@ export const AppHeader = () => {
           <span className="sr-only">Toggle Sidebar</span>
         </Button>
 
-        <Separator orientation="vertical" className="hidden h-5 md:block" />
+        <Separator
+          orientation="vertical"
+          className="hidden h-5 md:block self-center!"
+        />
 
         <div className="min-w-0">
           <h1 className="truncate text-sm font-semibold tracking-tight">
@@ -94,7 +96,7 @@ export const AppHeader = () => {
           <span className="sr-only">Tìm kiếm</span>
         </Button>
 
-        <Separator orientation="vertical" className="h-5" />
+        <Separator orientation="vertical" className="h-5 self-center!" />
 
         <Button
           size="icon-sm"

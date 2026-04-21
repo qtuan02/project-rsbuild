@@ -70,7 +70,7 @@ export const AppSidebar = () => {
   const location = useLocation();
 
   return (
-    <Sidebar collapsible="icon" className="border-r">
+    <Sidebar collapsible="icon" className="border-r-0">
       <SidebarHeader className="h-14 border-b px-4 md:h-[60px] lg:px-6 group-data-[collapsible=icon]:p-0 group-data-[collapsible=icon]:items-center group-data-[collapsible=icon]:justify-center">
         <Link
           to={routes.home}
