@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "build": "rsbuild build",
+    "start": "rsbuild start",
     "dev": "rsbuild dev --open",
     "format": "biome format .",
     "format:fix": "biome format --write .",
