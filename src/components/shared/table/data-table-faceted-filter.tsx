@@ -8,27 +8,43 @@ import {
   PopoverTrigger,
 } from '@/components/ui/popover';
 import { Separator } from '@/components/ui/separator';
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/cn';
 
-import type { Column } from '@tanstack/react-table';
+export interface FacetedFilterColumn {
+  getFacetedUniqueValues: () => Map<string, number>;
+  getFilterValue: () => unknown;
+  setFilterValue: (value: unknown) => void;
+}
 
-interface DataTableFacetedFilterProps<TData, TValue> {
-  column?: Column<TData, TValue>;
+interface DataTableFacetedFilterProps<TValue extends string> {
+  column?: FacetedFilterColumn;
   title?: string;
   options: {
     label: string;
-    value: string;
+    value: TValue;
     icon?: React.ComponentType<{ className?: string }>;
   }[];
+  labels?: {
+    selectedCount: (count: number) => string;
+    clearFilter: string;
+  };
 }
 
-export function DataTableFacetedFilter<TData, TValue>({
+const toSelectedValues = (value: unknown): string[] =>
+  Array.isArray(value) ? value.filter((item): item is string => !!item) : [];
+const DEFAULT_LABELS = {
+  selectedCount: (count: number) => `${count} đã chọn`,
+  clearFilter: 'Xóa bộ lọc',
+};
+
+export function DataTableFacetedFilter<TValue extends string>({
   column,
   title,
   options,
-}: DataTableFacetedFilterProps<TData, TValue>) {
+  labels = DEFAULT_LABELS,
+}: DataTableFacetedFilterProps<TValue>) {
   const facets = column?.getFacetedUniqueValues();
-  const selectedValues = new Set(column?.getFilterValue() as string[]);
+  const selectedValues = new Set(toSelectedValues(column?.getFilterValue()));
 
   return (
     <Popover>
@@ -51,7 +67,7 @@ export function DataTableFacetedFilter<TData, TValue>({
                     variant="secondary"
                     className="rounded-sm px-1 font-normal"
                   >
-                    {selectedValues.size} đã chọn
+                    {labels.selectedCount(selectedValues.size)}
                   </Badge>
                 ) : (
                   options
@@ -132,7 +148,7 @@ export function DataTableFacetedFilter<TData, TValue>({
                 onClick={() => column?.setFilterValue(undefined)}
                 className="w-full rounded-md px-2 py-1.5 text-center text-sm text-muted-foreground hover:bg-accent hover:text-accent-foreground"
               >
-                Xóa bộ lọc
+                {labels.clearFilter}
               </button>
             </div>
           </>

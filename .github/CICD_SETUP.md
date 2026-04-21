@@ -1,58 +1,70 @@
-# CI/CD Setup Checklist
+# CI/CD Setup Guide
 
-This repository uses:
-- automatic CI checks on pull requests and pushes to `main`
-- manual production deployments via GitHub Actions
+Tài liệu này dùng để hoàn tất các bước cấu hình platform (GitHub + Vercel) không thể lưu trong git.
 
-Use this checklist once to complete platform settings that cannot be stored in git.
+## Mục tiêu pipeline
 
-## 1) Add GitHub repository secrets
+- CI tự động chạy cho pull request và push lên `main`
+- Production deploy chạy thủ công qua GitHub Actions
 
-In GitHub: `Settings` -> `Secrets and variables` -> `Actions` -> `New repository secret`
+## 1) Cấu hình GitHub repository secrets
 
-Add:
+Vào:
+
+- `Settings` -> `Secrets and variables` -> `Actions` -> `New repository secret`
+
+Tạo các secret:
+
 - `VERCEL_TOKEN`
 - `VERCEL_ORG_ID`
 - `VERCEL_PROJECT_ID`
 
-These are required by `.github/workflows/deploy-manual.yml`.
+Các giá trị này được dùng bởi workflow deploy thủ công.
 
-## 2) Enable branch protection for `main`
+## 2) Bật branch protection cho `main`
 
-In GitHub: `Settings` -> `Branches` -> `Add rule`
+Vào:
 
-Use:
+- `Settings` -> `Branches` -> `Add rule`
+
+Khuyến nghị cấu hình:
+
 - Branch name pattern: `main`
-- Enable `Require a pull request before merging`
-- Enable `Require status checks to pass before merging`
-- Select the CI job check from workflow `CI`:
+- Bật `Require a pull request before merging`
+- Bật `Require status checks to pass before merging`
+- Chọn status check từ workflow `CI`:
   - `Lint, Format Check, Typecheck`
-- (Recommended) Enable `Require branches to be up to date before merging`
-- (Optional) Enable `Restrict who can push to matching branches`
+- Bật `Require branches to be up to date before merging` (khuyến nghị)
+- `Restrict who can push to matching branches` (tùy team policy)
 
-This ensures PRs cannot be merged when checks fail.
+## 3) Tắt auto production deploy từ Vercel Git integration
 
-## 3) Disable Vercel automatic Git production deploys
+Vào Vercel project:
 
-In Vercel project:
-- Open project `Settings` -> `Git`
-- Disable automatic production deployments from `main`
-  - If your UI shows `Auto Expose System Environment Variables` / deployment toggles, keep env settings as needed but disable automatic production trigger
-  - If your project uses `Ignored Build Step`, configure it so Git pushes do not auto-build for production
+- `Settings` -> `Git`
+- Tắt auto production deploy từ branch `main`
 
-Goal: only `.github/workflows/deploy-manual.yml` should deploy production.
+Mục tiêu: production chỉ được deploy bởi GitHub Actions workflow manual.
 
-## 4) Manual deployment flow
+## 4) Quy trình deploy production thủ công
 
-When you want to deploy:
-- Go to GitHub `Actions` tab
-- Open workflow `Deploy Manual`
-- Click `Run workflow`
-- Choose branch `main`
-- Confirm run
+Khi cần deploy:
 
-The workflow performs:
-- install with Bun
-- Vercel pull
-- Vercel build
-- Vercel deploy (`--prebuilt --prod`)
+1. Vào tab `Actions` trên GitHub
+2. Mở workflow `Deploy Manual`
+3. Chọn `Run workflow`
+4. Chọn branch `main`
+5. Xác nhận chạy
+
+Workflow sẽ thực hiện:
+
+- cài dependency
+- `vercel pull`
+- `vercel build`
+- `vercel deploy --prebuilt --prod`
+
+## 5) Checklist xác nhận sau khi setup
+
+- CI fail thì không merge được vào `main`
+- Push vào `main` không tự tạo production deployment trên Vercel
+- `Deploy Manual` chạy thành công và tạo production deployment

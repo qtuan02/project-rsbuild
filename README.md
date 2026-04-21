@@ -1,64 +1,134 @@
-# Frontend (Rsbuild + React)
+# Frontend
 
-## Environment
+React + TypeScript app dùng Rsbuild, TanStack Query, TanStack Table, dnd-kit và hệ UI theo hướng shared components.
 
-Copy the template and adjust the API URL:
+## Tech stack
 
-```bash
-cp .env.template .env
-```
+- React 19 + TypeScript
+- Rsbuild (build/dev)
+- React Router
+- TanStack Query + Axios
+- TanStack Table + dnd-kit
+- Tailwind CSS + Radix UI
+- ESLint + Biome (format only)
 
-- **Rsbuild** loads `.env`, `.env.local`, etc. from the **project root** when you run `bun run dev` or `bun run build`. Variables prefixed with `PUBLIC_` are embedded in the client bundle.
-- Runtime values are validated with **Zod** in [`src/config/env.ts`](src/config/env.ts) (invalid URL falls back to the default).
-- If you need to run a **non-Rsbuild** command with the same variables as `.env`, use:
+## Requirements
 
-```bash
-bun run with-env -- <command>
-```
+- Node.js `>=22.21.0`
+- Bun (khuyến nghị để chạy scripts trong repo)
 
-Example: `bun run with-env -- bunx some-cli`
+## Quick start
 
-## Setup
+1) Cài dependency
 
 ```bash
 bun install
 ```
 
-**Tooling:** **Check** = `format`, `lint`, `typecheck` (three commands, no writes). **Fix** = `format:fix`, `lint:fix` where auto-fix exists. TypeScript has no `typecheck:fix`.
+2) Tạo env local
+
+```bash
+cp .env.template .env
+```
+
+3) Chạy dev
+
+```bash
+bun run dev
+```
+
+## Environment variables
+
+- Rsbuild đọc `.env`, `.env.local` ở root project.
+- Chỉ biến có prefix `PUBLIC_` mới được expose lên client bundle.
+- Runtime env được validate ở [`src/config/env.ts`](src/config/env.ts).
+- Nếu URL không hợp lệ, app fallback về `http://localhost:3000`.
+
+Chạy command bất kỳ với env từ `.env`:
+
+```bash
+bun run with-env -- <command>
+```
+
+Ví dụ:
+
+```bash
+bun run with-env -- bunx some-cli
+```
 
 ## Scripts
 
-| Script                    | Description                        |
-| ------------------------- | ---------------------------------- |
-| `bun run dev`             | Rsbuild dev server                 |
-| `bun run build`           | Production build                   |
-| `bun run preview`         | Preview production build           |
-| `bun run storybook`       | Storybook (Rsbuild) :6006          |
-| `bun run build-storybook` | Static Storybook output            |
-| `bun run format`          | Check formatting (Biome, no write) |
-| `bun run format:fix`      | Write formatting (Biome)           |
-| `bun run lint`            | ESLint                             |
-| `bun run lint:fix`        | ESLint with `--fix`                |
-| `bun run typecheck`       | TypeScript (`tsc --noEmit`)        |
-| `bun run with-env`        | Prefix: load `.env` then run command |
+- `bun run dev`: chạy dev server
+- `bun run build`: build production
+- `bun run preview`: preview bản build
+- `bun run storybook`: chạy Storybook ở `:6006`
+- `bun run build-storybook`: build static Storybook
+- `bun run format`: check format (không ghi file)
+- `bun run format:fix`: format và ghi file
+- `bun run lint`: ESLint (max warnings = 0)
+- `bun run lint:fix`: ESLint auto-fix
+- `bun run typecheck`: `tsc --noEmit`
+- `bun run with-env`: wrapper để nạp `.env`
 
-## Deploy on Vercel
+## Code quality workflow
 
-- Root Directory: `.` (project root)
-- Install Command: `npm ci`
+Trước khi mở PR:
+
+```bash
+bun run format
+bun run lint
+bun run typecheck
+```
+
+Nếu cần auto-fix:
+
+```bash
+bun run format:fix
+bun run lint:fix
+```
+
+## Architecture overview
+
+App entry:
+
+- [`src/main.tsx`](src/main.tsx): mount React app
+- [`src/app.tsx`](src/app.tsx): providers (theme, query client, router, toaster)
+- [`src/app-routes.tsx`](src/app-routes.tsx): route tree
+- [`src/config/routes.ts`](src/config/routes.ts): route config + metadata source-of-truth
+
+Feature modules hiện theo hướng clean layers:
+
+- `features/<feature>/data`: mock/repository
+- `features/<feature>/domain`: pure logic (filter, pagination, stats, parser)
+- `features/<feature>/hooks`: state + view-model
+- `features/<feature>/components`: presentational components
+- `features/<feature>/pages`: page composition
+
+Shared reusable:
+
+- `components/shared/table`: generic data-table stack
+- `components/shared/pagination`: pagination primitives
+- `types`: domain types dùng chung
+- `lib`: framework-agnostic utilities (`cn`, query key helpers, query client)
+
+## Deployment (Vercel)
+
+Project đã có `vercel.json` cho:
+
+- output static từ `dist`
+- SPA fallback về `/index.html`
+
+Thiết lập Vercel:
+
+- Root Directory: `.`
 - Build Command: `npm run build`
 - Output Directory: `dist`
+- Env bắt buộc: `PUBLIC_API_BASE_URL`
 
-Project already includes `vercel.json` for:
+Chi tiết CI/CD checklist: [`.github/CICD_SETUP.md`](.github/CICD_SETUP.md)
 
-- Static build output (`dist`)
-- SPA fallback (`/index.html`) so React Router routes work after refresh/direct links
+## References
 
-Before deploy, configure environment variables in Vercel Project Settings:
-
-- `PUBLIC_API_BASE_URL`
-
-## Learn more
-
-- [Rsbuild](https://rsbuild.rs) — [Environment variables](https://rsbuild.rs/guide/advanced/env-vars)
+- [Rsbuild docs](https://rsbuild.rs)
+- [Rsbuild env vars](https://rsbuild.rs/guide/advanced/env-vars)
 - [Storybook Rsbuild](https://storybook.rsbuild.rs)

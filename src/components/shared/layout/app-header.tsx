@@ -5,36 +5,12 @@ import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { useSidebar } from '@/components/ui/sidebar';
-import { routeMetadata, routes } from '@/config/routes';
-import { cn } from '@/lib/utils';
-
-const resolveHeaderContent = (pathname: string) => {
-  if (pathname.startsWith(routes.rooms)) {
-    return routeMetadata[routes.rooms];
-  }
-
-  if (pathname.startsWith(routes.tenants)) {
-    return routeMetadata[routes.tenants];
-  }
-
-  if (pathname.startsWith(routes.contracts)) {
-    return routeMetadata[routes.contracts];
-  }
-
-  if (pathname.startsWith(routes.invoices)) {
-    return routeMetadata[routes.invoices];
-  }
-
-  if (pathname.startsWith(routes.settings)) {
-    return routeMetadata[routes.settings];
-  }
-
-  return routeMetadata[routes.home];
-};
+import { resolveRouteMetadata } from '@/config/routes';
+import { cn } from '@/lib/cn';
 
 export const AppHeader = () => {
   const location = useLocation();
-  const metadata = resolveHeaderContent(location.pathname);
+  const metadata = resolveRouteMetadata(location.pathname);
   const { state, toggleSidebar } = useSidebar();
   const isCollapsed = state === 'collapsed';
 

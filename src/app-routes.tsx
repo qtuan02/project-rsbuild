@@ -1,8 +1,12 @@
 import { Route, Routes } from 'react-router-dom';
 
 import { DashboardLayout } from '@/components/shared/layout/dashboard-layout';
+import { appRouteConfigs, type AppRouteKey } from '@/config/routes';
 import { DashboardPage } from '@/features/dashboard/pages/dashboard-page';
 import { RoomListPage } from '@/features/rooms/pages/room-list-page';
+import { TenantListPage } from '@/features/tenants/pages/tenant-list-page';
+
+import type { ReactElement } from 'react';
 
 const ComingSoonPlaceholder = ({ title }: { title: string }) => {
   return (
@@ -19,27 +23,41 @@ const ComingSoonPlaceholder = ({ title }: { title: string }) => {
 };
 
 export const AppRoutes = () => {
+  const implementedRouteElements: Record<AppRouteKey, ReactElement | null> = {
+    home: <DashboardPage />,
+    rooms: <RoomListPage />,
+    tenants: <TenantListPage />,
+    contracts: null,
+    invoices: null,
+    settings: null,
+  };
+
   return (
     <Routes>
       <Route element={<DashboardLayout />}>
-        <Route index element={<DashboardPage />} />
-        <Route path="rooms/*" element={<RoomListPage />} />
-        <Route
-          path="tenants/*"
-          element={<ComingSoonPlaceholder title="Quản lý khách thuê" />}
-        />
-        <Route
-          path="contracts/*"
-          element={<ComingSoonPlaceholder title="Quản lý hợp đồng" />}
-        />
-        <Route
-          path="invoices/*"
-          element={<ComingSoonPlaceholder title="Quản lý hóa đơn" />}
-        />
-        <Route
-          path="settings/*"
-          element={<ComingSoonPlaceholder title="Cài đặt hệ thống" />}
-        />
+        {appRouteConfigs.map((routeConfig) => {
+          const implementedElement = implementedRouteElements[routeConfig.key];
+          const element =
+            routeConfig.implemented && implementedElement ? (
+              implementedElement
+            ) : (
+              <ComingSoonPlaceholder
+                title={routeConfig.comingSoonTitle ?? ''}
+              />
+            );
+
+          if (routeConfig.key === 'home') {
+            return <Route key={routeConfig.key} index element={element} />;
+          }
+
+          return (
+            <Route
+              key={routeConfig.key}
+              path={routeConfig.routePath}
+              element={element}
+            />
+          );
+        })}
         <Route
           path="*"
           element={<ComingSoonPlaceholder title="Không tìm thấy trang" />}

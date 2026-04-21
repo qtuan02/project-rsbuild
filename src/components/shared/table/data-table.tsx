@@ -49,18 +49,28 @@ import {
   type DataTableSearchableColumn,
 } from './data-table-toolbar';
 
-interface DataTableProps<TData, TValue> {
+interface DataTableBaseProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
   filterableColumns?: DataTableFilterableColumn<TData>[];
   searchableColumns?: DataTableSearchableColumn<TData>[];
   toolbarActions?: React.ReactNode;
-
-  // Drag and drop optional properties
-  enableRowDrag?: boolean;
-  onRowReorder?: (oldIndex: number, newIndex: number) => void;
-  getRowId?: (row: TData) => string;
 }
+
+interface DataTableDragProps<TData> {
+  enableRowDrag: true;
+  onRowReorder: (oldIndex: number, newIndex: number) => void;
+  getRowId: (row: TData) => string;
+}
+
+interface DataTableStaticProps {
+  enableRowDrag?: false;
+  onRowReorder?: never;
+  getRowId?: never;
+}
+
+type DataTableProps<TData, TValue> = DataTableBaseProps<TData, TValue> &
+  (DataTableDragProps<TData> | DataTableStaticProps);
 
 function DraggableRow<TData>({ row }: { row: Row<TData> }) {
   const {
@@ -115,16 +125,18 @@ function DraggableRow<TData>({ row }: { row: Row<TData> }) {
   );
 }
 
-export function DataTable<TData, TValue>({
-  columns,
-  data,
-  filterableColumns = [],
-  searchableColumns = [],
-  toolbarActions,
-  enableRowDrag = false,
-  onRowReorder,
-  getRowId,
-}: DataTableProps<TData, TValue>) {
+export function DataTable<TData, TValue>(props: DataTableProps<TData, TValue>) {
+  const {
+    columns,
+    data,
+    filterableColumns = [],
+    searchableColumns = [],
+    toolbarActions,
+  } = props;
+  const enableRowDrag = props.enableRowDrag ?? false;
+  const onRowReorder = props.enableRowDrag ? props.onRowReorder : undefined;
+  const getRowId = props.enableRowDrag ? props.getRowId : undefined;
+
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     [],

@@ -1,36 +1,49 @@
 import {
-  ChevronLeft,
-  ChevronRight,
-  ChevronsLeft,
-  ChevronsRight,
-} from 'lucide-react';
-
-import { Button } from '@/components/ui/button';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
+  PaginationNavigation,
+  PaginationPageSizeSelect,
+} from '@/components/shared/pagination';
 
 import type { Table } from '@tanstack/react-table';
 
 interface DataTablePaginationProps<TData> {
   table: Table<TData>;
   pageSizeOptions?: number[];
+  labels?: {
+    selected: string;
+    rows: string;
+    total: string;
+    results: string;
+    perPage: string;
+    page: string;
+  };
 }
+
+const DEFAULT_LABELS = {
+  selected: 'Đã chọn',
+  rows: 'dòng',
+  total: 'Tổng',
+  results: 'kết quả',
+  perPage: 'Hiển thị',
+  page: 'Trang',
+};
 
 export function DataTablePagination<TData>({
   table,
   pageSizeOptions = [10, 20, 30, 50],
+  labels = DEFAULT_LABELS,
 }: DataTablePaginationProps<TData>) {
+  const totalPages = Math.max(table.getPageCount(), 1);
+  const currentPage = Math.min(
+    table.getState().pagination.pageIndex + 1,
+    totalPages,
+  );
+
   return (
     <div className="flex flex-col items-center justify-between gap-4 px-2 sm:flex-row">
       <div className="flex-1 text-sm text-muted-foreground">
         {table.getFilteredSelectedRowModel().rows.length > 0 ? (
           <span>
-            Đã chọn{' '}
+            {labels.selected}{' '}
             <span className="font-medium text-foreground">
               {table.getFilteredSelectedRowModel().rows.length}
             </span>
@@ -38,15 +51,15 @@ export function DataTablePagination<TData>({
             <span className="font-medium text-foreground">
               {table.getFilteredRowModel().rows.length}
             </span>{' '}
-            dòng
+            {labels.rows}
           </span>
         ) : (
           <span>
-            Tổng{' '}
+            {labels.total}{' '}
             <span className="font-medium text-foreground">
               {table.getFilteredRowModel().rows.length}
             </span>{' '}
-            kết quả
+            {labels.results}
           </span>
         )}
       </div>
@@ -54,76 +67,35 @@ export function DataTablePagination<TData>({
       <div className="flex items-center gap-4 lg:gap-6">
         <div className="flex items-center gap-2">
           <p className="text-sm text-muted-foreground whitespace-nowrap">
-            Hiển thị
+            {labels.perPage}
           </p>
-          <Select
-            value={`${table.getState().pagination.pageSize}`}
-            onValueChange={(value) => {
-              table.setPageSize(Number(value));
+          <PaginationPageSizeSelect
+            pageSize={table.getState().pagination.pageSize}
+            pageSizeOptions={pageSizeOptions}
+            onPageSizeChange={(value) => {
+              table.setPageSize(value);
             }}
-          >
-            <SelectTrigger className="h-8 w-[70px]">
-              <SelectValue placeholder={table.getState().pagination.pageSize} />
-            </SelectTrigger>
-            <SelectContent side="bottom" position="popper" align="start">
-              {pageSizeOptions.map((pageSize) => (
-                <SelectItem key={pageSize} value={`${pageSize}`}>
-                  {pageSize}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+            triggerClassName="h-8 w-[70px]"
+          />
         </div>
 
         <div className="flex items-center text-sm text-muted-foreground">
-          Trang{' '}
+          {labels.page}{' '}
           <span className="mx-1 font-medium text-foreground">
-            {table.getState().pagination.pageIndex + 1}
+            {currentPage}
           </span>
           /{' '}
-          <span className="ml-1 font-medium text-foreground">
-            {table.getPageCount()}
-          </span>
+          <span className="ml-1 font-medium text-foreground">{totalPages}</span>
         </div>
 
-        <div className="flex items-center gap-1">
-          <Button
-            variant="outline"
-            size="icon-sm"
-            onClick={() => table.setPageIndex(0)}
-            disabled={!table.getCanPreviousPage()}
-          >
-            <span className="sr-only">Trang đầu</span>
-            <ChevronsLeft className="h-4 w-4" />
-          </Button>
-          <Button
-            variant="outline"
-            size="icon-sm"
-            onClick={() => table.previousPage()}
-            disabled={!table.getCanPreviousPage()}
-          >
-            <span className="sr-only">Trang trước</span>
-            <ChevronLeft className="h-4 w-4" />
-          </Button>
-          <Button
-            variant="outline"
-            size="icon-sm"
-            onClick={() => table.nextPage()}
-            disabled={!table.getCanNextPage()}
-          >
-            <span className="sr-only">Trang sau</span>
-            <ChevronRight className="h-4 w-4" />
-          </Button>
-          <Button
-            variant="outline"
-            size="icon-sm"
-            onClick={() => table.setPageIndex(table.getPageCount() - 1)}
-            disabled={!table.getCanNextPage()}
-          >
-            <span className="sr-only">Trang cuối</span>
-            <ChevronsRight className="h-4 w-4" />
-          </Button>
-        </div>
+        <PaginationNavigation
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={(page) => {
+            table.setPageIndex(page - 1);
+          }}
+          showFirstLast
+        />
       </div>
     </div>
   );
