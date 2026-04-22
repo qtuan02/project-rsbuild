@@ -10,6 +10,9 @@ import {
 import { DashboardPage } from "@/features/dashboard/pages/dashboard-page";
 import { RoomListPage } from "@/features/rooms/pages/room-list-page";
 import { TenantListPage } from "@/features/tenants/pages/tenant-list-page";
+import { ContractListPage } from "@/features/contracts/pages/contract-list-page";
+import { InvoiceListPage } from "@/features/invoices/pages/invoice-list-page";
+import { SettingsPage } from "@/features/settings/pages/settings-page";
 
 import type { LucideIcon } from "lucide-react";
 import type { ComponentType } from "react";
@@ -85,8 +88,8 @@ export const appRouteManifest: AppRouteManifestItem[] = [
     description: "Quản lý hợp đồng cho thuê.",
     icon: ScrollText,
     group: "management",
-    implemented: false,
-    comingSoonTitle: "Quản lý hợp đồng",
+    implemented: true,
+    component: ContractListPage,
   },
   {
     key: "invoices",
@@ -96,8 +99,8 @@ export const appRouteManifest: AppRouteManifestItem[] = [
     description: "Theo dõi thanh toán và công nợ.",
     icon: ReceiptText,
     group: "management",
-    implemented: false,
-    comingSoonTitle: "Quản lý hóa đơn",
+    implemented: true,
+    component: InvoiceListPage,
   },
   {
     key: "settings",
@@ -107,8 +110,8 @@ export const appRouteManifest: AppRouteManifestItem[] = [
     description: "Cấu hình hệ thống.",
     icon: Settings,
     group: "system",
-    implemented: false,
-    comingSoonTitle: "Cài đặt hệ thống",
+    implemented: true,
+    component: SettingsPage,
   },
 ] as const;
 
