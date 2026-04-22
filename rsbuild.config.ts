@@ -12,6 +12,9 @@ export default defineConfig({
   server: {
     historyApiFallback: true,
   },
+  dev: {
+    lazyCompilation: false,
+  },
   source: {
     entry: {
       index: "./src/main.tsx",
