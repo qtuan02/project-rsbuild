@@ -1,9 +1,11 @@
-import { Badge, type BadgeProps } from "@/components/ui/badge";
+import { Badge } from "@/components/ui/badge";
+import { tenantStatusConfig } from "@/features/tenants/domain/tenant-status-config";
 import { cn } from "@/lib/cn";
 import type { TenantStatus } from "@/types/tenant";
-import { tenantStatusConfig } from "@/features/tenants/domain/tenant-status-config";
 
-interface TenantStatusBadgeProps extends BadgeProps {
+type BadgeComponentProps = Parameters<typeof Badge>[0];
+
+interface TenantStatusBadgeProps extends BadgeComponentProps {
   status: TenantStatus;
   compact?: boolean;
 }

@@ -14,6 +14,7 @@ export interface Contract {
   room: string;
   floor: number;
   rentAmount: number;
+  depositAmount?: number;
   startDate: string;
   endDate: string;
   status: ContractStatus;

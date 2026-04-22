@@ -5,23 +5,19 @@ import {
   ArrowLeft,
   User,
   Calendar,
-  DoorOpen,
   FileText,
   AlertCircle,
 } from "lucide-react";
 import { useState } from "react";
 
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-
-import type { Contract } from "@/types/contract";
-import { formatCurrency } from "@/utils/currency";
-
 import { InfoCard, InfoRow } from "@/components/shared/cards/info-card";
 import { ConfirmActionDialog } from "@/components/shared/dialogs/confirm-action-dialog";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
+import { formatCurrency } from "@/utils/currency";
 
 import { getContracts } from "../data/contract.repository";
 import { contractStatusConfig } from "../domain/contract-display-config";
@@ -74,6 +70,7 @@ export const ContractDetailPage = ({
     (endDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24),
   );
   const isExpiringsoon = daysUntilEnd <= 30 && daysUntilEnd > 0;
+  const depositAmount = contract.depositAmount ?? contract.rentAmount;
 
   return (
     <div className="space-y-6">
@@ -107,8 +104,8 @@ export const ContractDetailPage = ({
         <Alert variant="destructive">
           <AlertCircle className="h-4 w-4" />
           <AlertDescription>
-            Hợp đồng sẽ hết hạn trong {daysUntilEnd} ngày. Vui lòng gia hạn hoặc liên hệ khách
-            thuê.
+            Hợp đồng sẽ hết hạn trong {daysUntilEnd} ngày. Vui lòng gia hạn hoặc
+            liên hệ khách thuê.
           </AlertDescription>
         </Alert>
       )}
@@ -119,7 +116,9 @@ export const ContractDetailPage = ({
             <CardHeader className="pb-3">
               <div className="flex items-start justify-between">
                 <div>
-                  <CardTitle className="text-2xl">{contract.contractNumber}</CardTitle>
+                  <CardTitle className="text-2xl">
+                    {contract.contractNumber}
+                  </CardTitle>
                   <p className="mt-1 text-sm text-muted-foreground">
                     Ký kết: {contract.startDate}
                   </p>
@@ -136,13 +135,17 @@ export const ContractDetailPage = ({
                   <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
                     Ngày bắt đầu
                   </p>
-                  <p className="mt-2 text-base font-semibold">{contract.startDate}</p>
+                  <p className="mt-2 text-base font-semibold">
+                    {contract.startDate}
+                  </p>
                 </div>
                 <div>
                   <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
                     Ngày kết thúc
                   </p>
-                  <p className="mt-2 text-base font-semibold">{contract.endDate}</p>
+                  <p className="mt-2 text-base font-semibold">
+                    {contract.endDate}
+                  </p>
                 </div>
               </div>
             </CardContent>
@@ -181,7 +184,7 @@ export const ContractDetailPage = ({
                   Tiền đặt cọc
                 </p>
                 <p className="mt-1 text-base font-bold text-foreground">
-                  {formatCurrency(contract.depositAmount)}
+                  {formatCurrency(depositAmount)}
                 </p>
               </div>
               <Separator />
@@ -201,7 +204,11 @@ export const ContractDetailPage = ({
             {isExpiringsoon && (
               <InfoRow
                 label="Cảnh báo"
-                value={<span className="text-red-600 dark:text-red-400">Sắp hết hạn</span>}
+                value={
+                  <span className="text-red-600 dark:text-red-400">
+                    Sắp hết hạn
+                  </span>
+                }
               />
             )}
           </InfoCard>
@@ -214,7 +221,10 @@ export const ContractDetailPage = ({
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="rounded-lg bg-muted/50 p-4">
-                <Badge variant="outline" className={`w-full justify-center ${statusConfig.className}`}>
+                <Badge
+                  variant="outline"
+                  className={`w-full justify-center ${statusConfig.className}`}
+                >
                   {statusConfig.label}
                 </Badge>
               </div>
@@ -252,7 +262,7 @@ export const ContractDetailPage = ({
                   Tiền đặt cọc
                 </p>
                 <p className="mt-1 text-lg font-bold text-foreground">
-                  {formatCurrency(contract.depositAmount)}
+                  {formatCurrency(depositAmount)}
                 </p>
               </div>
             </CardContent>

@@ -1,5 +1,7 @@
 import { useState } from "react";
+
 import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
@@ -9,10 +11,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import type { Invoice, InvoiceStatus } from "@/types/invoice";
 import { getTenants } from "@/features/tenants/data/tenant.repository";
+import type { Invoice, InvoiceStatus } from "@/types/invoice";
 
 interface InvoiceFormProps {
   invoice?: Invoice;
@@ -129,11 +130,17 @@ export const InvoiceForm = ({
           <CardContent className="space-y-3">
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <p className="text-xs font-medium text-muted-foreground">Phòng</p>
-                <p className="mt-1 text-sm font-semibold">{selectedTenant.room}</p>
+                <p className="text-xs font-medium text-muted-foreground">
+                  Phòng
+                </p>
+                <p className="mt-1 text-sm font-semibold">
+                  {selectedTenant.room}
+                </p>
               </div>
               <div>
-                <p className="text-xs font-medium text-muted-foreground">Tầng</p>
+                <p className="text-xs font-medium text-muted-foreground">
+                  Tầng
+                </p>
                 <p className="mt-1 text-sm font-semibold">
                   Tầng {selectedTenant.floor}
                 </p>

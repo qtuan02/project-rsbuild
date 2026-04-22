@@ -1,20 +1,16 @@
 import { Edit, Download, Trash2, ArrowLeft } from "lucide-react";
 import { useState } from "react";
 
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
-import { cn } from "@/lib/cn";
-import type { Room } from "@/types/room";
-import { formatCurrency } from "@/utils/currency";
-
 import { RoomStatusBadge } from "@/components/shared/badges/room-status-badge";
 import { InfoCard, InfoRow } from "@/components/shared/cards/info-card";
 import { ConfirmActionDialog } from "@/components/shared/dialogs/confirm-action-dialog";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
+import { formatCurrency } from "@/utils/currency";
 
-import { roomTypeConfig } from "../domain/room-display-config";
 import { getRooms } from "../data/room.repository";
+import { roomTypeConfig } from "../domain/room-display-config";
 
 interface RoomDetailPageProps {
   roomId: string;
@@ -125,9 +121,16 @@ export const RoomDetailPage = ({ roomId, onBack }: RoomDetailPageProps) => {
           <InfoCard title="Thông tin cơ bản">
             <InfoRow label="ID phòng" value={room.id} />
             <InfoRow label="Tầng" value={`Tầng ${room.floor}`} />
-            <InfoRow label="Loại phòng" value={roomTypeConfig[room.type].label} />
+            <InfoRow
+              label="Loại phòng"
+              value={roomTypeConfig[room.type].label}
+            />
             <InfoRow label="Diện tích" value={`${room.area}m²`} />
-            <InfoRow label="Giá thuê/tháng" value={formatCurrency(room.price)} highlight />
+            <InfoRow
+              label="Giá thuê/tháng"
+              value={formatCurrency(room.price)}
+              highlight
+            />
             <InfoRow label="Cập nhật lần cuối" value={room.lastUpdated} />
           </InfoCard>
 
@@ -154,7 +157,10 @@ export const RoomDetailPage = ({ roomId, onBack }: RoomDetailPageProps) => {
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="rounded-lg bg-muted/50 p-4">
-                <RoomStatusBadge status={room.status} className="w-full justify-center" />
+                <RoomStatusBadge
+                  status={room.status}
+                  className="w-full justify-center"
+                />
               </div>
 
               <div className="space-y-2 text-sm">

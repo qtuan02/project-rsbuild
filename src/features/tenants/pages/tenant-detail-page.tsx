@@ -12,18 +12,15 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
-import { cn } from "@/lib/cn";
-import type { Tenant } from "@/types/tenant";
-import { formatCurrency } from "@/utils/currency";
-import { getInitials } from "@/utils/string";
-
 import { TenantStatusBadge } from "@/components/shared/badges/tenant-status-badge";
 import { InfoCard, InfoRow } from "@/components/shared/cards/info-card";
 import { ConfirmActionDialog } from "@/components/shared/dialogs/confirm-action-dialog";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
+import { cn } from "@/lib/cn";
+import { formatCurrency } from "@/utils/currency";
+import { getInitials } from "@/utils/string";
 
 import { getTenants } from "../data/tenant.repository";
 
@@ -32,7 +29,10 @@ interface TenantDetailPageProps {
   onBack?: () => void;
 }
 
-export const TenantDetailPage = ({ tenantId, onBack }: TenantDetailPageProps) => {
+export const TenantDetailPage = ({
+  tenantId,
+  onBack,
+}: TenantDetailPageProps) => {
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
 
@@ -119,7 +119,9 @@ export const TenantDetailPage = ({ tenantId, onBack }: TenantDetailPageProps) =>
             <CardContent className="pt-6 space-y-3">
               <div className="flex items-center gap-3 text-sm">
                 <DoorOpen className="h-4 w-4 text-muted-foreground" />
-                <span>{tenant.room} • Tầng {tenant.floor}</span>
+                <span>
+                  {tenant.room} • Tầng {tenant.floor}
+                </span>
               </div>
               <div className="flex items-center gap-3 text-sm">
                 <Phone className="h-4 w-4 text-muted-foreground" />
@@ -136,7 +138,10 @@ export const TenantDetailPage = ({ tenantId, onBack }: TenantDetailPageProps) =>
             <InfoRow label="ID khách" value={tenant.id} />
             <InfoRow label="Tên" value={tenant.name} />
             <InfoRow label="Số CCCD/CMND" value={tenant.idNumber} />
-            <InfoRow label="Giới tính" value={tenant.gender === "male" ? "Nam" : "Nữ"} />
+            <InfoRow
+              label="Giới tính"
+              value={tenant.gender === "male" ? "Nam" : "Nữ"}
+            />
             <InfoRow label="Điện thoại" value={tenant.phone} />
             <InfoRow label="Email" value={tenant.email} />
           </InfoCard>
@@ -184,7 +189,10 @@ export const TenantDetailPage = ({ tenantId, onBack }: TenantDetailPageProps) =>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="rounded-lg bg-muted/50 p-4">
-                <TenantStatusBadge status={tenant.status} className="w-full justify-center" />
+                <TenantStatusBadge
+                  status={tenant.status}
+                  className="w-full justify-center"
+                />
               </div>
 
               <div className="space-y-2 text-sm">

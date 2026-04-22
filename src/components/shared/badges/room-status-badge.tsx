@@ -1,9 +1,11 @@
-import { Badge, type BadgeProps } from "@/components/ui/badge";
-import { cn } from "@/lib/cn";
-import type { Room, RoomStatus } from "@/types/room";
+import { Badge } from "@/components/ui/badge";
 import { roomStatusConfig } from "@/features/rooms/domain/room-display-config";
+import { cn } from "@/lib/cn";
+import type { RoomStatus } from "@/types/room";
 
-interface RoomStatusBadgeProps extends BadgeProps {
+type BadgeComponentProps = Parameters<typeof Badge>[0];
+
+interface RoomStatusBadgeProps extends BadgeComponentProps {
   status: RoomStatus;
   compact?: boolean;
 }

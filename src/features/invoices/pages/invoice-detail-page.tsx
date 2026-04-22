@@ -4,28 +4,20 @@ import {
   Trash2,
   ArrowLeft,
   CheckCircle2,
-  Clock,
-  AlertCircle,
-  DoorOpen,
   User,
   Calendar,
 } from "lucide-react";
 import { useState } from "react";
 
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
-import { cn } from "@/lib/cn";
-import type { Invoice } from "@/types/invoice";
-import { formatCurrency } from "@/utils/currency";
-
 import { InvoiceStatusBadge } from "@/components/shared/badges/invoice-status-badge";
 import { InfoCard, InfoRow } from "@/components/shared/cards/info-card";
 import { ConfirmActionDialog } from "@/components/shared/dialogs/confirm-action-dialog";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
+import { formatCurrency } from "@/utils/currency";
 
 import { getInvoices } from "../data/invoice.repository";
-import { invoiceStatusConfig } from "../domain/invoice-display-config";
 
 interface InvoiceDetailPageProps {
   invoiceId: string;
@@ -66,8 +58,6 @@ export const InvoiceDetailPage = ({
     onBack?.();
   };
 
-  const statusConfig = invoiceStatusConfig[invoice.status];
-
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
@@ -102,7 +92,9 @@ export const InvoiceDetailPage = ({
             <CardHeader className="pb-3">
               <div className="flex items-start justify-between">
                 <div>
-                  <CardTitle className="text-2xl">{invoice.invoiceNumber}</CardTitle>
+                  <CardTitle className="text-2xl">
+                    {invoice.invoiceNumber}
+                  </CardTitle>
                   <p className="mt-1 text-sm text-muted-foreground">
                     Tháng {invoice.month}
                   </p>
@@ -136,19 +128,25 @@ export const InvoiceDetailPage = ({
           <InfoCard title="Chi tiết hóa đơn">
             <div className="space-y-3">
               <div className="flex items-center justify-between pb-3 border-b">
-                <span className="text-sm text-muted-foreground">Tiền thuê phòng</span>
+                <span className="text-sm text-muted-foreground">
+                  Tiền thuê phòng
+                </span>
                 <span className="text-sm font-medium tabular-nums">
                   {formatCurrency(invoice.amount)}
                 </span>
               </div>
               <div className="flex items-center justify-between pb-3 border-b">
-                <span className="text-sm text-muted-foreground">Phí dịch vụ</span>
+                <span className="text-sm text-muted-foreground">
+                  Phí dịch vụ
+                </span>
                 <span className="text-sm font-medium tabular-nums">
                   {formatCurrency(0)}
                 </span>
               </div>
               <div className="flex items-center justify-between pb-3 border-b">
-                <span className="text-sm text-muted-foreground">Các khoản khác</span>
+                <span className="text-sm text-muted-foreground">
+                  Các khoản khác
+                </span>
                 <span className="text-sm font-medium tabular-nums">
                   {formatCurrency(0)}
                 </span>
@@ -166,7 +164,11 @@ export const InvoiceDetailPage = ({
             <InfoRow label="Ngày đến hạn" value={invoice.dueDate} />
             {invoice.paymentDate ? (
               <>
-                <InfoRow label="Ngày thanh toán" value={invoice.paymentDate} highlight />
+                <InfoRow
+                  label="Ngày thanh toán"
+                  value={invoice.paymentDate}
+                  highlight
+                />
                 <InfoRow label="Trạng thái" value="Đã thanh toán" />
               </>
             ) : invoice.status === "pending" ? (
@@ -206,7 +208,10 @@ export const InvoiceDetailPage = ({
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="rounded-lg bg-muted/50 p-4">
-                <InvoiceStatusBadge status={invoice.status} className="w-full justify-center" />
+                <InvoiceStatusBadge
+                  status={invoice.status}
+                  className="w-full justify-center"
+                />
               </div>
 
               <div className="space-y-2 text-sm">

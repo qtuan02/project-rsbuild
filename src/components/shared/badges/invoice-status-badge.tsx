@@ -1,9 +1,11 @@
-import { Badge, type BadgeProps } from "@/components/ui/badge";
+import { Badge } from "@/components/ui/badge";
+import { invoiceStatusConfig } from "@/features/invoices/domain/invoice-display-config";
 import { cn } from "@/lib/cn";
 import type { InvoiceStatus } from "@/types/invoice";
-import { invoiceStatusConfig } from "@/features/invoices/domain/invoice-display-config";
 
-interface InvoiceStatusBadgeProps extends BadgeProps {
+type BadgeComponentProps = Parameters<typeof Badge>[0];
+
+interface InvoiceStatusBadgeProps extends BadgeComponentProps {
   status: InvoiceStatus;
   compact?: boolean;
 }

@@ -1,9 +1,11 @@
-import { Badge, type BadgeProps } from "@/components/ui/badge";
+import { Badge } from "@/components/ui/badge";
+import { contractStatusConfig } from "@/features/contracts/domain/contract-display-config";
 import { cn } from "@/lib/cn";
 import type { ContractStatus } from "@/types/contract";
-import { contractStatusConfig } from "@/features/contracts/domain/contract-display-config";
 
-interface ContractStatusBadgeProps extends BadgeProps {
+type BadgeComponentProps = Parameters<typeof Badge>[0];
+
+interface ContractStatusBadgeProps extends BadgeComponentProps {
   status: ContractStatus;
   compact?: boolean;
 }
