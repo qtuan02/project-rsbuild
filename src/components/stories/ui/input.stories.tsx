@@ -1,11 +1,11 @@
-import { Input } from '@/components/ui/input';
+import { Input } from "@/components/ui/input";
 
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from "@storybook/react";
 
 const meta = {
-  title: 'UI/Input',
+  title: "UI/Input",
   component: Input,
-  tags: ['autodocs'],
+  tags: ["autodocs"],
 } satisfies Meta<typeof Input>;
 
 export default meta;
@@ -14,14 +14,14 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    placeholder: 'Nhap noi dung...',
-    type: 'text',
+    placeholder: "Nhap noi dung...",
+    type: "text",
   },
 };
 
 export const Disabled: Story = {
   args: {
-    placeholder: 'Disabled',
+    placeholder: "Disabled",
     disabled: true,
   },
 };

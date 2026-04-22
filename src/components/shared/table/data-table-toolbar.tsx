@@ -1,6 +1,6 @@
-import { Settings2, X } from 'lucide-react';
+import { Settings2, X } from "lucide-react";
 
-import { Button } from '@/components/ui/button';
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -8,12 +8,12 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import { Input } from '@/components/ui/input';
+} from "@/components/ui/dropdown-menu";
+import { Input } from "@/components/ui/input";
 
-import { DataTableFacetedFilter } from './data-table-faceted-filter';
+import { DataTableFacetedFilter } from "./data-table-faceted-filter";
 
-import type { Table } from '@tanstack/react-table';
+import type { Table } from "@tanstack/react-table";
 
 export interface DataTableFilterableColumn<TData> {
   id: keyof TData & string;
@@ -55,7 +55,7 @@ export function DataTableToolbar<TData>({
               key={column.id}
               placeholder={`Tìm ${column.title}...`}
               value={
-                (table.getColumn(column.id)?.getFilterValue() as string) ?? ''
+                (table.getColumn(column.id)?.getFilterValue() as string) ?? ""
               }
               onChange={(event) =>
                 table.getColumn(column.id)?.setFilterValue(event.target.value)
@@ -108,7 +108,7 @@ export function DataTableToolbar<TData>({
               .getAllColumns()
               .filter(
                 (column) =>
-                  typeof column.accessorFn !== 'undefined' &&
+                  typeof column.accessorFn !== "undefined" &&
                   column.getCanHide(),
               )
               .map((column) => (

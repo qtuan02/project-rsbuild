@@ -1,12 +1,12 @@
-import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from "@storybook/react";
 
 const meta = {
-  title: 'UI/Textarea',
+  title: "UI/Textarea",
   component: Textarea,
-  tags: ['autodocs'],
+  tags: ["autodocs"],
 } satisfies Meta<typeof Textarea>;
 
 export default meta;

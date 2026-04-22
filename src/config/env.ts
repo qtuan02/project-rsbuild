@@ -1,8 +1,8 @@
-import { z } from 'zod';
+import { z } from "zod";
 
-const FALLBACK_API_BASE_URL = 'http://localhost:3000';
+const FALLBACK_API_BASE_URL = "http://localhost:3000";
 
-const trimEndSlash = (value: string) => value.replace(/\/+$/, '');
+const trimEndSlash = (value: string) => value.replace(/\/+$/, "");
 
 const publicEnvSchema = z.object({
   PUBLIC_API_BASE_URL: z.string().optional(),
@@ -15,7 +15,7 @@ const parsed = publicEnvSchema.safeParse({
 const rawUrl =
   parsed.success && parsed.data.PUBLIC_API_BASE_URL
     ? trimEndSlash(parsed.data.PUBLIC_API_BASE_URL.trim())
-    : '';
+    : "";
 
 const urlResult = z
   .string()

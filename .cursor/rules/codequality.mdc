@@ -1,47 +1,36 @@
 ---
-description: Code Quality Guidelines
-globs: 
+description: Actionable code quality rules for feature-driven frontend development
+globs: src/**/*.{ts,tsx,css}
 ---
-# Code Quality Guidelines
 
-## Verify Information
-Always verify information before presenting it. Do not make assumptions or speculate without clear evidence.
+# Code Quality Rules
 
-## File-by-File Changes
-Make changes file by file and give me a chance to spot mistakes.
+## Preserve Behavior
+- Do not change unrelated behavior while implementing a focused task.
+- Keep existing public contracts stable unless the task explicitly requires a breaking change.
+- Prefer incremental refactors over broad rewrites in feature code.
 
-## No Apologies
-Never use apologies.
+## Readability And Maintainability
+- Use clear names that describe intent, not implementation detail.
+- Keep functions and components focused on one responsibility.
+- Remove dead code and unused branches introduced by a change.
+- Avoid deep nesting; extract helpers when branching becomes hard to scan.
 
-## No Understanding Feedback
-Avoid giving feedback about understanding in comments or documentation.
+## Architecture Alignment
+- Follow the project structure and layer boundaries from `architecture.mdc`.
+- Keep business logic in `domain` or hook-level orchestration, not in page markup.
+- Keep networking and DTO mapping in `data`, not in UI components.
 
-## No Whitespace Suggestions
-Don't suggest whitespace changes.
+## Type And Runtime Safety
+- Prefer explicit, narrow types over broad permissive types.
+- Handle loading, error, and empty states for async UI flows.
+- Guard against null/undefined at module boundaries and parsed inputs.
 
-## No Summaries
-Don't summarize changes made.
+## Reuse And Consistency
+- Reuse existing shared utilities/components before adding new abstractions.
+- Introduce new abstractions only when duplication is real and repeated.
+- Keep naming and file placement consistent with nearby code.
 
-## No Inventions
-Don't invent changes other than what's explicitly requested.
-
-## No Unnecessary Confirmations
-Don't ask for confirmation of information already provided in the context.
-
-## Preserve Existing Code
-Don't remove unrelated code or functionalities. Pay attention to preserving existing structures.
-
-## Single Chunk Edits
-Provide all edits in a single chunk instead of multiple-step instructions or explanations for the same file.
-
-## No Implementation Checks
-Don't ask the user to verify implementations that are visible in the provided context.
-
-## No Unnecessary Updates
-Don't suggest updates or changes to files when there are no actual modifications needed.
-
-## Provide Real File Links
-Always provide links to the real files, not x.md.
-
-## No Current Implementation
-Don't show or discuss the current implementation unless specifically requested.
+## Verification
+- Ensure changes are compatible with formatting, lint, and typecheck workflow.
+- When possible, cover non-trivial logic with focused tests.

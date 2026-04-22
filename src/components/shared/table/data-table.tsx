@@ -7,31 +7,21 @@ import {
   useSensor,
   useSensors,
   type DragEndEvent,
-} from '@dnd-kit/core';
-import { restrictToVerticalAxis } from '@dnd-kit/modifiers';
+} from "@dnd-kit/core";
+import { restrictToVerticalAxis } from "@dnd-kit/modifiers";
 import {
   SortableContext,
   verticalListSortingStrategy,
   useSortable,
-} from '@dnd-kit/sortable';
-import { CSS } from '@dnd-kit/utilities';
+} from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 import {
   flexRender,
   type ColumnDef,
-  type ColumnFiltersState,
-  type SortingState,
-  type VisibilityState,
   type Table as TanstackTable,
   type Row,
-  getCoreRowModel,
-  getFilteredRowModel,
-  getPaginationRowModel,
-  getSortedRowModel,
-  getFacetedRowModel,
-  getFacetedUniqueValues,
-  useReactTable,
-} from '@tanstack/react-table';
-import * as React from 'react';
+} from "@tanstack/react-table";
+import * as React from "react";
 
 import {
   Table,
@@ -40,14 +30,15 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/table';
+} from "@/components/ui/table";
 
-import { DataTablePagination } from './data-table-pagination';
+import { DataTablePagination } from "./data-table-pagination";
 import {
   DataTableToolbar,
   type DataTableFilterableColumn,
   type DataTableSearchableColumn,
-} from './data-table-toolbar';
+} from "./data-table-toolbar";
+import { useDataTable } from "./use-data-table";
 
 interface DataTableBaseProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -90,18 +81,18 @@ function DraggableRow<TData>({ row }: { row: Row<TData> }) {
     transition,
     opacity: isDragging ? 0.8 : 1,
     zIndex: isDragging ? 1 : 0,
-    position: 'relative',
-    backgroundColor: isDragging ? 'var(--accent)' : undefined,
+    position: "relative",
+    backgroundColor: isDragging ? "var(--accent)" : undefined,
   };
 
   return (
     <TableRow
       ref={setNodeRef}
       style={style}
-      data-state={row.getIsSelected() && 'selected'}
+      data-state={row.getIsSelected() && "selected"}
     >
       {row.getVisibleCells().map((cell) => {
-        if (cell.column.id === 'drag-handle') {
+        if (cell.column.id === "drag-handle") {
           return (
             <TableCell key={cell.id} className="w-10">
               <div
@@ -137,36 +128,10 @@ export function DataTable<TData, TValue>(props: DataTableProps<TData, TValue>) {
   const onRowReorder = props.enableRowDrag ? props.onRowReorder : undefined;
   const getRowId = props.enableRowDrag ? props.getRowId : undefined;
 
-  const [sorting, setSorting] = React.useState<SortingState>([]);
-  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
-    [],
-  );
-  const [columnVisibility, setColumnVisibility] =
-    React.useState<VisibilityState>({});
-  const [rowSelection, setRowSelection] = React.useState({});
-
-  // TanStack Table intentionally exposes mutable APIs that React Compiler can't safely memoize.
-  // eslint-disable-next-line react-hooks/incompatible-library
-  const table = useReactTable({
+  const { table } = useDataTable({
     data,
     columns,
-    state: {
-      sorting,
-      columnFilters,
-      columnVisibility,
-      rowSelection,
-    },
-    onSortingChange: setSorting,
-    onColumnFiltersChange: setColumnFilters,
-    onColumnVisibilityChange: setColumnVisibility,
-    onRowSelectionChange: setRowSelection,
-    getRowId: getRowId,
-    getCoreRowModel: getCoreRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
-    getSortedRowModel: getSortedRowModel(),
-    getFacetedRowModel: getFacetedRowModel(),
-    getFacetedUniqueValues: getFacetedUniqueValues(),
+    getRowId,
   });
 
   const sensors = useSensors(
@@ -227,7 +192,7 @@ export function DataTable<TData, TValue>(props: DataTableProps<TData, TValue>) {
               table.getRowModel().rows.map((row) => (
                 <TableRow
                   key={row.id}
-                  data-state={row.getIsSelected() && 'selected'}
+                  data-state={row.getIsSelected() && "selected"}
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>

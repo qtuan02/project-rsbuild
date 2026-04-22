@@ -3,24 +3,24 @@ import type {
   QueryOptions,
   UseMutationOptions,
   UseQueryOptions,
-} from '@tanstack/react-query';
+} from "@tanstack/react-query";
 
 export interface TQueryKey<TKey, TListQuery = any, TDetailQuery = string> {
   all: readonly [TKey];
-  lists: () => readonly [...TQueryKey<TKey>['all'], 'list'];
+  lists: () => readonly [...TQueryKey<TKey>["all"], "list"];
   list: (
     query?: TListQuery,
   ) =>
-    | readonly [...ReturnType<TQueryKey<TKey>['lists']>]
-    | readonly [...ReturnType<TQueryKey<TKey>['lists']>, { query: TListQuery }];
-  details: () => readonly [...TQueryKey<TKey>['all'], 'detail'];
+    | readonly [...ReturnType<TQueryKey<TKey>["lists"]>]
+    | readonly [...ReturnType<TQueryKey<TKey>["lists"]>, { query: TListQuery }];
+  details: () => readonly [...TQueryKey<TKey>["all"], "detail"];
   detail: (
     id: TDetailQuery,
     query?: TListQuery,
   ) =>
-    | readonly [...ReturnType<TQueryKey<TKey>['details']>, TDetailQuery]
+    | readonly [...ReturnType<TQueryKey<TKey>["details"]>, TDetailQuery]
     | readonly [
-        ...ReturnType<TQueryKey<TKey>['details']>,
+        ...ReturnType<TQueryKey<TKey>["details"]>,
         TDetailQuery,
         { query: TListQuery },
       ];
@@ -36,7 +36,7 @@ export type UseQueryOptionsWrapper<
   TQueryKey extends QueryKey = QueryKey,
 > = Omit<
   UseQueryOptions<TQueryFn, E, TQueryFnResult, TQueryKey>,
-  'queryKey' | 'queryFn'
+  "queryKey" | "queryFn"
 >;
 
 export type UseOptionsWrapper<
@@ -55,7 +55,7 @@ export type UseMutationOptionsWrapper<
   TContext = unknown,
 > = Omit<
   UseMutationOptions<TData, TError, TVariables, TContext>,
-  'mutationFn' | 'mutationKey'
+  "mutationFn" | "mutationKey"
 >;
 
 export const queryKeysFactory = <
@@ -67,12 +67,12 @@ export const queryKeysFactory = <
 ) => {
   const queryKeyFactory: TQueryKey<T, TListQueryType, TDetailQueryType> = {
     all: [globalKey],
-    lists: () => [...queryKeyFactory.all, 'list'],
+    lists: () => [...queryKeyFactory.all, "list"],
     list: (query?: TListQueryType) =>
       query === undefined
         ? queryKeyFactory.lists()
         : [...queryKeyFactory.lists(), { query }],
-    details: () => [...queryKeyFactory.all, 'detail'],
+    details: () => [...queryKeyFactory.all, "detail"],
     detail: (id: TDetailQueryType, query?: TListQueryType) =>
       query === undefined
         ? [...queryKeyFactory.details(), id]

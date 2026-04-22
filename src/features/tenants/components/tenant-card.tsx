@@ -6,16 +6,16 @@ import {
   MoreHorizontal,
   Phone,
   UserCircle,
-} from 'lucide-react';
+} from "lucide-react";
 
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
   CardFooter,
   CardHeader,
-} from '@/components/ui/card';
+} from "@/components/ui/card";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -24,13 +24,13 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import { cn } from '@/lib/cn';
-import type { Tenant } from '@/types/tenant';
-import { formatCurrency } from '@/utils/currency';
-import { getInitials } from '@/utils/string';
+} from "@/components/ui/dropdown-menu";
+import { cn } from "@/lib/cn";
+import type { Tenant } from "@/types/tenant";
+import { formatCurrency } from "@/utils/currency";
+import { getInitials } from "@/utils/string";
 
-import { tenantStatusConfig } from '../constants/tenant';
+import { tenantStatusConfig } from "../domain/tenant-status-config";
 
 interface TenantCardProps {
   tenant: Tenant;
@@ -48,7 +48,7 @@ export const TenantCard = ({ tenant }: TenantCardProps) => {
           <div className="flex items-center gap-3">
             <div
               className={cn(
-                'flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-sm font-bold text-white shadow-sm',
+                "flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-sm font-bold text-white shadow-sm",
                 tenant.avatarColor,
               )}
             >

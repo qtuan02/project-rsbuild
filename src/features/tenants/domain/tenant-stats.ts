@@ -1,4 +1,4 @@
-import type { Tenant } from '@/types/tenant';
+import type { Tenant } from "@/types/tenant";
 
 export interface TenantSummaryStats {
   total: number;
@@ -12,8 +12,8 @@ export const buildTenantSummaryStats = (
 ): TenantSummaryStats => {
   return {
     total: tenants.length,
-    active: tenants.filter((tenant) => tenant.status === 'active').length,
-    pending: tenants.filter((tenant) => tenant.status === 'pending').length,
-    overdue: tenants.filter((tenant) => tenant.status === 'overdue').length,
+    active: tenants.filter((tenant) => tenant.status === "active").length,
+    pending: tenants.filter((tenant) => tenant.status === "pending").length,
+    overdue: tenants.filter((tenant) => tenant.status === "overdue").length,
   };
 };

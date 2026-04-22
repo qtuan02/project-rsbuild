@@ -3,11 +3,12 @@ import {
   ChevronRight,
   ChevronsLeft,
   ChevronsRight,
-} from 'lucide-react';
+} from "lucide-react";
 
-import { Button } from '@/components/ui/button';
+import { clampPage } from "@/components/shared/pagination/pagination-utils";
+import { Button } from "@/components/ui/button";
 
-type PageItem = number | 'ellipsis';
+type PageItem = number | "ellipsis";
 
 interface PaginationNavigationProps {
   currentPage: number;
@@ -24,10 +25,10 @@ interface PaginationNavigationProps {
 }
 
 const DEFAULT_LABELS = {
-  firstPage: 'Trang đầu',
-  previousPage: 'Trang trước',
-  nextPage: 'Trang sau',
-  lastPage: 'Trang cuối',
+  firstPage: "Trang đầu",
+  previousPage: "Trang trước",
+  nextPage: "Trang sau",
+  lastPage: "Trang cuối",
 };
 
 export const PaginationNavigation = ({
@@ -39,15 +40,12 @@ export const PaginationNavigation = ({
   labels = DEFAULT_LABELS,
 }: PaginationNavigationProps) => {
   const resolvedTotalPages = Math.max(1, totalPages);
-  const resolvedCurrentPage = Math.min(
-    Math.max(1, currentPage),
-    resolvedTotalPages,
-  );
+  const resolvedCurrentPage = clampPage(currentPage, totalPages);
   const isFirstPage = resolvedCurrentPage <= 1;
   const isLastPage = resolvedCurrentPage >= resolvedTotalPages;
 
   const navigateTo = (page: number) => {
-    const nextPage = Math.min(Math.max(1, page), resolvedTotalPages);
+    const nextPage = clampPage(page, resolvedTotalPages);
     onPageChange(nextPage);
   };
 
@@ -76,7 +74,7 @@ export const PaginationNavigation = ({
       </Button>
 
       {pageItems?.map((page, index) =>
-        page === 'ellipsis' ? (
+        page === "ellipsis" ? (
           <span
             key={`ellipsis-${index}`}
             className="flex h-7 w-7 items-center justify-center text-xs text-muted-foreground"
@@ -86,7 +84,7 @@ export const PaginationNavigation = ({
         ) : (
           <Button
             key={page}
-            variant={resolvedCurrentPage === page ? 'default' : 'outline'}
+            variant={resolvedCurrentPage === page ? "default" : "outline"}
             size="icon-sm"
             onClick={() => navigateTo(page)}
             className="h-7 w-7 text-xs"

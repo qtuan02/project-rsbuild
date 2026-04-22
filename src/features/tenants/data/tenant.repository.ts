@@ -1,5 +1,5 @@
-import type { Tenant } from '@/types/tenant';
+import type { Tenant } from "@/types/tenant";
 
-import { mockTenants } from './tenant.mock';
+import { mockTenants } from "./tenant.mock";
 
 export const getTenants = (): Tenant[] => mockTenants;

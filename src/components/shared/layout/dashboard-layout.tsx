@@ -1,8 +1,8 @@
-import { Outlet } from 'react-router-dom';
+import { Outlet } from "react-router-dom";
 
-import { AppHeader } from '@/components/shared/layout/app-header';
-import { AppSidebar } from '@/components/shared/layout/app-sidebar';
-import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar';
+import { AppHeader } from "@/components/shared/layout/app-header";
+import { AppSidebar } from "@/components/shared/layout/app-sidebar";
+import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 
 export const DashboardLayout = () => {
   return (

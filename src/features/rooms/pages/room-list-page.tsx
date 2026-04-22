@@ -1,14 +1,23 @@
-import { Download, Plus } from 'lucide-react';
+import { Download, Plus } from "lucide-react";
 
-import { DataTable } from '@/components/shared/table';
-import { Button } from '@/components/ui/button';
+import { DataTable } from "@/components/shared/table";
+import type {
+  DataTableFilterableColumn,
+  DataTableSearchableColumn,
+} from "@/components/shared/table";
+import { Button } from "@/components/ui/button";
+import type { Room } from "@/types/room";
 
-import { columns } from '../components/room-columns';
-import { useRoomList } from '../hooks/use-room-list';
+import { columns } from "../components/room-columns";
+import { useRoomList } from "../hooks/use-room-list";
 
 export const RoomListPage = () => {
   const { data, searchableColumns, filterableColumns, onRowReorder } =
     useRoomList();
+  const tableSearchableColumns: DataTableSearchableColumn<Room>[] =
+    searchableColumns;
+  const tableFilterableColumns: DataTableFilterableColumn<Room>[] =
+    filterableColumns;
 
   return (
     <div className="space-y-6">
@@ -36,8 +45,8 @@ export const RoomListPage = () => {
       <DataTable
         columns={columns}
         data={data}
-        searchableColumns={searchableColumns}
-        filterableColumns={filterableColumns}
+        searchableColumns={tableSearchableColumns}
+        filterableColumns={tableFilterableColumns}
         enableRowDrag
         getRowId={(row) => row.id}
         onRowReorder={onRowReorder}

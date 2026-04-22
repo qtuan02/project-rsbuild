@@ -1,12 +1,12 @@
-export type TenantStatus = 'active' | 'pending' | 'overdue' | 'ended';
+export type TenantStatus = "active" | "pending" | "overdue" | "ended";
 export const TENANT_STATUSES = [
-  'active',
-  'pending',
-  'overdue',
-  'ended',
+  "active",
+  "pending",
+  "overdue",
+  "ended",
 ] as const;
 
-export type TenantGender = 'male' | 'female';
+export type TenantGender = "male" | "female";
 
 export interface Tenant {
   id: string;

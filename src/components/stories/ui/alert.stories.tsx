@@ -1,17 +1,17 @@
-import { AlertCircleIcon } from 'lucide-react';
+import { AlertCircleIcon } from "lucide-react";
 
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from "@storybook/react";
 
 const meta = {
-  title: 'UI/Alert',
+  title: "UI/Alert",
   component: Alert,
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   argTypes: {
     variant: {
-      control: 'select',
-      options: ['default', 'destructive'],
+      control: "select",
+      options: ["default", "destructive"],
     },
   },
 } satisfies Meta<typeof Alert>;

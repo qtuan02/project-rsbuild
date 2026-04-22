@@ -1,108 +1,130 @@
+import {
+  Building2,
+  Home,
+  ReceiptText,
+  ScrollText,
+  Settings,
+  Users,
+} from "lucide-react";
+
+import { DashboardPage } from "@/features/dashboard/pages/dashboard-page";
+import { RoomListPage } from "@/features/rooms/pages/room-list-page";
+import { TenantListPage } from "@/features/tenants/pages/tenant-list-page";
+
+import type { LucideIcon } from "lucide-react";
+import type { ComponentType } from "react";
+
 export const routes = {
-  home: '/',
-  rooms: '/rooms',
-  tenants: '/tenants',
-  contracts: '/contracts',
-  invoices: '/invoices',
-  settings: '/settings',
+  home: "/",
+  rooms: "/rooms",
+  tenants: "/tenants",
+  contracts: "/contracts",
+  invoices: "/invoices",
+  settings: "/settings",
 } as const;
 
-type AppRoutePath = (typeof routes)[keyof typeof routes];
+export type AppRoutePath = (typeof routes)[keyof typeof routes];
 export type AppRouteKey = keyof typeof routes;
+export type AppNavigationGroup = "main" | "management" | "system";
 
-interface RouteMeta {
+interface AppRouteMeta {
   title: string;
   description: string;
 }
 
-export interface AppRouteConfig extends RouteMeta {
+export interface AppRouteManifestItem extends AppRouteMeta {
   key: AppRouteKey;
   path: AppRoutePath;
   routePath: string;
+  icon: LucideIcon;
+  group: AppNavigationGroup;
   implemented: boolean;
   comingSoonTitle?: string;
+  component?: ComponentType;
 }
 
-export const appRouteConfigs: AppRouteConfig[] = [
+export const appRouteManifest: AppRouteManifestItem[] = [
   {
-    key: 'home',
+    key: "home",
     path: routes.home,
-    routePath: '',
-    title: 'Tổng quan',
-    description: 'Tổng quan hoạt động quản lý phòng trọ.',
+    routePath: "",
+    title: "Tổng quan",
+    description: "Tổng quan hoạt động quản lý phòng trọ.",
+    icon: Home,
+    group: "main",
     implemented: true,
+    component: DashboardPage,
   },
   {
-    key: 'rooms',
+    key: "rooms",
     path: routes.rooms,
-    routePath: 'rooms/*',
-    title: 'Phòng trọ',
-    description: 'Quản lý danh sách phòng và trạng thái.',
+    routePath: "rooms/*",
+    title: "Phòng trọ",
+    description: "Quản lý danh sách phòng và trạng thái.",
+    icon: Building2,
+    group: "main",
     implemented: true,
+    component: RoomListPage,
   },
   {
-    key: 'tenants',
+    key: "tenants",
     path: routes.tenants,
-    routePath: 'tenants/*',
-    title: 'Khách thuê',
-    description: 'Theo dõi thông tin khách thuê.',
+    routePath: "tenants/*",
+    title: "Khách thuê",
+    description: "Theo dõi thông tin khách thuê.",
+    icon: Users,
+    group: "main",
     implemented: true,
+    component: TenantListPage,
   },
   {
-    key: 'contracts',
+    key: "contracts",
     path: routes.contracts,
-    routePath: 'contracts/*',
-    title: 'Hợp đồng',
-    description: 'Quản lý hợp đồng cho thuê.',
+    routePath: "contracts/*",
+    title: "Hợp đồng",
+    description: "Quản lý hợp đồng cho thuê.",
+    icon: ScrollText,
+    group: "management",
     implemented: false,
-    comingSoonTitle: 'Quản lý hợp đồng',
+    comingSoonTitle: "Quản lý hợp đồng",
   },
   {
-    key: 'invoices',
+    key: "invoices",
     path: routes.invoices,
-    routePath: 'invoices/*',
-    title: 'Hóa đơn',
-    description: 'Theo dõi thanh toán và công nợ.',
+    routePath: "invoices/*",
+    title: "Hóa đơn",
+    description: "Theo dõi thanh toán và công nợ.",
+    icon: ReceiptText,
+    group: "management",
     implemented: false,
-    comingSoonTitle: 'Quản lý hóa đơn',
+    comingSoonTitle: "Quản lý hóa đơn",
   },
   {
-    key: 'settings',
+    key: "settings",
     path: routes.settings,
-    routePath: 'settings/*',
-    title: 'Cài đặt',
-    description: 'Cấu hình hệ thống.',
+    routePath: "settings/*",
+    title: "Cài đặt",
+    description: "Cấu hình hệ thống.",
+    icon: Settings,
+    group: "system",
     implemented: false,
-    comingSoonTitle: 'Cài đặt hệ thống',
+    comingSoonTitle: "Cài đặt hệ thống",
   },
 ] as const;
 
-export const routeMetadata: Record<AppRoutePath, RouteMeta> = {
-  [routes.home]: {
-    title: 'Tổng quan',
-    description: 'Tổng quan hoạt động quản lý phòng trọ.',
-  },
-  [routes.rooms]: {
-    title: 'Phòng trọ',
-    description: 'Quản lý danh sách phòng và trạng thái.',
-  },
-  [routes.tenants]: {
-    title: 'Khách thuê',
-    description: 'Theo dõi thông tin khách thuê.',
-  },
-  [routes.contracts]: {
-    title: 'Hợp đồng',
-    description: 'Quản lý hợp đồng cho thuê.',
-  },
-  [routes.invoices]: {
-    title: 'Hóa đơn',
-    description: 'Theo dõi thanh toán và công nợ.',
-  },
-  [routes.settings]: {
-    title: 'Cài đặt',
-    description: 'Cấu hình hệ thống.',
-  },
+export const navigationGroupLabels: Record<AppNavigationGroup, string> = {
+  main: "Chính",
+  management: "Quản lý",
+  system: "Hệ thống",
 };
+
+export const navigationSections = (
+  Object.keys(navigationGroupLabels) as AppNavigationGroup[]
+).map((group) => ({
+  key: group,
+  label: navigationGroupLabels[group],
+  items: appRouteManifest.filter((routeItem) => routeItem.group === group),
+}));
 
 const isRouteMatch = (pathname: string, routePath: AppRoutePath): boolean => {
   if (routePath === routes.home) {
@@ -112,18 +134,19 @@ const isRouteMatch = (pathname: string, routePath: AppRoutePath): boolean => {
   return pathname === routePath || pathname.startsWith(`${routePath}/`);
 };
 
-export const resolveRouteMetadata = (pathname: string): RouteMeta => {
-  const matchedConfig = appRouteConfigs
-    .filter((config) => config.path !== routes.home)
+export const resolveRouteMetadata = (pathname: string): AppRouteMeta => {
+  const matchedRoute = appRouteManifest
+    .filter((routeItem) => routeItem.path !== routes.home)
     .sort((first, second) => second.path.length - first.path.length)
-    .find((config) => isRouteMatch(pathname, config.path));
+    .find((routeItem) => isRouteMatch(pathname, routeItem.path));
 
-  if (matchedConfig) {
-    return {
-      title: matchedConfig.title,
-      description: matchedConfig.description,
-    };
-  }
-
-  return routeMetadata[routes.home];
+  return matchedRoute
+    ? {
+        title: matchedRoute.title,
+        description: matchedRoute.description,
+      }
+    : {
+        title: appRouteManifest[0].title,
+        description: appRouteManifest[0].description,
+      };
 };

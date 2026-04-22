@@ -1,6 +1,6 @@
-import axios from 'axios';
+import axios from "axios";
 
-import { env } from '@/config/env';
+import { env } from "@/config/env";
 
 export const httpClient = axios.create({
   baseURL: env.apiBaseUrl,
@@ -15,7 +15,7 @@ httpClient.interceptors.response.use(
     }
 
     const message =
-      error.response?.data && typeof error.response.data === 'object'
+      error.response?.data && typeof error.response.data === "object"
         ? String(
             (error.response.data as { message?: string }).message ??
               error.message,

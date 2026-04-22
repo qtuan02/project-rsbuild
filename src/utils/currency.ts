@@ -1,8 +1,8 @@
-import { appConfig } from '@/config/app';
+import { appConfig } from "@/config/app";
 
 const CURRENCY_FORMATTER = new Intl.NumberFormat(appConfig.locale, {
-  style: 'currency',
-  currency: 'VND',
+  style: "currency",
+  currency: "VND",
   maximumFractionDigits: 0,
 });
 

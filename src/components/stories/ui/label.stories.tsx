@@ -1,12 +1,12 @@
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from "@storybook/react";
 
 const meta = {
-  title: 'UI/Label',
+  title: "UI/Label",
   component: Label,
-  tags: ['autodocs'],
+  tags: ["autodocs"],
 } satisfies Meta<typeof Label>;
 
 export default meta;

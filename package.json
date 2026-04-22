@@ -5,7 +5,7 @@
   "type": "module",
   "engines": {
     "node": ">=22.21.0",
-    "pnpm": ">=10.19.0"
+    "bun": ">=1.2.3"
   },
   "scripts": {
     "build": "rsbuild build",

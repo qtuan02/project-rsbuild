@@ -1,11 +1,11 @@
-import { ThemeProvider } from 'next-themes';
+import { ThemeProvider } from "next-themes";
 
-import { Toaster } from '@/components/ui/sonner';
-import { TooltipProvider } from '@/components/ui/tooltip';
+import { Toaster } from "@/components/ui/sonner";
+import { TooltipProvider } from "@/components/ui/tooltip";
 
-import type { Preview } from '@storybook/react';
+import type { Preview } from "@storybook/react";
 
-import '../src/styles/globals.css';
+import "../src/styles/globals.css";
 
 const preview: Preview = {
   parameters: {
@@ -15,7 +15,7 @@ const preview: Preview = {
         date: /Date$/i,
       },
     },
-    layout: 'centered',
+    layout: "centered",
   },
   decorators: [
     (Story) => (

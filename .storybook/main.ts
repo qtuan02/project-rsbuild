@@ -1,20 +1,20 @@
-import path from 'node:path';
-import { fileURLToPath } from 'node:url';
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 
-import { mergeRsbuildConfig } from '@rsbuild/core';
+import { mergeRsbuildConfig } from "@rsbuild/core";
 
-import type { StorybookConfig } from 'storybook-react-rsbuild';
+import type { StorybookConfig } from "storybook-react-rsbuild";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const config: StorybookConfig = {
-  stories: ['../src/components/stories/**/*.stories.@(ts|tsx)'],
-  addons: ['@storybook/addon-docs'],
+  stories: ["../src/components/stories/**/*.stories.@(ts|tsx)"],
+  addons: ["@storybook/addon-docs"],
   framework: {
-    name: 'storybook-react-rsbuild',
+    name: "storybook-react-rsbuild",
     options: {
       builder: {
-        rsbuildConfigPath: path.resolve(__dirname, '../rsbuild.config.ts'),
+        rsbuildConfigPath: path.resolve(__dirname, "../rsbuild.config.ts"),
       },
     },
   },
@@ -22,7 +22,7 @@ const config: StorybookConfig = {
     return mergeRsbuildConfig(rsbuildConfig, {
       resolve: {
         alias: {
-          '@': path.resolve(__dirname, '../src'),
+          "@": path.resolve(__dirname, "../src"),
         },
       },
     });

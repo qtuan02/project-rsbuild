@@ -1,4 +1,4 @@
-import type { Tenant } from '@/types/tenant';
+import type { Tenant } from "@/types/tenant";
 
 export const getTotalPages = (itemsCount: number, pageSize: number): number => {
   return Math.max(1, Math.ceil(itemsCount / pageSize));

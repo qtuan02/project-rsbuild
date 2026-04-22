@@ -1,12 +1,7 @@
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes } from "react-router-dom";
 
-import { DashboardLayout } from '@/components/shared/layout/dashboard-layout';
-import { appRouteConfigs, type AppRouteKey } from '@/config/routes';
-import { DashboardPage } from '@/features/dashboard/pages/dashboard-page';
-import { RoomListPage } from '@/features/rooms/pages/room-list-page';
-import { TenantListPage } from '@/features/tenants/pages/tenant-list-page';
-
-import type { ReactElement } from 'react';
+import { DashboardLayout } from "@/components/shared/layout/dashboard-layout";
+import { appRouteManifest } from "@/config/routes";
 
 const ComingSoonPlaceholder = ({ title }: { title: string }) => {
   return (
@@ -23,37 +18,26 @@ const ComingSoonPlaceholder = ({ title }: { title: string }) => {
 };
 
 export const AppRoutes = () => {
-  const implementedRouteElements: Record<AppRouteKey, ReactElement | null> = {
-    home: <DashboardPage />,
-    rooms: <RoomListPage />,
-    tenants: <TenantListPage />,
-    contracts: null,
-    invoices: null,
-    settings: null,
-  };
-
   return (
     <Routes>
       <Route element={<DashboardLayout />}>
-        {appRouteConfigs.map((routeConfig) => {
-          const implementedElement = implementedRouteElements[routeConfig.key];
+        {appRouteManifest.map((routeItem) => {
+          const RouteComponent = routeItem.component;
           const element =
-            routeConfig.implemented && implementedElement ? (
-              implementedElement
+            routeItem.implemented && RouteComponent ? (
+              <RouteComponent />
             ) : (
-              <ComingSoonPlaceholder
-                title={routeConfig.comingSoonTitle ?? ''}
-              />
+              <ComingSoonPlaceholder title={routeItem.comingSoonTitle ?? ""} />
             );
 
-          if (routeConfig.key === 'home') {
-            return <Route key={routeConfig.key} index element={element} />;
+          if (routeItem.key === "home") {
+            return <Route key={routeItem.key} index element={element} />;
           }
 
           return (
             <Route
-              key={routeConfig.key}
-              path={routeConfig.routePath}
+              key={routeItem.key}
+              path={routeItem.routePath}
               element={element}
             />
           );
