@@ -1,7 +1,17 @@
-import { Route, Routes } from "react-router-dom";
+import {
+  Navigate,
+  Route,
+  Routes,
+  useNavigate,
+  useParams,
+} from "react-router-dom";
 
 import { DashboardLayout } from "@/components/shared/layout/dashboard-layout";
-import { appRouteManifest } from "@/config/routes";
+import { appRouteManifest, routes } from "@/config/routes";
+import { ContractDetailPage } from "@/features/contracts/pages/contract-detail-page";
+import { InvoiceDetailPage } from "@/features/invoices/pages/invoice-detail-page";
+import { RoomDetailPage } from "@/features/rooms/pages/room-detail-page";
+import { TenantDetailPage } from "@/features/tenants/pages/tenant-detail-page";
 
 const ComingSoonPlaceholder = ({ title }: { title: string }) => {
   return (
@@ -17,10 +27,75 @@ const ComingSoonPlaceholder = ({ title }: { title: string }) => {
   );
 };
 
+const ContractDetailRoute = () => {
+  const { contractId } = useParams<{ contractId: string }>();
+  const navigate = useNavigate();
+
+  if (!contractId) {
+    return <Navigate to={routes.contracts} replace />;
+  }
+
+  return (
+    <ContractDetailPage
+      contractId={contractId}
+      onBack={() => navigate(routes.contracts)}
+    />
+  );
+};
+
+const InvoiceDetailRoute = () => {
+  const { invoiceId } = useParams<{ invoiceId: string }>();
+  const navigate = useNavigate();
+
+  if (!invoiceId) {
+    return <Navigate to={routes.invoices} replace />;
+  }
+
+  return (
+    <InvoiceDetailPage
+      invoiceId={invoiceId}
+      onBack={() => navigate(routes.invoices)}
+    />
+  );
+};
+
+const RoomDetailRoute = () => {
+  const { roomId } = useParams<{ roomId: string }>();
+  const navigate = useNavigate();
+
+  if (!roomId) {
+    return <Navigate to={routes.rooms} replace />;
+  }
+
+  return (
+    <RoomDetailPage roomId={roomId} onBack={() => navigate(routes.rooms)} />
+  );
+};
+
+const TenantDetailRoute = () => {
+  const { tenantId } = useParams<{ tenantId: string }>();
+  const navigate = useNavigate();
+
+  if (!tenantId) {
+    return <Navigate to={routes.tenants} replace />;
+  }
+
+  return (
+    <TenantDetailPage
+      tenantId={tenantId}
+      onBack={() => navigate(routes.tenants)}
+    />
+  );
+};
+
 export const AppRoutes = () => {
   return (
     <Routes>
       <Route element={<DashboardLayout />}>
+        <Route path="rooms/:roomId" element={<RoomDetailRoute />} />
+        <Route path="tenants/:tenantId" element={<TenantDetailRoute />} />
+        <Route path="contracts/:contractId" element={<ContractDetailRoute />} />
+        <Route path="invoices/:invoiceId" element={<InvoiceDetailRoute />} />
         {appRouteManifest.map((routeItem) => {
           const RouteComponent = routeItem.component;
           const element =

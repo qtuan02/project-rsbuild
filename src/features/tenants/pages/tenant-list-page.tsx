@@ -9,6 +9,7 @@ import {
 } from "lucide-react";
 
 import { Pagination } from "@/components/shared/pagination";
+import { EmptyPanel } from "@/components/shared/panels";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -145,25 +146,12 @@ export const TenantListPage = () => {
           ))}
         </div>
       ) : (
-        <div className="flex flex-col items-center justify-center rounded-xl border border-dashed bg-card/50 p-16 text-center">
-          <div className="flex h-14 w-14 items-center justify-center rounded-full bg-muted">
-            <Users className="h-6 w-6 text-muted-foreground" />
-          </div>
-          <h3 className="mt-4 text-base font-semibold">
-            Không tìm thấy khách thuê
-          </h3>
-          <p className="mt-1.5 max-w-sm text-sm text-muted-foreground">
-            Thử thay đổi bộ lọc hoặc từ khóa tìm kiếm để xem thêm kết quả.
-          </p>
-          <Button
-            variant="outline"
-            size="sm"
-            className="mt-4"
-            onClick={clearFilters}
-          >
-            Xóa bộ lọc
-          </Button>
-        </div>
+        <EmptyPanel
+          icon={Users}
+          title="Không tìm thấy khách thuê"
+          description="Thử thay đổi bộ lọc hoặc từ khóa tìm kiếm để xem thêm kết quả."
+          action={{ label: "Xóa bộ lọc", onClick: clearFilters }}
+        />
       )}
 
       {filteredCount > 0 && (
