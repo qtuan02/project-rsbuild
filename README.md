@@ -60,6 +60,7 @@ bun run with-env -- bunx some-cli
 
 - `bun run dev`: chạy dev server
 - `bun run build`: build production
+- `bun run build:all`: build app + Storybook static (`dist/storybook`)
 - `bun run preview`: preview bản build
 - `bun run storybook`: chạy Storybook ở `:6006`
 - `bun run build-storybook`: build static Storybook
@@ -157,9 +158,14 @@ Project đã có `vercel.json` cho:
 Thiết lập Vercel:
 
 - Root Directory: `.`
-- Build Command: `npm run build`
+- Build Command: `bun run build:all`
 - Output Directory: `dist`
 - Env bắt buộc: `PUBLIC_API_BASE_URL`
+
+Sau deploy có thể truy cập:
+
+- App: `/`
+- Storybook: `/storybook` (hoặc `/storybook/`)
 
 Chi tiết CI/CD checklist: [`.github/CICD_SETUP.md`](.github/CICD_SETUP.md)
 

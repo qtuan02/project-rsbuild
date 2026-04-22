@@ -1,11 +1,15 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "installCommand": "bun install",
-  "buildCommand": "bun run build",
+  "buildCommand": "bun run build:all",
   "outputDirectory": "dist",
   "routes": [
     {
       "handle": "filesystem"
+    },
+    {
+      "src": "/storybook",
+      "dest": "/storybook/index.html"
     },
     {
       "src": "/.*",
