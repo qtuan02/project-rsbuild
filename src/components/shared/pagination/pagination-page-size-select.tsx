@@ -4,7 +4,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select';
+} from "@/components/ui/select";
 
 interface PaginationPageSizeSelectProps {
   pageSize: number;
@@ -17,7 +17,7 @@ export const PaginationPageSizeSelect = ({
   pageSize,
   pageSizeOptions,
   onPageSizeChange,
-  triggerClassName = 'w-[62px]',
+  triggerClassName = "w-[62px]",
 }: PaginationPageSizeSelectProps) => {
   return (
     <Select

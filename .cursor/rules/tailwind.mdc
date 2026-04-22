@@ -1,78 +1,33 @@
 ---
-description: Tailwind CSS and UI component best practices for modern web applications
-globs: **/*.css, **/*.tsx, **/*.jsx, tailwind.config.js, tailwind.config.ts
+description: Tailwind CSS v4 and shadcn styling conventions for this project
+globs: src/**/*.css, src/**/*.tsx, src/**/*.jsx, postcss.config.mjs
 ---
 
-# Tailwind CSS Best Practices
+# Tailwind CSS Rules
 
-## Project Setup
-- Use proper Tailwind configuration
-- Configure theme extension properly
-- Set up proper purge configuration
-- Use proper plugin integration
-- Configure custom spacing and breakpoints
-- Set up proper color palette
+## Tailwind v4 Setup
+- Use Tailwind v4 CSS-first conventions already defined in `src/styles/globals.css`.
+- Keep design tokens and theme variables centralized in `globals.css`.
+- Keep PostCSS integration consistent with `@tailwindcss/postcss`.
 
-## Component Styling
-- Use utility classes over custom CSS
-- Group related utilities with @apply when needed
-- Use proper responsive design utilities
-- Implement dark mode properly
-- Use proper state variants
-- Keep component styles consistent
+## Styling Strategy
+- Prefer utility classes in JSX over new ad-hoc CSS files.
+- Use `@apply` only for repeated style groups that improve readability.
+- Keep custom CSS minimal and colocated with global token/theme concerns.
+- Use `cn`/merge utilities for conditional class composition.
 
-## Layout
-- Use Flexbox and Grid utilities effectively
-- Implement proper spacing system
-- Use container queries when needed
-- Implement proper responsive breakpoints
-- Use proper padding and margin utilities
-- Implement proper alignment utilities
+## Design System And Components
+- Reuse `components/ui` (shadcn) primitives first.
+- Add shared, app-opinionated variants in `components/shared` when reuse spans features.
+- Keep feature-specific visual tweaks inside feature components.
+- Keep variant naming consistent across similar components.
 
-## Typography
-- Use proper font size utilities
-- Implement proper line height
-- Use proper font weight utilities
-- Configure custom fonts properly
-- Use proper text alignment
-- Implement proper text decoration
+## Theming And Accessibility
+- Use semantic tokens (`--background`, `--foreground`, `--primary`, etc.) instead of raw colors in components.
+- Maintain dark-mode compatibility via the existing `.dark` token strategy.
+- Ensure contrast and focus-visible states for interactive controls.
 
-## Colors
-- Use semantic color naming
-- Implement proper color contrast
-- Use opacity utilities effectively
-- Configure custom colors properly
-- Use proper gradient utilities
-- Implement proper hover states
-
-## Components
-- Use shadcn/ui components when available
-- Extend components properly
-- Keep component variants consistent
-- Implement proper animations
-- Use proper transition utilities
-- Keep accessibility in mind
-
-## Responsive Design
-- Use mobile-first approach
-- Implement proper breakpoints
-- Use container queries effectively
-- Handle different screen sizes properly
-- Implement proper responsive typography
-- Use proper responsive spacing
-
-## Performance
-- Use proper purge configuration
-- Minimize custom CSS
-- Use proper caching strategies
-- Implement proper code splitting
-- Optimize for production
-- Monitor bundle size
-
-## Best Practices
-- Follow naming conventions
-- Keep styles organized
-- Use proper documentation
-- Implement proper testing
-- Follow accessibility guidelines
-- Use proper version control 
+## Responsive And Performance
+- Follow mobile-first utility usage.
+- Prefer layout primitives (`flex`, `grid`, gap utilities) over custom layout CSS.
+- Avoid oversized class duplication; extract reusable patterns only when repeated.

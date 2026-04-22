@@ -1,14 +1,14 @@
-import { Check, PlusCircle } from 'lucide-react';
+import { Check, PlusCircle } from "lucide-react";
 
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from '@/components/ui/popover';
-import { Separator } from '@/components/ui/separator';
-import { cn } from '@/lib/cn';
+} from "@/components/ui/popover";
+import { Separator } from "@/components/ui/separator";
+import { cn } from "@/lib/cn";
 
 export interface FacetedFilterColumn {
   getFacetedUniqueValues: () => Map<string, number>;
@@ -34,7 +34,7 @@ const toSelectedValues = (value: unknown): string[] =>
   Array.isArray(value) ? value.filter((item): item is string => !!item) : [];
 const DEFAULT_LABELS = {
   selectedCount: (count: number) => `${count} đã chọn`,
-  clearFilter: 'Xóa bộ lọc',
+  clearFilter: "Xóa bộ lọc",
 };
 
 export function DataTableFacetedFilter<TValue extends string>({
@@ -111,16 +111,16 @@ export function DataTableFacetedFilter<TValue extends string>({
                     );
                   }}
                   className={cn(
-                    'flex w-full items-center gap-2 rounded-md px-2 py-1.5 text-sm transition-colors hover:bg-accent',
-                    isSelected && 'bg-accent',
+                    "flex w-full items-center gap-2 rounded-md px-2 py-1.5 text-sm transition-colors hover:bg-accent",
+                    isSelected && "bg-accent",
                   )}
                 >
                   <div
                     className={cn(
-                      'flex h-4 w-4 shrink-0 items-center justify-center rounded-sm border border-primary',
+                      "flex h-4 w-4 shrink-0 items-center justify-center rounded-sm border border-primary",
                       isSelected
-                        ? 'bg-primary text-primary-foreground'
-                        : 'opacity-50 [&_svg]:invisible',
+                        ? "bg-primary text-primary-foreground"
+                        : "opacity-50 [&_svg]:invisible",
                     )}
                   >
                     <Check className="h-3 w-3" />

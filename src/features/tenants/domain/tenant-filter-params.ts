@@ -1,4 +1,4 @@
-import { isTenantStatus, type TenantStatus } from '@/types/tenant';
+import { isTenantStatus, type TenantStatus } from "@/types/tenant";
 
 export type FloorFilter = `${number}`;
 
@@ -13,7 +13,7 @@ export const toTenantStatuses = (
 
   return value.filter(
     (item): item is TenantStatus =>
-      typeof item === 'string' && isTenantStatus(item),
+      typeof item === "string" && isTenantStatus(item),
   );
 };
 
@@ -24,6 +24,6 @@ export const toFloorFilters = (value: unknown): FloorFilter[] | undefined => {
 
   return value.filter(
     (item): item is FloorFilter =>
-      typeof item === 'string' && FLOOR_FILTER_REGEX.test(item),
+      typeof item === "string" && FLOOR_FILTER_REGEX.test(item),
   );
 };

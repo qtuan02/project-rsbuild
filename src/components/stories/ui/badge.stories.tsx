@@ -1,21 +1,21 @@
-import { Badge } from '@/components/ui/badge';
+import { Badge } from "@/components/ui/badge";
 
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from "@storybook/react";
 
 const meta = {
-  title: 'UI/Badge',
+  title: "UI/Badge",
   component: Badge,
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   argTypes: {
     variant: {
-      control: 'select',
+      control: "select",
       options: [
-        'default',
-        'secondary',
-        'destructive',
-        'outline',
-        'ghost',
-        'link',
+        "default",
+        "secondary",
+        "destructive",
+        "outline",
+        "ghost",
+        "link",
       ],
     },
   },
@@ -27,14 +27,14 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    children: 'Badge',
-    variant: 'default',
+    children: "Badge",
+    variant: "default",
   },
 };
 
 export const Destructive: Story = {
   args: {
-    children: 'Qua han',
-    variant: 'destructive',
+    children: "Qua han",
+    variant: "destructive",
   },
 };

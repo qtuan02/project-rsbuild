@@ -1,8 +1,8 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useState } from "react";
 
 type SetValueAction<T> = T | ((previousValue: T) => T);
 
-const isBrowser = () => typeof window !== 'undefined';
+const isBrowser = () => typeof window !== "undefined";
 
 const resolveInitialValue = <T>(initialValue: T | (() => T)) =>
   initialValue instanceof Function ? initialValue() : initialValue;

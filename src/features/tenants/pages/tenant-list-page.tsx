@@ -6,46 +6,46 @@ import {
   Plus,
   UserCheck,
   Users,
-} from 'lucide-react';
+} from "lucide-react";
 
-import { Pagination } from '@/components/shared/pagination';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
-import { cn } from '@/lib/cn';
+import { Pagination } from "@/components/shared/pagination";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { cn } from "@/lib/cn";
 
-import { TenantCard } from '../components/tenant-card';
-import { TenantFilters } from '../components/tenant-filters';
-import { useTenantList } from '../hooks/use-tenant-list';
+import { TenantCard } from "../components/tenant-card";
+import { TenantFilters } from "../components/tenant-filters";
+import { useTenantList } from "../hooks/use-tenant-list";
 
 const summaryStatConfigs = [
   {
-    key: 'total',
-    label: 'Tổng khách',
+    key: "total",
+    label: "Tổng khách",
     icon: Users,
-    color: 'text-primary',
-    bg: 'bg-primary/10',
+    color: "text-primary",
+    bg: "bg-primary/10",
   },
   {
-    key: 'active',
-    label: 'Đang thuê',
+    key: "active",
+    label: "Đang thuê",
     icon: UserCheck,
-    color: 'text-emerald-600 dark:text-emerald-400',
-    bg: 'bg-emerald-100 dark:bg-emerald-900/30',
+    color: "text-emerald-600 dark:text-emerald-400",
+    bg: "bg-emerald-100 dark:bg-emerald-900/30",
   },
   {
-    key: 'pending',
-    label: 'Chờ vào',
+    key: "pending",
+    label: "Chờ vào",
     icon: Clock,
-    color: 'text-blue-600 dark:text-blue-400',
-    bg: 'bg-blue-100 dark:bg-blue-900/30',
+    color: "text-blue-600 dark:text-blue-400",
+    bg: "bg-blue-100 dark:bg-blue-900/30",
   },
   {
-    key: 'overdue',
-    label: 'Nợ cước',
+    key: "overdue",
+    label: "Nợ cước",
     icon: CheckCircle2,
-    color: 'text-red-600 dark:text-red-400',
-    bg: 'bg-red-100 dark:bg-red-900/30',
+    color: "text-red-600 dark:text-red-400",
+    bg: "bg-red-100 dark:bg-red-900/30",
   },
 ] as const;
 
@@ -62,8 +62,8 @@ export const TenantListPage = () => {
     paginatedTenants,
     summaryStats,
     onSearchChange,
-    onStatusFilterChange,
-    onFloorFilterChange,
+    onStatusFilterValueChange,
+    onFloorFilterValueChange,
     onPageChange,
     onPageSizeChange,
     clearFilters,
@@ -98,11 +98,11 @@ export const TenantListPage = () => {
             <CardContent className="flex items-center gap-3">
               <div
                 className={cn(
-                  'flex h-9 w-9 shrink-0 items-center justify-center rounded-lg',
+                  "flex h-9 w-9 shrink-0 items-center justify-center rounded-lg",
                   config.bg,
                 )}
               >
-                <config.icon className={cn('h-4 w-4', config.color)} />
+                <config.icon className={cn("h-4 w-4", config.color)} />
               </div>
               <div>
                 <p className="text-xs text-muted-foreground">{config.label}</p>
@@ -119,9 +119,9 @@ export const TenantListPage = () => {
         search={search}
         onSearchChange={onSearchChange}
         statusFilter={statusFilter}
-        onStatusFilterChange={onStatusFilterChange}
+        onStatusFilterValueChange={onStatusFilterValueChange}
         floorFilter={floorFilter}
-        onFloorFilterChange={onFloorFilterChange}
+        onFloorFilterValueChange={onFloorFilterValueChange}
         activeFilterCount={activeFilterCount}
         onClearFilters={clearFilters}
       />

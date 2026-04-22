@@ -1,6 +1,6 @@
-export type RoomStatus = 'available' | 'occupied' | 'maintenance' | 'reserved';
+export type RoomStatus = "available" | "occupied" | "maintenance" | "reserved";
 
-export type RoomType = 'single' | 'double' | 'studio' | 'suite';
+export type RoomType = "single" | "double" | "studio" | "suite";
 
 export interface Room {
   id: string;

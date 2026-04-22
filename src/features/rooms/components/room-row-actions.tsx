@@ -1,6 +1,6 @@
-import { Copy, Edit, Eye, MoreHorizontal, Trash2 } from 'lucide-react';
+import { Copy, Edit, Eye, MoreHorizontal, Trash2 } from "lucide-react";
 
-import { Button } from '@/components/ui/button';
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -9,8 +9,8 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import type { Room } from '@/types/room';
+} from "@/components/ui/dropdown-menu";
+import type { Room } from "@/types/room";
 
 interface RoomRowActionsProps {
   room: Room;

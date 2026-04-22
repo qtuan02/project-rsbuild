@@ -1,15 +1,15 @@
 export const toTitleCase = (value: string) => {
   return value
     .toLowerCase()
-    .split(' ')
+    .split(" ")
     .filter(Boolean)
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(' ');
+    .join(" ");
 };
 
 export const getInitials = (value: string): string => {
   const parts = value
-    .split(' ')
+    .split(" ")
     .map((part) => part.trim())
     .filter(Boolean);
 

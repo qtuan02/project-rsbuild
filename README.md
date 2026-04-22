@@ -89,27 +89,51 @@ bun run lint:fix
 
 ## Architecture overview
 
-App entry:
+### Entry points
 
-- [`src/main.tsx`](src/main.tsx): mount React app
-- [`src/app.tsx`](src/app.tsx): providers (theme, query client, router, toaster)
-- [`src/app-routes.tsx`](src/app-routes.tsx): route tree
-- [`src/config/routes.ts`](src/config/routes.ts): route config + metadata source-of-truth
+- [`src/main.tsx`](src/main.tsx): bootstrap và mount React app.
+- [`src/app.tsx`](src/app.tsx): tập trung providers (theme, query client, router, toaster).
+- [`src/app-routes.tsx`](src/app-routes.tsx): route tree theo module.
+- [`src/config/routes.ts`](src/config/routes.ts): route config và metadata source-of-truth.
 
-Feature modules hiện theo hướng clean layers:
+### Source tree (thực tế)
 
-- `features/<feature>/data`: mock/repository
-- `features/<feature>/domain`: pure logic (filter, pagination, stats, parser)
-- `features/<feature>/hooks`: state + view-model
-- `features/<feature>/components`: presentational components
-- `features/<feature>/pages`: page composition
+```text
+src/
+  app.tsx
+  app-routes.tsx
+  main.tsx
+  config/
+    app.ts
+    env.ts
+    routes.ts
+  features/
+    <feature>/
+      pages/        # screen/page composition (route-level)
+      components/   # presentational components theo feature
+      hooks/        # view-model, state orchestration, query/form integration
+      domain/       # pure business logic, parser/filter/pagination/stats
+      data/         # repository, query functions, API/mock mapping
+      constants/    # constants nội bộ feature (optional)
+  components/
+    ui/             # shadcn/radix primitives
+    shared/         # reusable app-level widgets (layout/table/pagination/...)
+    stories/        # Storybook stories (không dùng cho runtime app)
+  lib/              # framework-agnostic utilities (cn, query keys, query client)
+  types/            # shared domain contracts/types
+  styles/
+    globals.css
+```
 
-Shared reusable:
+### Layering conventions
 
-- `components/shared/table`: generic data-table stack
-- `components/shared/pagination`: pagination primitives
-- `types`: domain types dùng chung
-- `lib`: framework-agnostic utilities (`cn`, query key helpers, query client)
+- Feature có thể không cần đủ mọi layer; chỉ tạo thư mục khi có nhu cầu thật.
+- Ưu tiên luồng phụ thuộc: `pages -> hooks -> domain/data`.
+- `domain` giữ logic thuần, không phụ thuộc UI hoặc network.
+- `data` xử lý API/repository và mapping, không render UI.
+- `components` ưu tiên presentational; hạn chế side effects và không gọi API trực tiếp.
+- Tái sử dụng UI primitives từ `components/ui` trước khi tạo primitive mới.
+- Code tái sử dụng liên-feature nên đưa về `components/shared`, `lib`, hoặc `types`.
 
 ## Deployment (Vercel)
 

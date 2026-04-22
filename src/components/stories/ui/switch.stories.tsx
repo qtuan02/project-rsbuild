@@ -1,12 +1,12 @@
-import { Label } from '@/components/ui/label';
-import { Switch } from '@/components/ui/switch';
+import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
 
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from "@storybook/react";
 
 const meta = {
-  title: 'UI/Switch',
+  title: "UI/Switch",
   component: Switch,
-  tags: ['autodocs'],
+  tags: ["autodocs"],
 } satisfies Meta<typeof Switch>;
 
 export default meta;

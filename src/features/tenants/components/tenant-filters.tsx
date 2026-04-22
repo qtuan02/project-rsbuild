@@ -1,27 +1,23 @@
-import { Search, X } from 'lucide-react';
+import { Search, X } from "lucide-react";
 
 import {
   DataTableFacetedFilter,
   type FacetedFilterColumn,
-} from '@/components/shared/table';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import type { TenantStatus } from '@/types/tenant';
+} from "@/components/shared/table";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import type { TenantStatus } from "@/types/tenant";
 
-import { tenantStatusConfig } from '../constants/tenant';
-import {
-  type FloorFilter,
-  toFloorFilters,
-  toTenantStatuses,
-} from '../domain/tenant-filter-params';
+import { type FloorFilter } from "../domain/tenant-filter-params";
+import { tenantStatusConfig } from "../domain/tenant-status-config";
 
 interface TenantFiltersProps {
   search: string;
   onSearchChange: (value: string) => void;
   statusFilter: TenantStatus[];
-  onStatusFilterChange: (value: TenantStatus[] | undefined) => void;
+  onStatusFilterValueChange: (value: unknown) => void;
   floorFilter: FloorFilter[];
-  onFloorFilterChange: (value: FloorFilter[] | undefined) => void;
+  onFloorFilterValueChange: (value: unknown) => void;
   activeFilterCount: number;
   onClearFilters: () => void;
 }
@@ -30,23 +26,21 @@ export const TenantFilters = ({
   search,
   onSearchChange,
   statusFilter,
-  onStatusFilterChange,
+  onStatusFilterValueChange,
   floorFilter,
-  onFloorFilterChange,
+  onFloorFilterValueChange,
   activeFilterCount,
   onClearFilters,
 }: TenantFiltersProps) => {
   const statusColumn: FacetedFilterColumn = {
     getFilterValue: () => (statusFilter.length > 0 ? statusFilter : undefined),
-    setFilterValue: (value: unknown) =>
-      onStatusFilterChange(toTenantStatuses(value)),
+    setFilterValue: onStatusFilterValueChange,
     getFacetedUniqueValues: () => new Map(),
   };
 
   const floorColumn: FacetedFilterColumn = {
     getFilterValue: () => (floorFilter.length > 0 ? floorFilter : undefined),
-    setFilterValue: (value: unknown) =>
-      onFloorFilterChange(toFloorFilters(value)),
+    setFilterValue: onFloorFilterValueChange,
     getFacetedUniqueValues: () => new Map(),
   };
 
@@ -64,7 +58,7 @@ export const TenantFilters = ({
           {search && (
             <button
               type="button"
-              onClick={() => onSearchChange('')}
+              onClick={() => onSearchChange("")}
               className="absolute right-2 top-1/2 -translate-y-1/2 rounded-sm p-0.5 text-muted-foreground/60 transition-colors hover:text-foreground"
             >
               <X className="h-3 w-3" />

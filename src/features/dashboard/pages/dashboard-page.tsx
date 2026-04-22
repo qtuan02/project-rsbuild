@@ -6,9 +6,9 @@ import {
   TrendingUp,
   UserCheck,
   Users,
-} from 'lucide-react';
+} from "lucide-react";
 
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 interface StatCardProps {
   title: string;
@@ -41,7 +41,7 @@ const StatCard = ({
           <>
             <span
               className={`inline-flex items-center gap-0.5 text-xs font-semibold ${
-                trend.positive ? 'text-emerald-600' : 'text-red-500'
+                trend.positive ? "text-emerald-600" : "text-red-500"
               }`}
             >
               {trend.positive ? (
@@ -63,60 +63,60 @@ const StatCard = ({
 
 const stats: StatCardProps[] = [
   {
-    title: 'Tổng số phòng',
-    value: '48',
-    description: 'so với tháng trước',
+    title: "Tổng số phòng",
+    value: "48",
+    description: "so với tháng trước",
     icon: Building2,
-    trend: { value: '+2', positive: true },
+    trend: { value: "+2", positive: true },
   },
   {
-    title: 'Đã cho thuê',
-    value: '42',
-    description: 'tỷ lệ lấp đầy 87.5%',
+    title: "Đã cho thuê",
+    value: "42",
+    description: "tỷ lệ lấp đầy 87.5%",
     icon: UserCheck,
-    trend: { value: '+5.2%', positive: true },
+    trend: { value: "+5.2%", positive: true },
   },
   {
-    title: 'Khách thuê',
-    value: '67',
-    description: 'so với tháng trước',
+    title: "Khách thuê",
+    value: "67",
+    description: "so với tháng trước",
     icon: Users,
-    trend: { value: '+3', positive: true },
+    trend: { value: "+3", positive: true },
   },
   {
-    title: 'Doanh thu tháng',
-    value: '126.5tr',
-    description: 'so với tháng trước',
+    title: "Doanh thu tháng",
+    value: "126.5tr",
+    description: "so với tháng trước",
     icon: DollarSign,
-    trend: { value: '+12.3%', positive: true },
+    trend: { value: "+12.3%", positive: true },
   },
 ];
 
 const recentActivities = [
   {
-    action: 'Khách thuê mới',
-    detail: 'Trần Văn B đã ký hợp đồng phòng 201',
-    time: '2 giờ trước',
+    action: "Khách thuê mới",
+    detail: "Trần Văn B đã ký hợp đồng phòng 201",
+    time: "2 giờ trước",
   },
   {
-    action: 'Thanh toán',
-    detail: 'Phòng 105 đã thanh toán hóa đơn tháng 4',
-    time: '3 giờ trước',
+    action: "Thanh toán",
+    detail: "Phòng 105 đã thanh toán hóa đơn tháng 4",
+    time: "3 giờ trước",
   },
   {
-    action: 'Hợp đồng hết hạn',
-    detail: 'Phòng 302 - Lê Thị C cần gia hạn',
-    time: '5 giờ trước',
+    action: "Hợp đồng hết hạn",
+    detail: "Phòng 302 - Lê Thị C cần gia hạn",
+    time: "5 giờ trước",
   },
   {
-    action: 'Bảo trì',
-    detail: 'Phòng 108 yêu cầu sửa điều hòa',
-    time: '1 ngày trước',
+    action: "Bảo trì",
+    detail: "Phòng 108 yêu cầu sửa điều hòa",
+    time: "1 ngày trước",
   },
   {
-    action: 'Phòng trống',
-    detail: 'Phòng 405 đã trả phòng, sẵn sàng cho thuê',
-    time: '1 ngày trước',
+    action: "Phòng trống",
+    detail: "Phòng 405 đã trả phòng, sẵn sàng cho thuê",
+    time: "1 ngày trước",
   },
 ];
 

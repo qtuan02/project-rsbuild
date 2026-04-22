@@ -1,6 +1,6 @@
-import { ChevronsUpDown, LogOut, Settings, Sparkles } from 'lucide-react';
+import { ChevronsUpDown, LogOut, Settings, Sparkles } from "lucide-react";
 
-import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -8,13 +8,13 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
+} from "@/components/ui/dropdown-menu";
 import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
   useSidebar,
-} from '@/components/ui/sidebar';
+} from "@/components/ui/sidebar";
 
 interface NavUserProps {
   name: string;
@@ -25,10 +25,10 @@ export const NavUser = ({ name, email }: NavUserProps) => {
   const { isMobile } = useSidebar();
 
   const initials = name
-    .split(' ')
+    .split(" ")
     .map((word) => word[0])
     .slice(-2)
-    .join('')
+    .join("")
     .toUpperCase();
 
   return (
@@ -56,7 +56,7 @@ export const NavUser = ({ name, email }: NavUserProps) => {
           </DropdownMenuTrigger>
           <DropdownMenuContent
             className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg"
-            side={isMobile ? 'bottom' : 'right'}
+            side={isMobile ? "bottom" : "right"}
             align="end"
             sideOffset={4}
           >

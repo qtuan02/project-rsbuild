@@ -1,13 +1,13 @@
-import { QueryClientProvider } from '@tanstack/react-query';
-import { ThemeProvider } from 'next-themes';
-import { useState } from 'react';
-import { BrowserRouter } from 'react-router-dom';
+import { QueryClientProvider } from "@tanstack/react-query";
+import { ThemeProvider } from "next-themes";
+import { useState } from "react";
+import { BrowserRouter } from "react-router-dom";
 
-import { AppRoutes } from '@/app-routes';
-import { Toaster } from '@/components/ui/sonner';
-import { TooltipProvider } from '@/components/ui/tooltip';
-import { createQueryClient } from '@/lib/query-client';
-import { QueryDevtools } from '@/lib/query-devtools';
+import { AppRoutes } from "@/app-routes";
+import { Toaster } from "@/components/ui/sonner";
+import { TooltipProvider } from "@/components/ui/tooltip";
+import { createQueryClient } from "@/lib/query-client";
+import { QueryDevtools } from "@/lib/query-devtools";
 
 export const App = () => {
   const [queryClient] = useState(createQueryClient);

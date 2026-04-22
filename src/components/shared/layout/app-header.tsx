@@ -1,18 +1,18 @@
-import { Bell, PanelLeft, Search } from 'lucide-react';
-import { useLocation } from 'react-router-dom';
+import { Bell, PanelLeft, Search } from "lucide-react";
+import { useLocation } from "react-router-dom";
 
-import { Avatar, AvatarFallback } from '@/components/ui/avatar';
-import { Button } from '@/components/ui/button';
-import { Separator } from '@/components/ui/separator';
-import { useSidebar } from '@/components/ui/sidebar';
-import { resolveRouteMetadata } from '@/config/routes';
-import { cn } from '@/lib/cn';
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
+import { useSidebar } from "@/components/ui/sidebar";
+import { resolveRouteMetadata } from "@/config/routes";
+import { cn } from "@/lib/cn";
 
 export const AppHeader = () => {
   const location = useLocation();
   const metadata = resolveRouteMetadata(location.pathname);
   const { state, toggleSidebar } = useSidebar();
-  const isCollapsed = state === 'collapsed';
+  const isCollapsed = state === "collapsed";
 
   return (
     <header className="sticky top-0 z-10 flex h-15 items-center gap-3 border-b border-border bg-background/80 px-4 backdrop-blur-md lg:h-[60px] lg:px-6">
@@ -25,8 +25,8 @@ export const AppHeader = () => {
         >
           <PanelLeft
             className={cn(
-              'h-5 w-5 transition-transform duration-300',
-              isCollapsed && 'rotate-180',
+              "h-5 w-5 transition-transform duration-300",
+              isCollapsed && "rotate-180",
             )}
           />
           <span className="sr-only">Toggle Sidebar</span>

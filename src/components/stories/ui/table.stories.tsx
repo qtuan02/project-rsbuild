@@ -6,14 +6,14 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/table';
+} from "@/components/ui/table";
 
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from "@storybook/react";
 
 const meta = {
-  title: 'UI/Table',
+  title: "UI/Table",
   component: Table,
-  tags: ['autodocs'],
+  tags: ["autodocs"],
 } satisfies Meta<typeof Table>;
 
 export default meta;

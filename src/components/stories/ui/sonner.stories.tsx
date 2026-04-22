@@ -1,12 +1,12 @@
-import { toast } from 'sonner';
+import { toast } from "sonner";
 
-import { Button } from '@/components/ui/button';
+import { Button } from "@/components/ui/button";
 
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from "@storybook/react";
 
 const meta = {
-  title: 'UI/Sonner',
-  tags: ['autodocs'],
+  title: "UI/Sonner",
+  tags: ["autodocs"],
 } satisfies Meta<object>;
 
 export default meta;
@@ -19,15 +19,15 @@ export const ShowToast: Story = {
       <Button
         variant="outline"
         onClick={() =>
-          toast('Da luu thanh cong', { description: 'Du lieu da dong bo.' })
+          toast("Da luu thanh cong", { description: "Du lieu da dong bo." })
         }
       >
         Toast mac dinh
       </Button>
-      <Button variant="outline" onClick={() => toast.success('Thanh cong')}>
+      <Button variant="outline" onClick={() => toast.success("Thanh cong")}>
         Success
       </Button>
-      <Button variant="outline" onClick={() => toast.error('Co loi xay ra')}>
+      <Button variant="outline" onClick={() => toast.error("Co loi xay ra")}>
         Error
       </Button>
     </div>

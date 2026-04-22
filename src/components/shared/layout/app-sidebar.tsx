@@ -1,16 +1,8 @@
-import {
-  Building2,
-  FileText,
-  Home,
-  ReceiptText,
-  ScrollText,
-  Settings,
-  Users,
-} from 'lucide-react';
-import { Link, useLocation } from 'react-router-dom';
+import { FileText } from "lucide-react";
+import { Link, useLocation } from "react-router-dom";
 
-import { NavUser } from '@/components/shared/layout/nav-user';
-import { ScrollArea } from '@/components/ui/scroll-area';
+import { NavUser } from "@/components/shared/layout/nav-user";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import {
   Sidebar,
   SidebarContent,
@@ -24,38 +16,21 @@ import {
   SidebarMenuItem,
   SidebarRail,
   SidebarSeparator,
-} from '@/components/ui/sidebar';
-import { routes } from '@/config/routes';
+} from "@/components/ui/sidebar";
+import {
+  navigationSections,
+  routes,
+  type AppRouteManifestItem,
+} from "@/config/routes";
 
-interface NavigationItem {
-  title: string;
-  href: string;
-  icon: typeof Home;
-}
-
-const mainMenuItems: NavigationItem[] = [
-  { title: 'Tổng quan', href: routes.home, icon: Home },
-  { title: 'Phòng trọ', href: routes.rooms, icon: Building2 },
-  { title: 'Khách thuê', href: routes.tenants, icon: Users },
-];
-
-const managementItems: NavigationItem[] = [
-  { title: 'Hợp đồng', href: routes.contracts, icon: ScrollText },
-  { title: 'Hóa đơn', href: routes.invoices, icon: ReceiptText },
-];
-
-const systemItems: NavigationItem[] = [
-  { title: 'Cài đặt', href: routes.settings, icon: Settings },
-];
-
-const renderMenuItem = (item: NavigationItem, pathname: string) => {
+const renderMenuItem = (item: AppRouteManifestItem, pathname: string) => {
   const isActive =
-    item.href === '/' ? pathname === '/' : pathname.startsWith(item.href);
+    item.path === "/" ? pathname === "/" : pathname.startsWith(item.path);
 
   return (
-    <SidebarMenuItem key={item.href}>
+    <SidebarMenuItem key={item.key}>
       <SidebarMenuButton asChild isActive={isActive} tooltip={item.title}>
-        <Link to={item.href}>
+        <Link to={item.path}>
           <item.icon className="shrink-0" />
           <span className="group-data-[collapsible=icon]:hidden">
             {item.title}
@@ -93,48 +68,25 @@ export const AppSidebar = () => {
       <SidebarContent className="overflow-hidden p-0">
         <ScrollArea className="h-full">
           <div className="space-y-1 px-3 py-3">
-            <SidebarGroup>
-              <SidebarGroupLabel className="mb-1 px-2 text-[11px] font-semibold tracking-wider uppercase text-foreground/60 group-data-[collapsible=icon]:hidden">
-                Chính
-              </SidebarGroupLabel>
-              <SidebarGroupContent>
-                <SidebarMenu>
-                  {mainMenuItems.map((item) =>
-                    renderMenuItem(item, location.pathname),
-                  )}
-                </SidebarMenu>
-              </SidebarGroupContent>
-            </SidebarGroup>
-
-            <SidebarSeparator className="mx-2" />
-
-            <SidebarGroup>
-              <SidebarGroupLabel className="mb-1 px-2 text-[11px] font-semibold tracking-wider uppercase text-foreground/60 group-data-[collapsible=icon]:hidden">
-                Quản lý
-              </SidebarGroupLabel>
-              <SidebarGroupContent>
-                <SidebarMenu>
-                  {managementItems.map((item) =>
-                    renderMenuItem(item, location.pathname),
-                  )}
-                </SidebarMenu>
-              </SidebarGroupContent>
-            </SidebarGroup>
-
-            <SidebarSeparator className="mx-2" />
-
-            <SidebarGroup>
-              <SidebarGroupLabel className="mb-1 px-2 text-[11px] font-semibold tracking-wider uppercase text-foreground/60 group-data-[collapsible=icon]:hidden">
-                Hệ thống
-              </SidebarGroupLabel>
-              <SidebarGroupContent>
-                <SidebarMenu>
-                  {systemItems.map((item) =>
-                    renderMenuItem(item, location.pathname),
-                  )}
-                </SidebarMenu>
-              </SidebarGroupContent>
-            </SidebarGroup>
+            {navigationSections.map((section, sectionIndex) => (
+              <div key={section.key}>
+                {sectionIndex > 0 ? (
+                  <SidebarSeparator className="mx-2" />
+                ) : null}
+                <SidebarGroup>
+                  <SidebarGroupLabel className="mb-1 px-2 text-[11px] font-semibold tracking-wider uppercase text-foreground/60 group-data-[collapsible=icon]:hidden">
+                    {section.label}
+                  </SidebarGroupLabel>
+                  <SidebarGroupContent>
+                    <SidebarMenu>
+                      {section.items.map((item) =>
+                        renderMenuItem(item, location.pathname),
+                      )}
+                    </SidebarMenu>
+                  </SidebarGroupContent>
+                </SidebarGroup>
+              </div>
+            ))}
           </div>
         </ScrollArea>
       </SidebarContent>

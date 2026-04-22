@@ -1,7 +1,7 @@
-import { lazy, Suspense } from 'react';
+import { lazy, Suspense } from "react";
 
 const LazyReactQueryDevtools = lazy(async () => {
-  const { ReactQueryDevtools } = await import('@tanstack/react-query-devtools');
+  const { ReactQueryDevtools } = await import("@tanstack/react-query-devtools");
   return { default: ReactQueryDevtools };
 });
 

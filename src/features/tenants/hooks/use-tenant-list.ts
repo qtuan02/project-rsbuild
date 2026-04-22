@@ -1,21 +1,25 @@
-import * as React from 'react';
+import * as React from "react";
 
-import type { TenantStatus } from '@/types/tenant';
+import type { TenantStatus } from "@/types/tenant";
 
-import { getTenants } from '../data/tenant.repository';
+import { getTenants } from "../data/tenant.repository";
+import {
+  toFloorFilters,
+  toTenantStatuses,
+} from "../domain/tenant-filter-params";
 import {
   countActiveTenantFilters,
   filterTenants,
   type TenantFiltersState,
-} from '../domain/tenant-filters';
+} from "../domain/tenant-filters";
 import {
   getSafeCurrentPage,
   getTotalPages,
   paginateTenants,
-} from '../domain/tenant-pagination';
-import { buildTenantSummaryStats } from '../domain/tenant-stats';
+} from "../domain/tenant-pagination";
+import { buildTenantSummaryStats } from "../domain/tenant-stats";
 
-import type { FloorFilter } from '../domain/tenant-filter-params';
+import type { FloorFilter } from "../domain/tenant-filter-params";
 
 const DEFAULT_PAGE_SIZE = 6;
 
@@ -32,14 +36,16 @@ export interface UseTenantListResult {
   summaryStats: ReturnType<typeof buildTenantSummaryStats>;
   onSearchChange: (value: string) => void;
   onStatusFilterChange: (value: TenantStatus[] | undefined) => void;
+  onStatusFilterValueChange: (value: unknown) => void;
   onFloorFilterChange: (value: FloorFilter[] | undefined) => void;
+  onFloorFilterValueChange: (value: unknown) => void;
   onPageChange: (value: number) => void;
   onPageSizeChange: (value: number) => void;
   clearFilters: () => void;
 }
 
 export const useTenantList = (): UseTenantListResult => {
-  const [search, setSearch] = React.useState('');
+  const [search, setSearch] = React.useState("");
   const [statusFilter, setStatusFilter] = React.useState<TenantStatus[]>([]);
   const [floorFilter, setFloorFilter] = React.useState<FloorFilter[]>([]);
   const [currentPage, setCurrentPage] = React.useState(1);
@@ -112,8 +118,18 @@ export const useTenantList = (): UseTenantListResult => {
     setCurrentPage(1);
   }, []);
 
+  const onStatusFilterValueChange = React.useCallback((value: unknown) => {
+    setStatusFilter(toTenantStatuses(value) ?? []);
+    setCurrentPage(1);
+  }, []);
+
+  const onFloorFilterValueChange = React.useCallback((value: unknown) => {
+    setFloorFilter(toFloorFilters(value) ?? []);
+    setCurrentPage(1);
+  }, []);
+
   const clearFilters = React.useCallback(() => {
-    setSearch('');
+    setSearch("");
     setStatusFilter([]);
     setFloorFilter([]);
     setCurrentPage(1);
@@ -132,7 +148,9 @@ export const useTenantList = (): UseTenantListResult => {
     summaryStats,
     onSearchChange,
     onStatusFilterChange,
+    onStatusFilterValueChange,
     onFloorFilterChange,
+    onFloorFilterValueChange,
     onPageChange: setCurrentPage,
     onPageSizeChange,
     clearFilters,

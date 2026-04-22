@@ -1,39 +1,27 @@
 import {
+  DEFAULT_DATA_TABLE_PAGINATION_LABELS,
+  DEFAULT_DATA_TABLE_PAGE_SIZE_OPTIONS,
+  type DataTablePaginationLabels,
   PaginationNavigation,
   PaginationPageSizeSelect,
-} from '@/components/shared/pagination';
+} from "@/components/shared/pagination";
+import { clampPage } from "@/components/shared/pagination/pagination-utils";
 
-import type { Table } from '@tanstack/react-table';
+import type { Table } from "@tanstack/react-table";
 
 interface DataTablePaginationProps<TData> {
   table: Table<TData>;
   pageSizeOptions?: number[];
-  labels?: {
-    selected: string;
-    rows: string;
-    total: string;
-    results: string;
-    perPage: string;
-    page: string;
-  };
+  labels?: DataTablePaginationLabels;
 }
-
-const DEFAULT_LABELS = {
-  selected: 'Đã chọn',
-  rows: 'dòng',
-  total: 'Tổng',
-  results: 'kết quả',
-  perPage: 'Hiển thị',
-  page: 'Trang',
-};
 
 export function DataTablePagination<TData>({
   table,
-  pageSizeOptions = [10, 20, 30, 50],
-  labels = DEFAULT_LABELS,
+  pageSizeOptions = DEFAULT_DATA_TABLE_PAGE_SIZE_OPTIONS,
+  labels = DEFAULT_DATA_TABLE_PAGINATION_LABELS,
 }: DataTablePaginationProps<TData>) {
-  const totalPages = Math.max(table.getPageCount(), 1);
-  const currentPage = Math.min(
+  const totalPages = table.getPageCount();
+  const currentPage = clampPage(
     table.getState().pagination.pageIndex + 1,
     totalPages,
   );
@@ -43,22 +31,22 @@ export function DataTablePagination<TData>({
       <div className="flex-1 text-sm text-muted-foreground">
         {table.getFilteredSelectedRowModel().rows.length > 0 ? (
           <span>
-            {labels.selected}{' '}
+            {labels.selected}{" "}
             <span className="font-medium text-foreground">
               {table.getFilteredSelectedRowModel().rows.length}
             </span>
-            {' / '}
+            {" / "}
             <span className="font-medium text-foreground">
               {table.getFilteredRowModel().rows.length}
-            </span>{' '}
+            </span>{" "}
             {labels.rows}
           </span>
         ) : (
           <span>
-            {labels.total}{' '}
+            {labels.total}{" "}
             <span className="font-medium text-foreground">
               {table.getFilteredRowModel().rows.length}
-            </span>{' '}
+            </span>{" "}
             {labels.results}
           </span>
         )}
@@ -80,11 +68,11 @@ export function DataTablePagination<TData>({
         </div>
 
         <div className="flex items-center text-sm text-muted-foreground">
-          {labels.page}{' '}
+          {labels.page}{" "}
           <span className="mx-1 font-medium text-foreground">
             {currentPage}
           </span>
-          /{' '}
+          /{" "}
           <span className="ml-1 font-medium text-foreground">{totalPages}</span>
         </div>
 

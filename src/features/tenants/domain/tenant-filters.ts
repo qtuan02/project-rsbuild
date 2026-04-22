@@ -1,6 +1,6 @@
-import type { Tenant, TenantStatus } from '@/types/tenant';
+import type { Tenant, TenantStatus } from "@/types/tenant";
 
-import type { FloorFilter } from './tenant-filter-params';
+import type { FloorFilter } from "./tenant-filter-params";
 
 export interface TenantFiltersState {
   search: string;
@@ -8,7 +8,7 @@ export interface TenantFiltersState {
   floorFilter: FloorFilter[];
 }
 
-const normalizePhone = (value: string): string => value.replace(/\s/g, '');
+const normalizePhone = (value: string): string => value.replace(/\s/g, "");
 
 const matchesSearch = (tenant: Tenant, query: string): boolean => {
   const normalizedQuery = query.toLowerCase();
