@@ -1,11 +1,12 @@
+/* @jsxRuntime automatic */
 import { ThemeProvider } from "next-themes";
 
-import { Toaster } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
+import { Toaster } from "../src/components/ui/sonner";
+import { TooltipProvider } from "../src/components/ui/tooltip";
 
 import type { Preview } from "@storybook/react";
 
-import "../src/styles/globals.css";
+import "../src/globals.css";
 
 const preview: Preview = {
   parameters: {
