@@ -21,7 +21,7 @@ export const AppHeader = () => {
           variant="ghost"
           size="icon-sm"
           onClick={toggleSidebar}
-          className="hidden text-muted-foreground hover:text-foreground md:inline-flex"
+          className="text-muted-foreground hover:text-foreground"
         >
           <PanelLeft
             className={cn(
