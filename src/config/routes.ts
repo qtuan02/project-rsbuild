@@ -26,6 +26,13 @@ export const routes = {
   settings: "/settings",
 } as const;
 
+export const routePathBuilders = {
+  roomDetail: (roomId: string) => `${routes.rooms}/${roomId}`,
+  tenantDetail: (tenantId: string) => `${routes.tenants}/${tenantId}`,
+  contractDetail: (contractId: string) => `${routes.contracts}/${contractId}`,
+  invoiceDetail: (invoiceId: string) => `${routes.invoices}/${invoiceId}`,
+} as const;
+
 export type AppRoutePath = (typeof routes)[keyof typeof routes];
 export type AppRouteKey = keyof typeof routes;
 export type AppNavigationGroup = "main" | "management" | "system";

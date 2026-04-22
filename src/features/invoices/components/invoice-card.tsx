@@ -1,4 +1,5 @@
 import { Calendar, DoorOpen, MoreHorizontal } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -17,6 +18,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { routePathBuilders } from "@/config/routes";
 import type { Invoice } from "@/types/invoice";
 import { formatCurrency } from "@/utils/currency";
 
@@ -27,6 +29,7 @@ interface InvoiceCardProps {
 }
 
 export const InvoiceCard = ({ invoice }: InvoiceCardProps) => {
+  const navigate = useNavigate();
   const statusCfg = invoiceStatusConfig[invoice.status];
 
   return (
@@ -58,7 +61,13 @@ export const InvoiceCard = ({ invoice }: InvoiceCardProps) => {
               <DropdownMenuLabel>Thao tác</DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuGroup>
-                <DropdownMenuItem>Xem chi tiết</DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={() =>
+                    navigate(routePathBuilders.invoiceDetail(invoice.id))
+                  }
+                >
+                  Xem chi tiết
+                </DropdownMenuItem>
                 <DropdownMenuItem>Tải về PDF</DropdownMenuItem>
               </DropdownMenuGroup>
             </DropdownMenuContent>

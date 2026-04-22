@@ -1,4 +1,5 @@
 import { Copy, Eye, MoreHorizontal } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -10,6 +11,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { routePathBuilders } from "@/config/routes";
 import type { Contract } from "@/types/contract";
 
 interface ContractRowActionsProps {
@@ -17,6 +19,8 @@ interface ContractRowActionsProps {
 }
 
 export const ContractRowActions = ({ contract }: ContractRowActionsProps) => {
+  const navigate = useNavigate();
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -37,7 +41,11 @@ export const ContractRowActions = ({ contract }: ContractRowActionsProps) => {
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem>
+          <DropdownMenuItem
+            onClick={() =>
+              navigate(routePathBuilders.contractDetail(contract.id))
+            }
+          >
             <Eye className="mr-2 h-3.5 w-3.5" />
             Xem chi tiết
           </DropdownMenuItem>
