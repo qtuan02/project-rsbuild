@@ -17,7 +17,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { cn } from "@/lib/cn";
 import type { Invoice } from "@/types/invoice";
 import { formatCurrency } from "@/utils/currency";
 
@@ -59,12 +58,8 @@ export const InvoiceCard = ({ invoice }: InvoiceCardProps) => {
               <DropdownMenuLabel>Thao tác</DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuGroup>
-                <DropdownMenuItem>
-                  Xem chi tiết
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  Tải về PDF
-                </DropdownMenuItem>
+                <DropdownMenuItem>Xem chi tiết</DropdownMenuItem>
+                <DropdownMenuItem>Tải về PDF</DropdownMenuItem>
               </DropdownMenuGroup>
             </DropdownMenuContent>
           </DropdownMenu>

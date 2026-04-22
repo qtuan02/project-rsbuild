@@ -50,7 +50,9 @@ export const columns: ColumnDef<Contract>[] = [
       <DataTableColumnHeader column={column} title="Số HĐ" />
     ),
     cell: ({ row }) => (
-      <span className="font-mono font-medium">{row.getValue("contractNumber")}</span>
+      <span className="font-mono font-medium">
+        {row.getValue("contractNumber")}
+      </span>
     ),
   },
   {
@@ -71,7 +73,7 @@ export const columns: ColumnDef<Contract>[] = [
       <div className="flex items-center gap-2">
         <span className="text-sm">{row.getValue("room")}</span>
         <Badge variant="outline" className="font-mono">
-          T{(row.original as Contract).floor}
+          T{row.original.floor}
         </Badge>
       </div>
     ),

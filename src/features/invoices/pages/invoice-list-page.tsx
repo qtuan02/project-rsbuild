@@ -13,11 +13,11 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/cn";
+import { formatCurrency } from "@/utils/currency";
 
 import { InvoiceCard } from "../components/invoice-card";
 import { InvoiceFilters } from "../components/invoice-filters";
 import { useInvoiceList } from "../hooks/use-invoice-list";
-import { formatCurrency } from "@/utils/currency";
 
 const summaryStatConfigs = [
   {
@@ -74,9 +74,7 @@ export const InvoiceListPage = () => {
     <div className="space-y-6">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h2 className="text-2xl font-bold tracking-tight">
-            Quản lý hóa đơn
-          </h2>
+          <h2 className="text-2xl font-bold tracking-tight">Quản lý hóa đơn</h2>
           <p className="mt-1 text-sm text-muted-foreground">
             Theo dõi và quản lý tất cả hóa đơn thanh toán từ khách thuê.
           </p>

@@ -1,6 +1,6 @@
-import type { Setting } from "@/types/setting";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/cn";
+import type { Setting } from "@/types/setting";
 import { formatCurrency } from "@/utils/currency";
 
 interface SettingItemProps {
@@ -8,7 +8,10 @@ interface SettingItemProps {
 }
 
 export const SettingItem = ({ setting }: SettingItemProps) => {
-  const renderValue = (value: string | number | boolean, type: Setting["type"]) => {
+  const renderValue = (
+    value: string | number | boolean,
+    type: Setting["type"],
+  ) => {
     switch (type) {
       case "number":
         // Check if it looks like a currency amount (value > 100)

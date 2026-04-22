@@ -31,7 +31,6 @@ export const SettingsPage = () => {
             key={category}
             category={category}
             settings={settingsByCategory[category]}
-            defaultOpen={true}
           />
         ))}
       </div>

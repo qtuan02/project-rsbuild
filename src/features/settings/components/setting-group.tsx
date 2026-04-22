@@ -1,11 +1,11 @@
 import { ChevronDown } from "lucide-react";
 import * as React from "react";
 
-import type { Setting, SettingCategory } from "@/types/setting";
 import { cn } from "@/lib/cn";
+import type { Setting, SettingCategory } from "@/types/setting";
 
-import { settingCategoryConfig } from "../domain/setting-categories";
 import { SettingItem } from "./setting-item";
+import { settingCategoryConfig } from "../domain/setting-categories";
 
 interface SettingGroupProps {
   category: SettingCategory;
@@ -35,7 +35,9 @@ export const SettingGroup = ({
           </div>
           <div className="text-left">
             <h3 className="font-semibold text-foreground">{config.label}</h3>
-            <p className="text-xs text-muted-foreground">{config.description}</p>
+            <p className="text-xs text-muted-foreground">
+              {config.description}
+            </p>
           </div>
         </div>
         <ChevronDown

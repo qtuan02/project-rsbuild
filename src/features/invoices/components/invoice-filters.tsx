@@ -8,8 +8,11 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import type { InvoiceStatus } from "@/types/invoice";
 
-import { getMonthOptions, type MonthFilter } from "../domain/invoice-filter-params";
-import { invoiceStatusConfig, statusFilterOptions } from "../domain/invoice-display-config";
+import { statusFilterOptions } from "../domain/invoice-display-config";
+import {
+  getMonthOptions,
+  type MonthFilter,
+} from "../domain/invoice-filter-params";
 
 interface InvoiceFiltersProps {
   search: string;
@@ -69,19 +72,13 @@ export const InvoiceFilters = ({
         <DataTableFacetedFilter
           column={statusColumn}
           title="Trạng thái"
-          options={statusFilterOptions.map((option) => ({
-            value: option.value as InvoiceStatus,
-            label: option.label,
-          }))}
+          options={statusFilterOptions}
         />
 
         <DataTableFacetedFilter
           column={monthColumn}
           title="Tháng"
-          options={getMonthOptions().map((option) => ({
-            value: option.value as MonthFilter,
-            label: option.label,
-          }))}
+          options={[...getMonthOptions()]}
         />
 
         {activeFilterCount > 0 && (

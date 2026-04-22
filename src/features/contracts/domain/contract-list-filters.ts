@@ -1,29 +1,28 @@
-import type {
-  DataTableFilterableColumn,
-  DataTableSearchableColumn,
-} from "@/components/shared/table";
-import type { Contract } from "@/types/contract";
+import type { Contract, ContractStatus } from "@/types/contract";
+
 import { statusFilterOptions } from "./contract-display-config";
 
-export type ContractSearchColumn = DataTableSearchableColumn<Contract>;
-export type ContractFilterColumn = DataTableFilterableColumn<Contract>;
+import type { LucideIcon } from "lucide-react";
+
+export interface ContractSearchColumn {
+  id: keyof Pick<Contract, "contractNumber" | "tenant" | "room"> & string;
+  title: string;
+}
+
+export interface ContractFilterColumn {
+  id: "status";
+  title: string;
+  options: {
+    label: string;
+    value: ContractStatus;
+    icon?: LucideIcon;
+  }[];
+}
 
 export const contractSearchColumns: ContractSearchColumn[] = [
-  {
-    id: "contractNumber",
-    title: "Số hợp đồng",
-    placeholder: "Tìm theo số HĐ...",
-  },
-  {
-    id: "tenant",
-    title: "Khách thuê",
-    placeholder: "Tìm theo tên khách...",
-  },
-  {
-    id: "room",
-    title: "Phòng",
-    placeholder: "Tìm theo tên phòng...",
-  },
+  { id: "contractNumber", title: "số hợp đồng" },
+  { id: "tenant", title: "khách thuê" },
+  { id: "room", title: "phòng" },
 ];
 
 export const contractFilterColumns: ContractFilterColumn[] = [

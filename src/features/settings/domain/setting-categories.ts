@@ -1,5 +1,6 @@
-import type { SettingCategory } from "@/types/setting";
 import { Building2, DollarSign, Bell, CreditCard } from "lucide-react";
+
+import type { SettingCategory } from "@/types/setting";
 
 export const settingCategoryConfig: Record<
   SettingCategory,

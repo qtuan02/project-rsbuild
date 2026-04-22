@@ -1,6 +1,6 @@
-import type { Invoice } from "@/types/invoice";
-import type { InvoiceStatus } from "@/types/invoice";
-import type { MonthFilter } from "./invoice-filter-params";
+import type { Invoice, InvoiceStatus } from "@/types/invoice";
+
+import { isMonthFilter, type MonthFilter } from "./invoice-filter-params";
 
 export interface InvoiceFiltersState {
   search: string;
@@ -32,7 +32,10 @@ export const filterInvoices = (
 
     // Month filter
     if (filters.monthFilter.length > 0) {
-      if (!filters.monthFilter.includes(invoice.month)) {
+      if (
+        !isMonthFilter(invoice.month) ||
+        !filters.monthFilter.includes(invoice.month)
+      ) {
         return false;
       }
     }

@@ -7,12 +7,12 @@ import {
   Users,
 } from "lucide-react";
 
-import { DashboardPage } from "@/features/dashboard/pages/dashboard-page";
-import { RoomListPage } from "@/features/rooms/pages/room-list-page";
-import { TenantListPage } from "@/features/tenants/pages/tenant-list-page";
 import { ContractListPage } from "@/features/contracts/pages/contract-list-page";
+import { DashboardPage } from "@/features/dashboard/pages/dashboard-page";
 import { InvoiceListPage } from "@/features/invoices/pages/invoice-list-page";
+import { RoomListPage } from "@/features/rooms/pages/room-list-page";
 import { SettingsPage } from "@/features/settings/pages/settings-page";
+import { TenantListPage } from "@/features/tenants/pages/tenant-list-page";
 
 import type { LucideIcon } from "lucide-react";
 import type { ComponentType } from "react";

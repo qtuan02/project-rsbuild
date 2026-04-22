@@ -121,9 +121,21 @@ src/
     stories/        # Storybook stories (không dùng cho runtime app)
   lib/              # framework-agnostic utilities (cn, query keys, query client)
   types/            # shared domain contracts/types
-  styles/
-    globals.css
+  globals.css       # Tailwind v4 + design tokens (global styles)
 ```
+
+### Feature modules (routes)
+
+Các màn hình feature được khai báo trong [`src/config/routes.ts`](src/config/routes.ts) (`appRouteManifest`) và render trong [`src/app-routes.tsx`](src/app-routes.tsx):
+
+| Route | Feature directory |
+| --- | --- |
+| `/` | `features/dashboard` |
+| `/rooms` | `features/rooms` |
+| `/tenants` | `features/tenants` |
+| `/contracts` | `features/contracts` |
+| `/invoices` | `features/invoices` |
+| `/settings` | `features/settings` |
 
 ### Layering conventions
 
