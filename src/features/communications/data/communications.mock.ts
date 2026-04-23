@@ -19,11 +19,11 @@ export interface SendLog {
 export const mockTemplates: NotificationTemplate[] = [
   {
     id: "T001",
-    name: "Thông báo thanh toán",
-    channel: "sms",
-    description: "Gửi nhắc nhở khách thanh toán tiền thuê",
+    name: "ZNS: Nhắc đóng tiền nhà",
+    channel: "zalo",
+    description: "Mẫu Zalo ZNS nhắc nhở thanh toán hóa đơn hàng tháng",
     preview:
-      "Kính gửi khách, hóa đơn tháng này đã sẵn sàng. Vui lòng thanh toán trong 3 ngày.",
+      "Chào bạn, hóa đơn tiền nhà tháng này là {amount}đ. Vui lòng thanh toán trước ngày {dueDate}.",
   },
   {
     id: "T002",
@@ -34,10 +34,11 @@ export const mockTemplates: NotificationTemplate[] = [
   },
   {
     id: "T003",
-    name: "Thông báo gia hạn hợp đồng",
+    name: "ZNS: Sắp hết hạn hợp đồng",
     channel: "zalo",
-    description: "Gửi thông báo về gia hạn hợp đồng",
-    preview: "Hợp đồng của bạn sắp hết hạn. Vui lòng liên hệ để gia hạn.",
+    description: "Mẫu Zalo ZNS thông báo hợp đồng sắp hết hạn",
+    preview:
+      "Hợp đồng phòng {room} của bạn sắp hết hạn vào ngày {endDate}. Vui lòng liên hệ quản lý để gia hạn.",
   },
 ];
 

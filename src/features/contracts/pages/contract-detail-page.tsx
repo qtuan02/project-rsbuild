@@ -2,16 +2,15 @@ import {
   Edit,
   Download,
   Trash2,
-  ArrowLeft,
   User,
   Calendar,
   FileText,
   AlertCircle,
 } from "lucide-react";
-import { useState } from "react";
 
 import { InfoCard, InfoRow } from "@/components/shared/cards/info-card";
 import { ConfirmActionDialog } from "@/components/shared/dialogs/confirm-action-dialog";
+import { PageBackButton } from "@/components/shared/navigation";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -19,8 +18,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { formatCurrency } from "@/utils/currency";
 
-import { getContracts } from "../data/contract.repository";
-import { contractStatusConfig } from "../domain/contract-display-config";
+import { AssetChecklist } from "../components/asset-checklist";
+import { useContractDetail } from "../hooks/use-contract-detail";
 
 interface ContractDetailPageProps {
   contractId: string;
@@ -31,18 +30,21 @@ export const ContractDetailPage = ({
   contractId,
   onBack,
 }: ContractDetailPageProps) => {
-  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
-  const [isDeleting, setIsDeleting] = useState(false);
-
-  const contract = getContracts().find((c) => c.id === contractId);
+  const {
+    contract,
+    statusConfig,
+    expiryMeta,
+    depositAmount,
+    deleteDialogOpen,
+    isDeleting,
+    setDeleteDialogOpen,
+    handleDelete,
+  } = useContractDetail({ contractId, onBack });
 
   if (!contract) {
     return (
       <div className="space-y-6">
-        <Button variant="ghost" onClick={onBack} className="gap-2">
-          <ArrowLeft className="h-4 w-4" />
-          Quay lại
-        </Button>
+        <PageBackButton onClick={onBack} />
         <div className="rounded-lg border border-dashed bg-card/50 p-12 text-center">
           <h3 className="text-base font-semibold">Không tìm thấy hợp đồng</h3>
           <p className="mt-1 text-sm text-muted-foreground">
@@ -53,32 +55,14 @@ export const ContractDetailPage = ({
     );
   }
 
-  const handleDelete = async () => {
-    setIsDeleting(true);
-    await new Promise((resolve) => setTimeout(resolve, 500));
-    setIsDeleting(false);
-    setDeleteDialogOpen(false);
-    onBack?.();
-  };
-
-  const statusConfig = contractStatusConfig[contract.status];
-
-  // Calculate if contract is expiring soon (within 30 days)
-  const endDate = new Date(contract.endDate.split("/").reverse().join("-"));
-  const today = new Date();
-  const daysUntilEnd = Math.floor(
-    (endDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24),
-  );
-  const isExpiringsoon = daysUntilEnd <= 30 && daysUntilEnd > 0;
-  const depositAmount = contract.depositAmount ?? contract.rentAmount;
+  if (!statusConfig) {
+    return null;
+  }
 
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <Button variant="ghost" onClick={onBack} className="gap-2">
-          <ArrowLeft className="h-4 w-4" />
-          Quay lại
-        </Button>
+        <PageBackButton onClick={onBack} />
         <div className="flex items-center gap-2">
           <Button variant="outline" size="sm" className="gap-2">
             <Download className="h-4 w-4" />
@@ -100,12 +84,12 @@ export const ContractDetailPage = ({
         </div>
       </div>
 
-      {isExpiringsoon && (
+      {expiryMeta?.isExpiringSoon && (
         <Alert variant="destructive">
           <AlertCircle className="h-4 w-4" />
           <AlertDescription>
-            Hợp đồng sẽ hết hạn trong {daysUntilEnd} ngày. Vui lòng gia hạn hoặc
-            liên hệ khách thuê.
+            Hợp đồng sẽ hết hạn trong {expiryMeta.daysUntilEnd} ngày. Vui lòng
+            gia hạn hoặc liên hệ khách thuê.
           </AlertDescription>
         </Alert>
       )}
@@ -201,7 +185,7 @@ export const ContractDetailPage = ({
             <InfoRow label="Ngày bắt đầu" value={contract.startDate} />
             <InfoRow label="Ngày kết thúc" value={contract.endDate} highlight />
             <InfoRow label="Thời hạn" value="12 tháng" />
-            {isExpiringsoon && (
+            {expiryMeta?.isExpiringSoon && (
               <InfoRow
                 label="Cảnh báo"
                 value={
@@ -212,6 +196,8 @@ export const ContractDetailPage = ({
               />
             )}
           </InfoCard>
+
+          <AssetChecklist />
         </div>
 
         <div className="space-y-6">

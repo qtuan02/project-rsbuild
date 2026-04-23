@@ -1,23 +1,39 @@
+import { flexRender } from "@tanstack/react-table";
 import {
-  Download,
-  FileText,
-  Plus,
-  LayoutGrid,
   AlertCircle,
   CheckCircle2,
   Clock,
+  Download,
+  FileText,
+  LayoutGrid,
+  List,
+  Plus,
 } from "lucide-react";
+import * as React from "react";
 
-import { Pagination } from "@/components/shared/pagination";
 import { EmptyPanel } from "@/components/shared/panels";
+import {
+  DataTablePagination,
+  DataTableToolbar,
+  useDataTable,
+} from "@/components/shared/table";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { cn } from "@/lib/cn";
 import { formatCurrency } from "@/utils/currency";
 
 import { InvoiceCard } from "../components/invoice-card";
-import { InvoiceFilters } from "../components/invoice-filters";
+import { invoiceColumns } from "../components/invoice-columns";
 import { useInvoiceList } from "../hooks/use-invoice-list";
 
 const summaryStatConfigs = [
@@ -52,24 +68,19 @@ const summaryStatConfigs = [
 ] as const;
 
 export const InvoiceListPage = () => {
-  const {
-    search,
-    statusFilter,
-    monthFilter,
-    currentPage,
-    pageSize,
-    totalPages,
-    activeFilterCount,
-    filteredCount,
-    paginatedInvoices,
-    summaryStats,
-    onSearchChange,
-    onStatusFilterValueChange,
-    onMonthFilterValueChange,
-    onPageChange,
-    onPageSizeChange,
-    clearFilters,
-  } = useInvoiceList();
+  const { data, summaryStats, searchableColumns, filterableColumns } =
+    useInvoiceList();
+  const [activeTab, setActiveTab] = React.useState("grid");
+
+  const { table } = useDataTable({
+    data,
+    columns: invoiceColumns,
+    getRowId: (row) => row.id,
+    initialPageSize: 6,
+  });
+
+  const rows = table.getRowModel().rows;
+  const hasRows = rows.length > 0;
 
   return (
     <div className="space-y-6">
@@ -80,12 +91,12 @@ export const InvoiceListPage = () => {
             Theo dõi và quản lý tất cả hóa đơn thanh toán từ khách thuê.
           </p>
         </div>
-        <div className="flex items-center gap-2">
-          <Button variant="outline" size="sm">
+        <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto">
+          <Button variant="outline" size="sm" className="w-full sm:w-auto">
             <Download className="mr-2 h-4 w-4" />
             Xuất Excel
           </Button>
-          <Button size="sm">
+          <Button size="sm" className="w-full sm:w-auto">
             <Plus className="mr-2 h-4 w-4" />
             Tạo hóa đơn
           </Button>
@@ -117,54 +128,119 @@ export const InvoiceListPage = () => {
         ))}
       </div>
 
-      <InvoiceFilters
-        search={search}
-        onSearchChange={onSearchChange}
-        statusFilter={statusFilter}
-        onStatusFilterValueChange={onStatusFilterValueChange}
-        monthFilter={monthFilter}
-        onMonthFilterValueChange={onMonthFilterValueChange}
-        activeFilterCount={activeFilterCount}
-        onClearFilters={clearFilters}
-      />
-
-      <div className="flex items-center gap-2">
-        <LayoutGrid className="h-4 w-4 text-muted-foreground" />
-        <span className="text-sm text-muted-foreground">
-          {filteredCount} hóa đơn
-        </span>
-        {activeFilterCount > 0 && (
-          <Badge variant="secondary" className="text-xs">
-            {activeFilterCount} bộ lọc đang áp dụng
-          </Badge>
-        )}
-      </div>
-
-      {paginatedInvoices.length > 0 ? (
-        <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-          {paginatedInvoices.map((invoice) => (
-            <InvoiceCard key={invoice.id} invoice={invoice} />
-          ))}
+      <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <LayoutGrid className="h-4 w-4 text-muted-foreground" />
+            <span className="text-sm text-muted-foreground font-medium">
+              {table.getFilteredRowModel().rows.length} hóa đơn được tìm thấy
+            </span>
+            {table.getState().columnFilters.length > 0 && (
+              <Badge variant="secondary" className="text-[10px]">
+                Đang lọc
+              </Badge>
+            )}
+          </div>
+          <TabsList className="bg-muted/50">
+            <TabsTrigger value="grid" className="gap-2">
+              <LayoutGrid className="h-4 w-4" />
+              <span className="hidden sm:inline">Dạng thẻ</span>
+            </TabsTrigger>
+            <TabsTrigger value="table" className="gap-2">
+              <List className="h-4 w-4" />
+              <span className="hidden sm:inline">Dạng bảng</span>
+            </TabsTrigger>
+          </TabsList>
         </div>
-      ) : (
-        <EmptyPanel
-          icon={FileText}
-          title="Không tìm thấy hóa đơn"
-          description="Thử thay đổi bộ lọc hoặc từ khóa tìm kiếm để xem thêm kết quả."
-          action={{ label: "Xóa bộ lọc", onClick: clearFilters }}
-        />
-      )}
 
-      {filteredCount > 0 && (
-        <Pagination
-          currentPage={currentPage}
-          totalPages={totalPages}
-          pageSize={pageSize}
-          totalItems={filteredCount}
-          onPageChange={onPageChange}
-          onPageSizeChange={onPageSizeChange}
+        <DataTableToolbar
+          table={table}
+          searchableColumns={searchableColumns}
+          filterableColumns={filterableColumns}
+          showViewOptions={activeTab === "table"}
         />
-      )}
+
+        <TabsContent value="grid" className="mt-0 outline-none">
+          {hasRows ? (
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {rows.map((row) => (
+                <InvoiceCard key={row.id} invoice={row.original} />
+              ))}
+            </div>
+          ) : (
+            <div className="py-12 border-2 border-dashed rounded-xl">
+              <EmptyPanel
+                icon={FileText}
+                title="Không tìm thấy hóa đơn"
+                description="Thử thay đổi bộ lọc hoặc từ khóa tìm kiếm để xem kết quả."
+                action={{
+                  label: "Xóa toàn bộ bộ lọc",
+                  onClick: () => table.resetColumnFilters(),
+                }}
+              />
+            </div>
+          )}
+        </TabsContent>
+
+        <TabsContent value="table" className="mt-0 outline-none">
+          {hasRows ? (
+            <div className="overflow-hidden rounded-xl border bg-card shadow-sm">
+              <Table>
+                <TableHeader>
+                  {table.getHeaderGroups().map((headerGroup) => (
+                    <TableRow
+                      key={headerGroup.id}
+                      className="bg-muted/40 hover:bg-muted/40"
+                    >
+                      {headerGroup.headers.map((header) => (
+                        <TableHead key={header.id}>
+                          {header.isPlaceholder
+                            ? null
+                            : flexRender(
+                                header.column.columnDef.header,
+                                header.getContext(),
+                              )}
+                        </TableHead>
+                      ))}
+                    </TableRow>
+                  ))}
+                </TableHeader>
+                <TableBody>
+                  {rows.map((row) => (
+                    <TableRow
+                      key={row.id}
+                      data-state={row.getIsSelected() && "selected"}
+                    >
+                      {row.getVisibleCells().map((cell) => (
+                        <TableCell key={cell.id}>
+                          {flexRender(
+                            cell.column.columnDef.cell,
+                            cell.getContext(),
+                          )}
+                        </TableCell>
+                      ))}
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </div>
+          ) : (
+            <div className="py-12 border-2 border-dashed rounded-xl">
+              <EmptyPanel
+                icon={FileText}
+                title="Không tìm thấy hóa đơn"
+                description="Thử thay đổi bộ lọc hoặc từ khóa tìm kiếm để xem kết quả."
+                action={{
+                  label: "Xóa toàn bộ bộ lọc",
+                  onClick: () => table.resetColumnFilters(),
+                }}
+              />
+            </div>
+          )}
+        </TabsContent>
+      </Tabs>
+
+      {hasRows && <DataTablePagination table={table} />}
     </div>
   );
 };

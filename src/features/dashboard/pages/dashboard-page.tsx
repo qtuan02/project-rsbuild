@@ -8,7 +8,10 @@ import {
   Users,
 } from "lucide-react";
 
+import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+
+import { RevenueChart } from "../components/revenue-chart";
 
 interface StatCardProps {
   title: string;
@@ -104,19 +107,33 @@ const recentActivities = [
     time: "3 giờ trước",
   },
   {
-    action: "Hợp đồng hết hạn",
-    detail: "Phòng 302 - Lê Thị C cần gia hạn",
-    time: "5 giờ trước",
-  },
-  {
-    action: "Bảo trì",
-    detail: "Phòng 108 yêu cầu sửa điều hòa",
-    time: "1 ngày trước",
-  },
-  {
     action: "Phòng trống",
     detail: "Phòng 405 đã trả phòng, sẵn sàng cho thuê",
     time: "1 ngày trước",
+  },
+];
+
+const pendingTasks = [
+  {
+    id: 1,
+    title: "Sửa vòi nước phòng 108",
+    type: "Bảo trì",
+    priority: "Cao",
+    due: "Hôm nay",
+  },
+  {
+    id: 2,
+    title: "Phòng 302 - Lê Thị C sắp hết hạn hợp đồng",
+    type: "Hợp đồng",
+    priority: "Vừa",
+    due: "Trong 3 ngày",
+  },
+  {
+    id: 3,
+    title: "Hóa đơn phòng 204 quá hạn",
+    type: "Hóa đơn",
+    priority: "Khẩn cấp",
+    due: "Quá hạn 2 ngày",
   },
 ];
 
@@ -149,46 +166,91 @@ export const DashboardPage = () => {
               <span className="font-medium">+12.3% tháng này</span>
             </div>
           </CardHeader>
-          <CardContent>
-            <div className="flex h-[220px] items-center justify-center rounded-lg border border-dashed border-border bg-muted/30">
-              <div className="text-center">
-                <TrendingUp className="mx-auto h-8 w-8 text-muted-foreground/40" />
-                <p className="mt-2 text-sm text-muted-foreground">
-                  Biểu đồ doanh thu sẽ hiển thị ở đây
-                </p>
-              </div>
-            </div>
+          <CardContent className="pl-0">
+            <RevenueChart />
           </CardContent>
         </Card>
 
-        {/* Recent activity */}
-        <Card className="lg:col-span-3">
-          <CardHeader>
-            <CardTitle className="text-base font-semibold">
-              Hoạt động gần đây
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              {recentActivities.map((activity, index) => (
-                <div key={index} className="flex items-start gap-3">
-                  <div className="mt-1 h-2 w-2 shrink-0 rounded-full bg-primary/60" />
-                  <div className="min-w-0 flex-1">
-                    <p className="text-sm font-medium leading-tight">
-                      {activity.action}
-                    </p>
-                    <p className="mt-0.5 truncate text-xs text-muted-foreground">
-                      {activity.detail}
-                    </p>
+        <div className="flex flex-col gap-4 lg:col-span-3">
+          {/* Task List */}
+          <Card className="flex-1">
+            <CardHeader>
+              <CardTitle className="text-base font-semibold">
+                Việc cần làm
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                {pendingTasks.map((task) => (
+                  <div
+                    key={task.id}
+                    className="flex items-start justify-between gap-2 border-b pb-3 last:border-0 last:pb-0"
+                  >
+                    <div className="min-w-0 flex-1">
+                      <p className="text-sm font-medium leading-tight">
+                        {task.title}
+                      </p>
+                      <div className="mt-1 flex items-center gap-2 text-xs text-muted-foreground">
+                        <span>{task.type}</span>
+                        <span>•</span>
+                        <span
+                          className={
+                            task.due.includes("Quá hạn") ||
+                            task.due.includes("Hôm nay")
+                              ? "text-red-600 font-medium"
+                              : ""
+                          }
+                        >
+                          {task.due}
+                        </span>
+                      </div>
+                    </div>
+                    <Badge
+                      variant={
+                        task.priority === "Khẩn cấp"
+                          ? "destructive"
+                          : task.priority === "Cao"
+                            ? "default"
+                            : "secondary"
+                      }
+                    >
+                      {task.priority}
+                    </Badge>
                   </div>
-                  <span className="shrink-0 text-[11px] text-muted-foreground">
-                    {activity.time}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Recent activity */}
+          <Card className="flex-1">
+            <CardHeader>
+              <CardTitle className="text-base font-semibold">
+                Hoạt động gần đây
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                {recentActivities.map((activity, index) => (
+                  <div key={index} className="flex items-start gap-3">
+                    <div className="mt-1 h-2 w-2 shrink-0 rounded-full bg-primary/60" />
+                    <div className="min-w-0 flex-1">
+                      <p className="text-sm font-medium leading-tight">
+                        {activity.action}
+                      </p>
+                      <p className="mt-0.5 truncate text-xs text-muted-foreground">
+                        {activity.detail}
+                      </p>
+                    </div>
+                    <span className="shrink-0 text-[11px] text-muted-foreground">
+                      {activity.time}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        </div>
       </div>
     </div>
   );

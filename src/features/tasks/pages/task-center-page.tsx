@@ -25,13 +25,15 @@ export const TaskCenterPage = () => {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div>
-        <h1 className="text-3xl font-bold tracking-tight">
-          Trung tâm nhiệm vụ
-        </h1>
-        <p className="text-sm text-muted-foreground">
-          Quản lý những nhiệm vụ cần xử lý
-        </p>
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div>
+          <h2 className="text-2xl font-bold tracking-tight">
+            Trung tâm nhiệm vụ
+          </h2>
+          <p className="mt-1 text-sm text-muted-foreground">
+            Quản lý những nhiệm vụ cần xử lý
+          </p>
+        </div>
       </div>
 
       {/* Task Count Badges */}

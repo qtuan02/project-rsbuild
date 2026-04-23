@@ -75,7 +75,7 @@ export const TenantCard = ({ tenant }: TenantCardProps) => {
               <Button
                 variant="ghost"
                 size="icon-sm"
-                className="opacity-0 transition-opacity group-hover:opacity-100 data-[state=open]:opacity-100"
+                className="opacity-100 transition-opacity sm:opacity-0 sm:group-hover:opacity-100 data-[state=open]:opacity-100"
               >
                 <MoreHorizontal className="h-4 w-4" />
               </Button>
@@ -118,7 +118,7 @@ export const TenantCard = ({ tenant }: TenantCardProps) => {
           </div>
         </div>
 
-        <div className="grid grid-cols-2 gap-2 rounded-lg bg-muted/50 p-2.5">
+        <div className="grid grid-cols-1 gap-2 rounded-lg bg-muted/50 p-2.5 sm:grid-cols-2">
           <div>
             <p className="text-[10px] font-medium uppercase tracking-wider text-muted-foreground/70">
               Tiền thuê
@@ -138,7 +138,7 @@ export const TenantCard = ({ tenant }: TenantCardProps) => {
         </div>
       </CardContent>
 
-      <CardFooter className="gap-4 text-xs">
+      <CardFooter className="flex-wrap gap-2 text-xs sm:gap-4">
         <div className="flex items-center gap-1.5 text-muted-foreground">
           <Calendar className="h-3 w-3" />
           <span>Vào: {tenant.moveInDate}</span>

@@ -1,8 +1,9 @@
-import { AlertCircle, ArrowLeft, CheckCircle2 } from "lucide-react";
+import { AlertCircle, CheckCircle2 } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 
 import { InfoRow } from "@/components/shared/cards/info-card";
+import { PageBackButton } from "@/components/shared/navigation";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import {
@@ -40,10 +41,7 @@ export const ContractRenewPage = ({
   if (!contract) {
     return (
       <div className="space-y-6">
-        <Button variant="ghost" onClick={onBack} className="gap-2">
-          <ArrowLeft className="h-4 w-4" />
-          Quay lại
-        </Button>
+        <PageBackButton onClick={onBack} />
         <Card>
           <CardContent className="pt-6">
             <p className="text-center text-muted-foreground">
@@ -73,10 +71,7 @@ export const ContractRenewPage = ({
 
   return (
     <div className="space-y-6">
-      <Button variant="ghost" onClick={onBack} className="gap-2">
-        <ArrowLeft className="h-4 w-4" />
-        Quay lại
-      </Button>
+      <PageBackButton onClick={onBack} />
 
       <div className="grid gap-6 lg:grid-cols-3">
         {/* Main Form */}

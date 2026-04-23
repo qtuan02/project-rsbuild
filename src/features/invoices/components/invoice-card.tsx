@@ -52,7 +52,7 @@ export const InvoiceCard = ({ invoice }: InvoiceCardProps) => {
               <Button
                 variant="ghost"
                 size="icon-sm"
-                className="opacity-0 transition-opacity group-hover:opacity-100 data-[state=open]:opacity-100"
+                className="opacity-100 transition-opacity sm:opacity-0 sm:group-hover:opacity-100 data-[state=open]:opacity-100"
               >
                 <MoreHorizontal className="h-4 w-4" />
               </Button>
@@ -99,7 +99,7 @@ export const InvoiceCard = ({ invoice }: InvoiceCardProps) => {
           </div>
         </div>
 
-        <div className="grid grid-cols-2 gap-2 rounded-lg bg-primary/5 p-2.5">
+        <div className="grid grid-cols-1 gap-2 rounded-lg bg-primary/5 p-2.5 sm:grid-cols-2">
           <div>
             <p className="text-[10px] font-medium uppercase tracking-wider text-muted-foreground/70">
               Số tiền
