@@ -7,10 +7,8 @@ import {
   countTasksByType,
   filterTasks,
   taskFilterColumns,
-  taskSearchColumns,
   type TaskFilterState,
   type TaskFilterColumn,
-  type TaskSearchColumn,
 } from "../domain/task-filters";
 
 export interface UseTaskListResult {
@@ -19,7 +17,6 @@ export interface UseTaskListResult {
   searchValue: string;
   filterValues: Record<string, string[]>;
   taskCountByType: ReturnType<typeof countTasksByType>;
-  searchableColumns: TaskSearchColumn[];
   filterableColumns: TaskFilterColumn[];
   onSearchChange: (value: string) => void;
   onFilterChange: (filterId: string, values: string[]) => void;
@@ -33,7 +30,6 @@ export const useTaskList = (): UseTaskListResult => {
     Record<string, string[]>
   >({});
 
-  const searchableColumns = React.useMemo(() => taskSearchColumns, []);
   const filterableColumns = React.useMemo(() => taskFilterColumns, []);
   const taskCountByType = React.useMemo(() => countTasksByType(data), [data]);
   const filterState = React.useMemo<TaskFilterState>(
@@ -66,7 +62,6 @@ export const useTaskList = (): UseTaskListResult => {
     searchValue,
     filterValues,
     taskCountByType,
-    searchableColumns,
     filterableColumns,
     onSearchChange: setSearchValue,
     onFilterChange,

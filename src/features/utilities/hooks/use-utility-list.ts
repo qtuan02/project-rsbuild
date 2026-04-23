@@ -9,9 +9,7 @@ import {
 } from "../domain/utility-filters";
 import {
   utilityFilterColumns,
-  utilitySearchColumns,
   type UtilityFilterColumn,
-  type UtilitySearchColumn,
 } from "../domain/utility-filters";
 import { calculateUtilityStats } from "../domain/utility-stats";
 
@@ -21,7 +19,6 @@ export interface UseUtilityListResult {
   searchValue: string;
   filterValues: Record<string, string[]>;
   stats: ReturnType<typeof calculateUtilityStats>;
-  searchableColumns: UtilitySearchColumn[];
   filterableColumns: UtilityFilterColumn[];
   onSearchChange: (value: string) => void;
   onFilterChange: (filterId: string, values: string[]) => void;
@@ -35,7 +32,6 @@ export const useUtilityList = (): UseUtilityListResult => {
     Record<string, string[]>
   >({});
 
-  const searchableColumns = React.useMemo(() => utilitySearchColumns, []);
   const filterableColumns = React.useMemo(() => utilityFilterColumns, []);
   const stats = React.useMemo(() => calculateUtilityStats(data), [data]);
   const filterState = React.useMemo<UtilityFilterState>(
@@ -68,7 +64,6 @@ export const useUtilityList = (): UseUtilityListResult => {
     searchValue,
     filterValues,
     stats,
-    searchableColumns,
     filterableColumns,
     onSearchChange: setSearchValue,
     onFilterChange,

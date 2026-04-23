@@ -5,11 +5,6 @@ import {
   typeFilterOptions,
 } from "./utility-display-config";
 
-export interface UtilitySearchColumn {
-  id: "roomName" | "month";
-  title: string;
-}
-
 export interface UtilityFilterColumn {
   id: "status" | "type";
   title: string;
@@ -23,11 +18,6 @@ export interface UtilityFilterState {
   search: string;
   filters: Record<string, string[]>;
 }
-
-export const utilitySearchColumns: UtilitySearchColumn[] = [
-  { id: "roomName", title: "tên phòng" },
-  { id: "month", title: "tháng" },
-];
 
 export const utilityFilterColumns: UtilityFilterColumn[] = [
   {

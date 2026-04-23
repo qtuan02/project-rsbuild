@@ -6,11 +6,6 @@ import {
   typeFilterOptions,
 } from "./task-display-config";
 
-export interface TaskSearchColumn {
-  id: "title" | "description";
-  title: string;
-}
-
 export interface TaskFilterColumn {
   id: "priority" | "status" | "type";
   title: string;
@@ -24,11 +19,6 @@ export interface TaskFilterState {
   search: string;
   filters: Record<string, string[]>;
 }
-
-export const taskSearchColumns: TaskSearchColumn[] = [
-  { id: "title", title: "tiêu đề" },
-  { id: "description", title: "mô tả" },
-];
 
 export const taskFilterColumns: TaskFilterColumn[] = [
   {
