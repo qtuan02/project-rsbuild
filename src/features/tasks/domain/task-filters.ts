@@ -1,10 +1,10 @@
+import type { Task, TaskType } from "@/types/task";
+
 import {
   priorityFilterOptions,
   statusFilterOptions,
   typeFilterOptions,
 } from "./task-display-config";
-
-import type { ComponentType } from "react";
 
 export interface TaskSearchColumn {
   id: "title" | "description";
@@ -17,8 +17,12 @@ export interface TaskFilterColumn {
   options: {
     label: string;
     value: string;
-    icon?: ComponentType<{ className?: string }>;
   }[];
+}
+
+export interface TaskFilterState {
+  search: string;
+  filters: Record<string, string[]>;
 }
 
 export const taskSearchColumns: TaskSearchColumn[] = [
@@ -43,3 +47,46 @@ export const taskFilterColumns: TaskFilterColumn[] = [
     options: typeFilterOptions,
   },
 ];
+
+export const filterTasks = (
+  tasks: Task[],
+  filterState: TaskFilterState,
+): Task[] => {
+  let result = tasks;
+  const normalizedSearch = filterState.search.trim().toLowerCase();
+
+  if (normalizedSearch) {
+    result = result.filter(
+      (task) =>
+        task.title.toLowerCase().includes(normalizedSearch) ||
+        task.description.toLowerCase().includes(normalizedSearch),
+    );
+  }
+
+  Object.entries(filterState.filters).forEach(([key, values]) => {
+    if (values.length === 0) {
+      return;
+    }
+
+    result = result.filter((task) => {
+      const taskValue = task[key as keyof Task];
+      return values.includes(String(taskValue));
+    });
+  });
+
+  return result;
+};
+
+export const countTasksByType = (tasks: Task[]): Record<TaskType, number> => {
+  return tasks.reduce<Record<TaskType, number>>(
+    (accumulator, task) => {
+      accumulator[task.type] += 1;
+      return accumulator;
+    },
+    {
+      invoice_overdue: 0,
+      contract_expiring: 0,
+      maintenance: 0,
+    },
+  );
+};

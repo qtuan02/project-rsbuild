@@ -8,8 +8,10 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { routeBuilders } from "@/config/routes";
 import type { Task } from "@/types/task";
 
+import { taskPriorityUiConfig, taskStatusUiConfig } from "./task-ui-config";
 import {
   taskPriorityConfig,
   taskStatusConfig,
@@ -30,16 +32,16 @@ export const TaskCard: React.FC<TaskCardProps> = ({ task }) => {
   const handleViewDetails = () => {
     switch (task.relatedEntity) {
       case "invoice":
-        navigate(`/invoices/${task.relatedId}`);
+        navigate(routeBuilders.invoiceDetail(task.relatedId));
         break;
       case "contract":
-        navigate(`/contracts/${task.relatedId}`);
+        navigate(routeBuilders.contractDetail(task.relatedId));
         break;
       case "room":
-        navigate(`/rooms/${task.relatedId}`);
+        navigate(routeBuilders.roomDetail(task.relatedId));
         break;
       case "tenant":
-        navigate(`/tenants/${task.relatedId}`);
+        navigate(routeBuilders.tenantDetail(task.relatedId));
         break;
     }
   };
@@ -62,7 +64,7 @@ export const TaskCard: React.FC<TaskCardProps> = ({ task }) => {
             </CardDescription>
           </div>
           <div
-            className={`whitespace-nowrap rounded-full px-2.5 py-0.5 text-xs font-medium ${priorityConfig.badgeColor}`}
+            className={`whitespace-nowrap rounded-full px-2.5 py-0.5 text-xs font-medium ${taskPriorityUiConfig[task.priority].badgeClassName}`}
           >
             {priorityConfig.label}
           </div>
@@ -76,7 +78,7 @@ export const TaskCard: React.FC<TaskCardProps> = ({ task }) => {
             {typeConfig.label}
           </span>
           <span
-            className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${statusConfig.badgeColor}`}
+            className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${taskStatusUiConfig[task.status].badgeClassName}`}
           >
             {statusConfig.label}
           </span>

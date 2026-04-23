@@ -1,13 +1,17 @@
 import { format } from "date-fns";
 import { vi } from "date-fns/locale";
+import { Link } from "react-router-dom";
 
+import { Button } from "@/components/ui/button";
+import { routeBuilders } from "@/config/routes";
 import type { Utility } from "@/types/utility";
 
+import { utilityStatusUiConfig } from "./utility-ui-config";
 import { utilityStatusConfig } from "../domain/utility-display-config";
 
 import type { ColumnDef } from "@tanstack/react-table";
 
-export const createUtilityColumns = (): ColumnDef<Utility>[] => [
+export const utilityColumns: ColumnDef<Utility>[] = [
   {
     accessorKey: "roomName",
     header: "Phòng",
@@ -52,12 +56,13 @@ export const createUtilityColumns = (): ColumnDef<Utility>[] => [
     cell: ({ row }) => {
       const status = row.original.status;
       const config = utilityStatusConfig[status];
-      const Icon = config.icon;
+      const statusUi = utilityStatusUiConfig[status];
+      const Icon = statusUi.Icon;
       return (
         <div className="flex items-center gap-2">
           <Icon className="h-4 w-4" />
           <span
-            className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${config.badgeColor}`}
+            className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${statusUi.badgeClassName}`}
           >
             {config.label}
           </span>
@@ -72,5 +77,16 @@ export const createUtilityColumns = (): ColumnDef<Utility>[] => [
       format(new Date(row.original.updatedAt), "dd MMM yyyy, HH:mm", {
         locale: vi,
       }),
+  },
+  {
+    id: "actions",
+    header: "",
+    cell: ({ row }) => (
+      <Button variant="ghost" size="sm" asChild>
+        <Link to={routeBuilders.utilityDetail(row.original.id)}>
+          Xem chi tiết
+        </Link>
+      </Button>
+    ),
   },
 ];

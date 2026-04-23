@@ -16,7 +16,7 @@ import { RoomListPage } from "@/features/rooms/pages/room-list-page";
 import { SettingsPage } from "@/features/settings/pages/settings-page";
 import { TaskCenterPage } from "@/features/tasks/pages/task-center-page";
 import { TenantListPage } from "@/features/tenants/pages/tenant-list-page";
-import { UtilityListPage } from "@/features/utilities/pages/utility-list-page";
+import { UtilityRoutes } from "@/features/utilities/pages/utility-routes";
 
 import type { LucideIcon } from "lucide-react";
 import type { ComponentType } from "react";
@@ -33,6 +33,10 @@ export const routes = {
 } as const;
 
 export const routeBuilders = {
+  invoiceDetail: (invoiceId: string) => `/invoices/${invoiceId}`,
+  contractDetail: (contractId: string) => `/contracts/${contractId}`,
+  roomDetail: (roomId: string) => `/rooms/${roomId}`,
+  tenantDetail: (tenantId: string) => `/tenants/${tenantId}`,
   utilityDetail: (utilityId: string) => `/utilities/${utilityId}`,
 };
 
@@ -121,7 +125,7 @@ export const appRouteManifest: AppRouteManifestItem[] = [
     icon: Droplet,
     group: "management",
     implemented: true,
-    component: UtilityListPage,
+    component: UtilityRoutes,
   },
   {
     key: "tasks",

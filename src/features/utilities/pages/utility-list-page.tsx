@@ -1,54 +1,27 @@
 import { Plus, Activity, AlertCircle, Clock } from "lucide-react";
-import * as React from "react";
 
 import { SummaryCard } from "@/components/shared/cards/summary-card";
 import { EmptyPanel, LoadingPanel } from "@/components/shared/panels";
 import { DataTable } from "@/components/shared/table/data-table";
 import { Button } from "@/components/ui/button";
 
-import { createUtilityColumns } from "../components/utility-columns";
+import { utilityColumns } from "../components/utility-columns";
 import { UtilityFilters } from "../components/utility-filters";
-import { calculateUtilityStats } from "../domain/utility-stats";
 import { useUtilityList } from "../hooks/use-utility-list";
 
-export const UtilityListPage: React.FC = () => {
-  const { data, filterableColumns } = useUtilityList();
+export const UtilityListPage = () => {
+  const {
+    filteredData,
+    filterValues,
+    filterableColumns,
+    onFilterChange,
+    onSearchChange,
+    searchValue,
+    clearFilters,
+    stats,
+  } = useUtilityList();
 
-  const [isLoading] = React.useState(false);
-  const [filteredData, setFilteredData] = React.useState(data);
-  const [searchValue, setSearchValue] = React.useState("");
-  const [filterValues, setFilterValues] = React.useState<
-    Record<string, string[]>
-  >({});
-
-  React.useEffect(() => {
-    let result = data;
-
-    if (searchValue) {
-      result = result.filter((item) => {
-        const searchLower = searchValue.toLowerCase();
-        return (
-          item.roomName.toLowerCase().includes(searchLower) ||
-          item.month.includes(searchValue)
-        );
-      });
-    }
-
-    Object.entries(filterValues).forEach(([key, values]) => {
-      if (values.length > 0) {
-        result = result.filter((item) => {
-          const itemValue = item[key as keyof typeof item];
-          return values.includes(String(itemValue));
-        });
-      }
-    });
-
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setFilteredData(result);
-  }, [data, searchValue, filterValues]);
-
-  const stats = calculateUtilityStats(data);
-  const columns = createUtilityColumns();
+  const isLoading = false;
 
   if (isLoading) {
     return <LoadingPanel />;
@@ -96,29 +69,25 @@ export const UtilityListPage: React.FC = () => {
       {/* Filters */}
       <div>
         <UtilityFilters
-          onSearch={setSearchValue}
-          onFilterChange={(key, values) => {
-            setFilterValues((prev) => ({
-              ...prev,
-              [key]: values,
-            }));
-          }}
+          searchValue={searchValue}
+          selectedFilters={filterValues}
+          onSearch={onSearchChange}
+          onFilterChange={onFilterChange}
+          onClearFilters={clearFilters}
           filterOptions={filterableColumns}
         />
       </div>
 
       {/* Table */}
       {filteredData.length > 0 ? (
-        <div className="rounded-lg border">
-          <DataTable columns={columns} data={filteredData} />
-        </div>
+        <DataTable columns={utilityColumns} data={filteredData} />
       ) : (
         <EmptyPanel
           title="Không có dữ liệu"
           description="Chưa có chỉ số nào được thêm"
           action={{
-            label: "Thêm chỉ số đầu tiên",
-            onClick: () => console.log("Add utility"),
+            label: "Xóa bộ lọc",
+            onClick: clearFilters,
           }}
         />
       )}

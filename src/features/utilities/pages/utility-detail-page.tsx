@@ -5,7 +5,9 @@ import { useNavigate, useParams } from "react-router-dom";
 import { ErrorPanel, LoadingPanel } from "@/components/shared/panels";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { routes } from "@/config/routes";
 
+import { utilityStatusUiConfig } from "../components/utility-ui-config";
 import { getUtilityById } from "../data/utility.repository";
 import {
   utilityStatusConfig,
@@ -37,6 +39,7 @@ export const UtilityDetailPage: React.FC = () => {
     try {
       // eslint-disable-next-line react-hooks/set-state-in-effect
       setIsLoading(true);
+      setError(null);
       if (!utilityId) {
         setError("Invalid utility ID");
         return;
@@ -65,13 +68,14 @@ export const UtilityDetailPage: React.FC = () => {
         description={error || "Chỉ số không tìm thấy"}
         action={{
           label: "Quay lại",
-          onClick: () => navigate("/utilities"),
+          onClick: () => navigate(routes.utilities),
         }}
       />
     );
   }
 
   const statusConfig = utilityStatusConfig[utility.status];
+  const statusUiConfig = utilityStatusUiConfig[utility.status];
   const typeConfig = utilityTypeConfig[utility.type];
 
   return (
@@ -82,7 +86,7 @@ export const UtilityDetailPage: React.FC = () => {
           <Button
             variant="ghost"
             size="icon"
-            onClick={() => navigate("/utilities")}
+            onClick={() => navigate(routes.utilities)}
           >
             <ArrowLeft className="h-4 w-4" />
           </Button>
@@ -150,7 +154,7 @@ export const UtilityDetailPage: React.FC = () => {
                 label="Trạng thái"
                 value={
                   <span
-                    className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${statusConfig.badgeColor}`}
+                    className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${statusUiConfig.badgeClassName}`}
                   >
                     {statusConfig.label}
                   </span>
