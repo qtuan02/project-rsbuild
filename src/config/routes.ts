@@ -1,5 +1,7 @@
 import {
   Building2,
+  CheckSquare,
+  Droplet,
   Home,
   ReceiptText,
   ScrollText,
@@ -12,7 +14,9 @@ import { DashboardPage } from "@/features/dashboard/pages/dashboard-page";
 import { InvoiceListPage } from "@/features/invoices/pages/invoice-list-page";
 import { RoomListPage } from "@/features/rooms/pages/room-list-page";
 import { SettingsPage } from "@/features/settings/pages/settings-page";
+import { TaskCenterPage } from "@/features/tasks/pages/task-center-page";
 import { TenantListPage } from "@/features/tenants/pages/tenant-list-page";
+import { UtilityRoutes } from "@/features/utilities/pages/utility-routes";
 
 import type { LucideIcon } from "lucide-react";
 import type { ComponentType } from "react";
@@ -23,6 +27,8 @@ export const routes = {
   tenants: "/tenants",
   contracts: "/contracts",
   invoices: "/invoices",
+  utilities: "/utilities",
+  tasks: "/tasks",
   settings: "/settings",
 } as const;
 
@@ -31,6 +37,7 @@ export const routePathBuilders = {
   tenantDetail: (tenantId: string) => `${routes.tenants}/${tenantId}`,
   contractDetail: (contractId: string) => `${routes.contracts}/${contractId}`,
   invoiceDetail: (invoiceId: string) => `${routes.invoices}/${invoiceId}`,
+  utilityDetail: (utilityId: string) => `${routes.utilities}/${utilityId}`,
 } as const;
 
 export type AppRoutePath = (typeof routes)[keyof typeof routes];
@@ -108,6 +115,28 @@ export const appRouteManifest: AppRouteManifestItem[] = [
     group: "management",
     implemented: true,
     component: InvoiceListPage,
+  },
+  {
+    key: "utilities",
+    path: routes.utilities,
+    routePath: "utilities/*",
+    title: "Tiện ích",
+    description: "Quản lý chỉ số điện nước.",
+    icon: Droplet,
+    group: "management",
+    implemented: true,
+    component: UtilityRoutes,
+  },
+  {
+    key: "tasks",
+    path: routes.tasks,
+    routePath: "tasks/*",
+    title: "Trung tâm nhiệm vụ",
+    description: "Xem các nhiệm vụ cần xử lý.",
+    icon: CheckSquare,
+    group: "main",
+    implemented: true,
+    component: TaskCenterPage,
   },
   {
     key: "settings",
