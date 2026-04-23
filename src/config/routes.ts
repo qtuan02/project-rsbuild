@@ -2,6 +2,9 @@ import {
   Building2,
   CheckSquare,
   Droplet,
+  BarChart3,
+  Shield,
+  MessageSquare,
   Home,
   ReceiptText,
   ScrollText,
@@ -9,9 +12,12 @@ import {
   Users,
 } from "lucide-react";
 
-import { ContractListPage } from "@/features/contracts/pages/contract-list-page";
+import { CommunicationsPage } from "@/features/communications/pages/communications-page";
+import { ComplianceDashboardPage } from "@/features/compliance/pages/compliance-dashboard-page";
+import { ContractRoutes } from "@/features/contracts/pages/contract-routes";
 import { DashboardPage } from "@/features/dashboard/pages/dashboard-page";
 import { InvoiceListPage } from "@/features/invoices/pages/invoice-list-page";
+import { ReportsOverviewPage } from "@/features/reports/pages/reports-overview-page";
 import { RoomListPage } from "@/features/rooms/pages/room-list-page";
 import { SettingsPage } from "@/features/settings/pages/settings-page";
 import { TaskCenterPage } from "@/features/tasks/pages/task-center-page";
@@ -29,6 +35,9 @@ export const routes = {
   invoices: "/invoices",
   utilities: "/utilities",
   tasks: "/tasks",
+  reports: "/reports",
+  compliance: "/compliance",
+  communications: "/communications",
   settings: "/settings",
 } as const;
 
@@ -36,6 +45,10 @@ export const routePathBuilders = {
   roomDetail: (roomId: string) => `${routes.rooms}/${roomId}`,
   tenantDetail: (tenantId: string) => `${routes.tenants}/${tenantId}`,
   contractDetail: (contractId: string) => `${routes.contracts}/${contractId}`,
+  contractRenew: (contractId: string) =>
+    `${routes.contracts}/${contractId}/renew`,
+  contractLiquidation: (contractId: string) =>
+    `${routes.contracts}/${contractId}/liquidation`,
   invoiceDetail: (invoiceId: string) => `${routes.invoices}/${invoiceId}`,
   utilityDetail: (utilityId: string) => `${routes.utilities}/${utilityId}`,
 } as const;
@@ -103,7 +116,7 @@ export const appRouteManifest: AppRouteManifestItem[] = [
     icon: ScrollText,
     group: "management",
     implemented: true,
-    component: ContractListPage,
+    component: ContractRoutes,
   },
   {
     key: "invoices",
@@ -137,6 +150,39 @@ export const appRouteManifest: AppRouteManifestItem[] = [
     group: "main",
     implemented: true,
     component: TaskCenterPage,
+  },
+  {
+    key: "reports",
+    path: routes.reports,
+    routePath: "reports/*",
+    title: "Báo cáo",
+    description: "Xem báo cáo doanh thu, chi phí và hiệu suất.",
+    icon: BarChart3,
+    group: "management",
+    implemented: true,
+    component: ReportsOverviewPage,
+  },
+  {
+    key: "compliance",
+    path: routes.compliance,
+    routePath: "compliance/*",
+    title: "Tuân thủ",
+    description: "Quản lý khai báo nơi ở và kiểm tra an toàn.",
+    icon: Shield,
+    group: "system",
+    implemented: true,
+    component: ComplianceDashboardPage,
+  },
+  {
+    key: "communications",
+    path: routes.communications,
+    routePath: "communications/*",
+    title: "Liên lạc",
+    description: "Gửi thông báo cho khách thuê.",
+    icon: MessageSquare,
+    group: "system",
+    implemented: true,
+    component: CommunicationsPage,
   },
   {
     key: "settings",

@@ -1,6 +1,15 @@
-import { RotateCcw } from "lucide-react";
+import { BarChart3, MessageSquare, RotateCcw, Shield } from "lucide-react";
+import { Link } from "react-router-dom";
 
 import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { routes } from "@/config/routes";
 
 import { SettingGroup } from "../components/setting-group";
 import { useSettings } from "../hooks/use-settings";
@@ -24,6 +33,36 @@ export const SettingsPage = () => {
           Khôi phục mặc định
         </Button>
       </div>
+
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-base">Tuân thủ & liên lạc</CardTitle>
+          <CardDescription>
+            Truy cập nhanh các màn hình hệ thống liên quan đến tuân thủ và gửi
+            thông báo.
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="flex flex-wrap gap-2">
+          <Button variant="outline" size="sm" asChild>
+            <Link to={routes.compliance} className="gap-2">
+              <Shield className="h-4 w-4" />
+              Tuân thủ
+            </Link>
+          </Button>
+          <Button variant="outline" size="sm" asChild>
+            <Link to={routes.communications} className="gap-2">
+              <MessageSquare className="h-4 w-4" />
+              Liên lạc
+            </Link>
+          </Button>
+          <Button variant="outline" size="sm" asChild>
+            <Link to={routes.reports} className="gap-2">
+              <BarChart3 className="h-4 w-4" />
+              Báo cáo
+            </Link>
+          </Button>
+        </CardContent>
+      </Card>
 
       <div className="space-y-4">
         {categoryOrder.map((category) => (
