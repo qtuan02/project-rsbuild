@@ -1,5 +1,6 @@
 import { AlertCircle, ArrowLeft, CheckCircle2 } from "lucide-react";
 import { useState } from "react";
+import { toast } from "sonner";
 
 import { InfoRow } from "@/components/shared/cards/info-card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
@@ -64,7 +65,9 @@ export const ContractRenewPage = ({
     // Simulate API call
     await new Promise((resolve) => setTimeout(resolve, 1000));
     setIsSubmitting(false);
-    alert("Hợp đồng đã được gia hạn thành công!");
+    toast.success("Gia hạn hợp đồng", {
+      description: "Đã mô phỏng gia hạn thành công (UI-only).",
+    });
     onBack?.();
   };
 

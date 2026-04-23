@@ -1,5 +1,6 @@
 import { AlertTriangle, ArrowLeft } from "lucide-react";
 import { useState } from "react";
+import { toast } from "sonner";
 
 import { InfoRow } from "@/components/shared/cards/info-card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
@@ -89,7 +90,9 @@ export const ContractLiquidationPage = ({
     setIsSubmitting(true);
     await new Promise((resolve) => setTimeout(resolve, 1000));
     setIsSubmitting(false);
-    alert("Hợp đồng đã được thanh lý thành công!");
+    toast.success("Thanh lý hợp đồng", {
+      description: "Đã mô phỏng thanh lý thành công (UI-only).",
+    });
     onBack?.();
   };
 

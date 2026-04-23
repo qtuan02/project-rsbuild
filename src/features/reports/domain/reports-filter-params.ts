@@ -13,4 +13,7 @@ export const defaultReportFilters: ReportFilterParams = {
     startDate: "04/01/2026",
     endDate: "04/30/2026",
   },
+  building: "all",
+  floor: "all",
+  status: "all",
 };

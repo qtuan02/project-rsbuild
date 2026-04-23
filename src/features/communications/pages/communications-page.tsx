@@ -1,5 +1,8 @@
-import { useState } from "react";
-
+import {
+  EmptyPanel,
+  ErrorPanel,
+  LoadingPanel,
+} from "@/components/shared/panels";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import {
@@ -12,35 +15,46 @@ import {
 
 import { SendLogTable } from "../components/send-log-table";
 import { TemplateList } from "../components/template-list";
-import { getTemplates, getSendLogs } from "../data/communications.mock";
-
-import type { NotificationTemplate } from "../data/communications.mock";
+import { useCommunications } from "../hooks/use-communications";
 
 export const CommunicationsPage = () => {
-  const templates = getTemplates();
-  const sendLogs = getSendLogs();
-  const [filterChannel, setFilterChannel] = useState("all");
-  const [filterStatus, setFilterStatus] = useState("all");
-  const [searchTenant, setSearchTenant] = useState("");
+  const {
+    isLoading,
+    error,
+    templates,
+    sendLogs,
+    filteredLogs,
+    searchTenant,
+    setSearchTenant,
+    filterChannel,
+    setFilterChannel,
+    filterStatus,
+    setFilterStatus,
+    clearLogFilters,
+    handleSendTemplate,
+  } = useCommunications();
 
-  const filteredLogs = sendLogs.filter((log) => {
-    if (filterChannel !== "all" && log.channel !== filterChannel) return false;
-    if (filterStatus !== "all" && log.status !== filterStatus) return false;
-    if (
-      searchTenant &&
-      !log.tenant.toLowerCase().includes(searchTenant.toLowerCase())
-    )
-      return false;
-    return true;
-  });
+  if (error) {
+    return (
+      <div className="space-y-6">
+        <ErrorPanel
+          title="Không thể tải dữ liệu"
+          description={error}
+          action={{
+            label: "Thử lại",
+            onClick: () => window.location.reload(),
+          }}
+        />
+      </div>
+    );
+  }
 
-  const handleSendTemplate = (template: NotificationTemplate) => {
-    console.log("Sending template:", template.name);
-  };
+  if (isLoading) {
+    return <LoadingPanel />;
+  }
 
   return (
     <div className="space-y-6">
-      {/* Header */}
       <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
         <div>
           <h1 className="text-3xl font-bold tracking-tight">Liên lạc</h1>
@@ -50,17 +64,22 @@ export const CommunicationsPage = () => {
         </div>
       </div>
 
-      {/* Templates Section */}
       <div>
-        <h2 className="text-lg font-semibold mb-4">Mẫu thông báo</h2>
-        <TemplateList templates={templates} onSend={handleSendTemplate} />
+        <h2 className="mb-4 text-lg font-semibold">Mẫu thông báo</h2>
+        {templates.length > 0 ? (
+          <TemplateList templates={templates} onSend={handleSendTemplate} />
+        ) : (
+          <EmptyPanel
+            title="Chưa có mẫu"
+            description="Thêm mẫu thông báo để gửi nhanh cho khách thuê."
+          />
+        )}
       </div>
 
-      {/* Send Log Section */}
       <div>
         <div className="mb-4 flex flex-col gap-4 sm:flex-row sm:items-end">
           <div className="flex-1">
-            <label className="text-sm font-medium mb-2 block">
+            <label className="mb-2 block text-sm font-medium">
               Tìm kiếm khách
             </label>
             <Input
@@ -70,7 +89,7 @@ export const CommunicationsPage = () => {
             />
           </div>
           <div className="min-w-40">
-            <label className="text-sm font-medium mb-2 block">Kênh</label>
+            <label className="mb-2 block text-sm font-medium">Kênh</label>
             <Select value={filterChannel} onValueChange={setFilterChannel}>
               <SelectTrigger>
                 <SelectValue />
@@ -85,7 +104,7 @@ export const CommunicationsPage = () => {
             </Select>
           </div>
           <div className="min-w-40">
-            <label className="text-sm font-medium mb-2 block">Trạng thái</label>
+            <label className="mb-2 block text-sm font-medium">Trạng thái</label>
             <Select value={filterStatus} onValueChange={setFilterStatus}>
               <SelectTrigger>
                 <SelectValue />
@@ -100,10 +119,20 @@ export const CommunicationsPage = () => {
           </div>
         </div>
 
-        <SendLogTable logs={filteredLogs} />
+        {filteredLogs.length > 0 ? (
+          <SendLogTable logs={filteredLogs} />
+        ) : (
+          <EmptyPanel
+            title="Không có nhật ký phù hợp"
+            description="Thử đổi bộ lọc hoặc từ khóa tìm kiếm."
+            action={{
+              label: "Xóa bộ lọc",
+              onClick: clearLogFilters,
+            }}
+          />
+        )}
       </div>
 
-      {/* Statistics */}
       <div className="grid gap-4 md:grid-cols-4">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">

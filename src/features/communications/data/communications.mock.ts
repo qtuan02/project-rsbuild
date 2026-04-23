@@ -70,6 +70,3 @@ export const mockSendLogs: SendLog[] = [
     recipient: "0987654321",
   },
 ];
-
-export const getTemplates = () => mockTemplates;
-export const getSendLogs = () => mockSendLogs;

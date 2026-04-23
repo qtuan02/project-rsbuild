@@ -1,23 +1,58 @@
 import { AlertCircle, Download } from "lucide-react";
-import { useState } from "react";
+import { toast } from "sonner";
 
+import {
+  EmptyPanel,
+  ErrorPanel,
+  LoadingPanel,
+} from "@/components/shared/panels";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 import { ReportFilters } from "../components/report-filters";
 import { ReportKPICards } from "../components/report-kpi-cards";
 import { ReportTable } from "../components/report-table";
+import {
+  defaultReportFilters,
+  type ReportFilterParams,
+} from "../domain/reports-filter-params";
 import { useReports } from "../hooks/use-reports";
 
-import type { ReportFilterParams } from "../domain/reports-filter-params";
-
 export const ReportsOverviewPage = () => {
-  const { reports, filters, setFilters, plSummary, overdueList } = useReports();
-  const [isLoading] = useState(false);
+  const {
+    reports,
+    filters,
+    setFilters,
+    plSummary,
+    overdueList,
+    isLoading,
+    error,
+  } = useReports();
 
   const handleExport = () => {
-    alert("Chức năng xuất báo cáo sẽ được thêm trong tương lai");
+    toast.info("Chức năng xuất báo cáo", {
+      description: "Tính năng sẽ được bổ sung trong phiên bản sau.",
+    });
   };
+
+  if (error) {
+    return (
+      <div className="space-y-6">
+        <ErrorPanel
+          title="Không thể tải báo cáo"
+          description={error}
+          action={{
+            label: "Thử lại",
+            onClick: () => window.location.reload(),
+          }}
+        />
+      </div>
+    );
+  }
+
+  if (isLoading) {
+    return <LoadingPanel />;
+  }
 
   return (
     <div className="space-y-6">
@@ -41,26 +76,36 @@ export const ReportsOverviewPage = () => {
         onFiltersChange={(newFilters: ReportFilterParams) =>
           setFilters(newFilters)
         }
+        onClearFilters={() => setFilters(defaultReportFilters)}
       />
 
       {/* KPI Cards */}
-      {!isLoading && (
-        <ReportKPICards
-          totalRevenue={plSummary.totalRevenue}
-          totalExpenses={plSummary.totalExpenses}
-          profit={plSummary.totalProfit}
-          avgOccupancy={plSummary.avgOccupancy}
-        />
-      )}
+      <ReportKPICards
+        totalRevenue={plSummary.totalRevenue}
+        totalExpenses={plSummary.totalExpenses}
+        profit={plSummary.totalProfit}
+        avgOccupancy={plSummary.avgOccupancy}
+      />
 
       {/* Report Tables */}
       <div className="grid gap-6 lg:grid-cols-2">
         {/* P&L Summary */}
-        <ReportTable
-          data={reports}
-          title="Tổng hợp P&L"
-          description="Doanh thu, chi phí và lợi nhuận theo tòa/tầng"
-        />
+        {reports.length > 0 ? (
+          <ReportTable
+            data={reports}
+            title="Tổng hợp P&L"
+            description="Doanh thu, chi phí và lợi nhuận theo tòa/tầng"
+          />
+        ) : (
+          <EmptyPanel
+            title="Không có dòng báo cáo"
+            description="Thử đổi bộ lọc tòa, tầng hoặc trạng thái."
+            action={{
+              label: "Đặt lại bộ lọc",
+              onClick: () => setFilters(defaultReportFilters),
+            }}
+          />
+        )}
 
         {/* Overdue Debt */}
         <Card>
@@ -104,9 +149,10 @@ export const ReportsOverviewPage = () => {
                   </div>
                 ))
               ) : (
-                <p className="text-sm text-muted-foreground">
-                  Không có công nợ quá hạn
-                </p>
+                <EmptyPanel
+                  title="Không có công nợ quá hạn"
+                  description="Danh sách trống trong kỳ báo cáo hiện tại."
+                />
               )}
             </div>
           </CardContent>
@@ -121,25 +167,33 @@ export const ReportsOverviewPage = () => {
             <CardTitle className="text-base">Hiệu suất lấp đầy</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="space-y-4">
-              {reports.map((report) => (
-                <div
-                  key={`${report.month}-${report.floor}`}
-                  className="space-y-2"
-                >
-                  <div className="flex justify-between text-sm">
-                    <span>{report.floor}</span>
-                    <span className="font-medium">{report.occupancyRate}%</span>
+            {reports.length > 0 ? (
+              <div className="space-y-4">
+                {reports.map((report) => (
+                  <div
+                    key={`${report.month}-${report.floor}`}
+                    className="space-y-2"
+                  >
+                    <div className="flex justify-between text-sm">
+                      <span>{report.floor}</span>
+                      <span className="font-medium">
+                        {report.occupancyRate}%
+                      </span>
+                    </div>
+                    <div className="h-2 w-full overflow-hidden rounded-full bg-muted">
+                      <div
+                        className="h-full bg-green-500"
+                        style={{ width: `${report.occupancyRate}%` }}
+                      />
+                    </div>
                   </div>
-                  <div className="h-2 w-full overflow-hidden rounded-full bg-muted">
-                    <div
-                      className="h-full bg-green-500"
-                      style={{ width: `${report.occupancyRate}%` }}
-                    />
-                  </div>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
+            ) : (
+              <p className="text-sm text-muted-foreground">
+                Không có dữ liệu cho bộ lọc hiện tại.
+              </p>
+            )}
           </CardContent>
         </Card>
 
@@ -151,22 +205,28 @@ export const ReportsOverviewPage = () => {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="space-y-4">
-              {reports.map((report) => (
-                <div
-                  key={`${report.month}-${report.floor}-util`}
-                  className="flex items-center justify-between rounded-lg border p-3"
-                >
-                  <div>
-                    <p className="text-sm font-medium">{report.floor}</p>
-                    <div className="mt-1 flex gap-4 text-xs text-muted-foreground">
-                      <span>💧 {report.waterUsage} m³</span>
-                      <span>⚡ {report.electricityUsage} kWh</span>
+            {reports.length > 0 ? (
+              <div className="space-y-4">
+                {reports.map((report) => (
+                  <div
+                    key={`${report.month}-${report.floor}-util`}
+                    className="flex items-center justify-between rounded-lg border p-3"
+                  >
+                    <div>
+                      <p className="text-sm font-medium">{report.floor}</p>
+                      <div className="mt-1 flex gap-4 text-xs text-muted-foreground">
+                        <span>💧 {report.waterUsage} m³</span>
+                        <span>⚡ {report.electricityUsage} kWh</span>
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
+            ) : (
+              <p className="text-sm text-muted-foreground">
+                Không có dữ liệu cho bộ lọc hiện tại.
+              </p>
+            )}
           </CardContent>
         </Card>
       </div>

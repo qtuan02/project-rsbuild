@@ -20,11 +20,13 @@ import type { ReportFilterParams } from "../domain/reports-filter-params";
 interface ReportFiltersProps {
   filters: ReportFilterParams;
   onFiltersChange: (filters: ReportFilterParams) => void;
+  onClearFilters?: () => void;
 }
 
 export const ReportFilters = ({
   filters,
   onFiltersChange,
+  onClearFilters,
 }: ReportFiltersProps) => {
   return (
     <div className="space-y-4 rounded-lg border bg-card p-4">
@@ -33,7 +35,7 @@ export const ReportFilters = ({
         <div className="space-y-2">
           <label className="text-sm font-medium">Tòa</label>
           <Select
-            defaultValue="all"
+            value={filters.building ?? "all"}
             onValueChange={(value) =>
               onFiltersChange({ ...filters, building: value })
             }
@@ -54,7 +56,7 @@ export const ReportFilters = ({
         <div className="space-y-2">
           <label className="text-sm font-medium">Tầng</label>
           <Select
-            defaultValue="all"
+            value={filters.floor ?? "all"}
             onValueChange={(value) =>
               onFiltersChange({ ...filters, floor: value })
             }
@@ -75,7 +77,7 @@ export const ReportFilters = ({
         <div className="space-y-2">
           <label className="text-sm font-medium">Trạng thái</label>
           <Select
-            defaultValue="all"
+            value={filters.status ?? "all"}
             onValueChange={(value) =>
               onFiltersChange({ ...filters, status: value })
             }
@@ -103,7 +105,12 @@ export const ReportFilters = ({
       </div>
 
       <div className="flex justify-between">
-        <Button variant="outline" size="sm">
+        <Button
+          variant="outline"
+          size="sm"
+          type="button"
+          onClick={() => onClearFilters?.()}
+        >
           Xóa bộ lọc
         </Button>
         <Button size="sm" variant="default">

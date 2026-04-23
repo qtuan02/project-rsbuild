@@ -1,38 +1,54 @@
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import {
-  getReports,
-  getProfitLossSummary,
   getOverdueList,
+  getProfitLossSummary,
+  getReports,
 } from "../data/reports.repository";
 import { defaultReportFilters } from "../domain/reports-filter-params";
+import { filterReports } from "../domain/reports-filters";
 
 import type { ReportFilterParams } from "../domain/reports-filter-params";
 
 export const useReports = () => {
   const [filters, setFilters] =
     useState<ReportFilterParams>(defaultReportFilters);
-  const reports = getReports();
-  const plSummary = getProfitLossSummary();
-  const overdueList = getOverdueList();
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  const filteredReports = reports.filter((report) => {
-    if (
-      filters.building &&
-      filters.building !== "all" &&
-      report.building !== filters.building
-    ) {
-      return false;
-    }
-    if (
-      filters.floor &&
-      filters.floor !== "all" &&
-      report.floor !== filters.floor
-    ) {
-      return false;
-    }
-    return true;
-  });
+  useEffect(() => {
+    let cancelled = false;
+
+    const load = async () => {
+      setIsLoading(true);
+      setError(null);
+      try {
+        await new Promise((resolve) => setTimeout(resolve, 350));
+      } catch {
+        if (!cancelled) {
+          setError("Không thể tải dữ liệu báo cáo.");
+        }
+      } finally {
+        if (!cancelled) {
+          setIsLoading(false);
+        }
+      }
+    };
+
+    void load();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  const allReports = useMemo(() => getReports(), []);
+  const plSummary = useMemo(() => getProfitLossSummary(), []);
+  const overdueList = useMemo(() => getOverdueList(), []);
+
+  const filteredReports = useMemo(
+    () => filterReports(allReports, filters),
+    [allReports, filters],
+  );
 
   return {
     reports: filteredReports,
@@ -40,5 +56,7 @@ export const useReports = () => {
     setFilters,
     plSummary,
     overdueList,
+    isLoading,
+    error,
   };
 };

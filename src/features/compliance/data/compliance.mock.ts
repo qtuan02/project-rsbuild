@@ -43,5 +43,3 @@ export const mockComplianceItems: ComplianceItem[] = [
     dueDate: "30/04/2026",
   },
 ];
-
-export const getComplianceItems = () => mockComplianceItems;
