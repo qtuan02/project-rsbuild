@@ -3,7 +3,7 @@ import { vi } from "date-fns/locale";
 import { Link } from "react-router-dom";
 
 import { Button } from "@/components/ui/button";
-import { routeBuilders } from "@/config/routes";
+import { routePathBuilders } from "@/config/routes";
 import type { Utility } from "@/types/utility";
 
 import { utilityStatusUiConfig } from "./utility-ui-config";
@@ -83,7 +83,7 @@ export const utilityColumns: ColumnDef<Utility>[] = [
     header: "",
     cell: ({ row }) => (
       <Button variant="ghost" size="sm" asChild>
-        <Link to={routeBuilders.utilityDetail(row.original.id)}>
+        <Link to={routePathBuilders.utilityDetail(row.original.id)}>
           Xem chi tiết
         </Link>
       </Button>

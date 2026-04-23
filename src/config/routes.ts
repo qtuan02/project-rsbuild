@@ -32,13 +32,13 @@ export const routes = {
   settings: "/settings",
 } as const;
 
-export const routeBuilders = {
-  invoiceDetail: (invoiceId: string) => `/invoices/${invoiceId}`,
-  contractDetail: (contractId: string) => `/contracts/${contractId}`,
-  roomDetail: (roomId: string) => `/rooms/${roomId}`,
-  tenantDetail: (tenantId: string) => `/tenants/${tenantId}`,
-  utilityDetail: (utilityId: string) => `/utilities/${utilityId}`,
-};
+export const routePathBuilders = {
+  roomDetail: (roomId: string) => `${routes.rooms}/${roomId}`,
+  tenantDetail: (tenantId: string) => `${routes.tenants}/${tenantId}`,
+  contractDetail: (contractId: string) => `${routes.contracts}/${contractId}`,
+  invoiceDetail: (invoiceId: string) => `${routes.invoices}/${invoiceId}`,
+  utilityDetail: (utilityId: string) => `${routes.utilities}/${utilityId}`,
+} as const;
 
 export type AppRoutePath = (typeof routes)[keyof typeof routes];
 export type AppRouteKey = keyof typeof routes;

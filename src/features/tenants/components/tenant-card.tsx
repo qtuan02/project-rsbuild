@@ -7,6 +7,7 @@ import {
   Phone,
   UserCircle,
 } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -25,6 +26,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { routePathBuilders } from "@/config/routes";
 import { cn } from "@/lib/cn";
 import type { Tenant } from "@/types/tenant";
 import { formatCurrency } from "@/utils/currency";
@@ -37,6 +39,7 @@ interface TenantCardProps {
 }
 
 export const TenantCard = ({ tenant }: TenantCardProps) => {
+  const navigate = useNavigate();
   const statusCfg = tenantStatusConfig[tenant.status];
 
   return (
@@ -81,7 +84,11 @@ export const TenantCard = ({ tenant }: TenantCardProps) => {
               <DropdownMenuLabel>Thao tác</DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuGroup>
-                <DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={() =>
+                    navigate(routePathBuilders.tenantDetail(tenant.id))
+                  }
+                >
                   <UserCircle className="mr-2 h-3.5 w-3.5" />
                   Xem chi tiết
                 </DropdownMenuItem>

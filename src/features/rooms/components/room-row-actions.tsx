@@ -1,4 +1,5 @@
 import { Copy, Edit, Eye, MoreHorizontal, Trash2 } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -10,6 +11,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { routePathBuilders } from "@/config/routes";
 import type { Room } from "@/types/room";
 
 interface RoomRowActionsProps {
@@ -17,6 +19,8 @@ interface RoomRowActionsProps {
 }
 
 export const RoomRowActions = ({ room }: RoomRowActionsProps) => {
+  const navigate = useNavigate();
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -37,7 +41,9 @@ export const RoomRowActions = ({ room }: RoomRowActionsProps) => {
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem>
+          <DropdownMenuItem
+            onClick={() => navigate(routePathBuilders.roomDetail(room.id))}
+          >
             <Eye className="mr-2 h-3.5 w-3.5" />
             Xem chi tiết
           </DropdownMenuItem>

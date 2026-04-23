@@ -8,7 +8,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { routeBuilders } from "@/config/routes";
+import { routePathBuilders } from "@/config/routes";
 import type { Task } from "@/types/task";
 
 import { taskPriorityUiConfig, taskStatusUiConfig } from "./task-ui-config";
@@ -32,16 +32,16 @@ export const TaskCard: React.FC<TaskCardProps> = ({ task }) => {
   const handleViewDetails = () => {
     switch (task.relatedEntity) {
       case "invoice":
-        navigate(routeBuilders.invoiceDetail(task.relatedId));
+        navigate(routePathBuilders.invoiceDetail(task.relatedId));
         break;
       case "contract":
-        navigate(routeBuilders.contractDetail(task.relatedId));
+        navigate(routePathBuilders.contractDetail(task.relatedId));
         break;
       case "room":
-        navigate(routeBuilders.roomDetail(task.relatedId));
+        navigate(routePathBuilders.roomDetail(task.relatedId));
         break;
       case "tenant":
-        navigate(routeBuilders.tenantDetail(task.relatedId));
+        navigate(routePathBuilders.tenantDetail(task.relatedId));
         break;
     }
   };
