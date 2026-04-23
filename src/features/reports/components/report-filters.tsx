@@ -1,5 +1,6 @@
 import { Calendar } from "lucide-react";
 
+import { FilterToolbar } from "@/components/shared/filters";
 import { Button } from "@/components/ui/button";
 import {
   Select,
@@ -28,20 +29,23 @@ export const ReportFilters = ({
   onFiltersChange,
   onClearFilters,
 }: ReportFiltersProps) => {
+  const hasActiveFilters =
+    filters.building !== "all" ||
+    filters.floor !== "all" ||
+    filters.status !== "all";
+
   return (
-    <div className="space-y-4 rounded-lg border bg-card p-4">
-      <h3 className="text-sm font-semibold">Bộ lọc báo cáo</h3>
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <div className="space-y-2">
-          <label className="text-sm font-medium">Tòa</label>
+    <FilterToolbar
+      controls={
+        <>
           <Select
             value={filters.building ?? "all"}
             onValueChange={(value) =>
               onFiltersChange({ ...filters, building: value })
             }
           >
-            <SelectTrigger>
-              <SelectValue />
+            <SelectTrigger className="h-8 w-full sm:w-[150px]">
+              <SelectValue placeholder="Tòa" />
             </SelectTrigger>
             <SelectContent>
               {BUILDING_OPTIONS.map((option) => (
@@ -51,18 +55,15 @@ export const ReportFilters = ({
               ))}
             </SelectContent>
           </Select>
-        </div>
 
-        <div className="space-y-2">
-          <label className="text-sm font-medium">Tầng</label>
           <Select
             value={filters.floor ?? "all"}
             onValueChange={(value) =>
               onFiltersChange({ ...filters, floor: value })
             }
           >
-            <SelectTrigger>
-              <SelectValue />
+            <SelectTrigger className="h-8 w-full sm:w-[150px]">
+              <SelectValue placeholder="Tầng" />
             </SelectTrigger>
             <SelectContent>
               {FLOOR_OPTIONS.map((option) => (
@@ -72,18 +73,15 @@ export const ReportFilters = ({
               ))}
             </SelectContent>
           </Select>
-        </div>
 
-        <div className="space-y-2">
-          <label className="text-sm font-medium">Trạng thái</label>
           <Select
             value={filters.status ?? "all"}
             onValueChange={(value) =>
               onFiltersChange({ ...filters, status: value })
             }
           >
-            <SelectTrigger>
-              <SelectValue />
+            <SelectTrigger className="h-8 w-full sm:w-[150px]">
+              <SelectValue placeholder="Trạng thái" />
             </SelectTrigger>
             <SelectContent>
               {STATUS_OPTIONS.map((option) => (
@@ -93,30 +91,19 @@ export const ReportFilters = ({
               ))}
             </SelectContent>
           </Select>
-        </div>
 
-        <div className="space-y-2">
-          <label className="text-sm font-medium">Khoảng thời gian</label>
-          <Button variant="outline" className="w-full justify-start gap-2">
+          <Button
+            variant="outline"
+            size="sm"
+            className="h-8 w-full justify-start gap-2 sm:w-auto"
+          >
             <Calendar className="h-4 w-4" />
-            <span className="text-sm">Chọn ngày</span>
+            <span>Chọn ngày</span>
           </Button>
-        </div>
-      </div>
-
-      <div className="flex justify-between">
-        <Button
-          variant="outline"
-          size="sm"
-          type="button"
-          onClick={() => onClearFilters?.()}
-        >
-          Xóa bộ lọc
-        </Button>
-        <Button size="sm" variant="default">
-          Xuất báo cáo
-        </Button>
-      </div>
-    </div>
+        </>
+      }
+      hasActiveFilters={hasActiveFilters}
+      onClearFilters={() => onClearFilters?.()}
+    />
   );
 };

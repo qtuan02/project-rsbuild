@@ -1,7 +1,8 @@
-import { ArrowLeft, Download, Edit2 } from "lucide-react";
+import { Download, Edit2 } from "lucide-react";
 import * as React from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
+import { PageBackButton } from "@/components/shared/navigation";
 import { ErrorPanel, LoadingPanel } from "@/components/shared/panels";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -83,13 +84,7 @@ export const UtilityDetailPage: React.FC = () => {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-4">
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={() => navigate(routes.utilities)}
-          >
-            <ArrowLeft className="h-4 w-4" />
-          </Button>
+          <PageBackButton onClick={() => navigate(routes.utilities)} />
           <div>
             <h1 className="text-3xl font-bold tracking-tight">
               {utility.roomName}

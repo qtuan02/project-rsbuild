@@ -1,4 +1,4 @@
-import { AlertCircle, CheckCircle2, Clock } from "lucide-react";
+import { AlertCircle, CheckCircle2, Clock, Plus, FileDown } from "lucide-react";
 
 import {
   EmptyPanel,
@@ -41,14 +41,27 @@ export const ComplianceDashboardPage = () => {
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">Tuân thủ</h1>
-          <p className="mt-2 text-muted-foreground">
+          <h2 className="text-2xl font-bold tracking-tight">Tuân thủ</h2>
+          <p className="mt-1 text-sm text-muted-foreground">
             Quản lý khai báo nơi ở, kiểm tra an toàn và tài liệu.
           </p>
         </div>
-        <Button type="button">Thêm yêu cầu tuân thủ</Button>
+        <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto">
+          <Button
+            variant="outline"
+            size="sm"
+            className="w-full sm:w-auto text-blue-600 border-blue-200 hover:bg-blue-50 dark:hover:bg-blue-950/50"
+          >
+            <FileDown className="mr-2 h-4 w-4" />
+            Tạo file CT01 (VNeID)
+          </Button>
+          <Button size="sm" className="w-full sm:w-auto">
+            <Plus className="mr-2 h-4 w-4" />
+            Thêm yêu cầu
+          </Button>
+        </div>
       </div>
 
       {items.length === 0 ? (

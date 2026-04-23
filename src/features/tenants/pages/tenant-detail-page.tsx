@@ -2,7 +2,6 @@ import {
   Edit,
   Download,
   Trash2,
-  ArrowLeft,
   Phone,
   Mail,
   DoorOpen,
@@ -10,11 +9,11 @@ import {
   CreditCard,
   FileText,
 } from "lucide-react";
-import { useState } from "react";
 
 import { TenantStatusBadge } from "@/components/shared/badges/tenant-status-badge";
 import { InfoCard, InfoRow } from "@/components/shared/cards/info-card";
 import { ConfirmActionDialog } from "@/components/shared/dialogs/confirm-action-dialog";
+import { PageBackButton } from "@/components/shared/navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
@@ -22,7 +21,7 @@ import { cn } from "@/lib/cn";
 import { formatCurrency } from "@/utils/currency";
 import { getInitials } from "@/utils/string";
 
-import { getTenants } from "../data/tenant.repository";
+import { useTenantDetail } from "../hooks/use-tenant-detail";
 
 interface TenantDetailPageProps {
   tenantId: string;
@@ -33,18 +32,18 @@ export const TenantDetailPage = ({
   tenantId,
   onBack,
 }: TenantDetailPageProps) => {
-  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
-  const [isDeleting, setIsDeleting] = useState(false);
-
-  const tenant = getTenants().find((t) => t.id === tenantId);
+  const {
+    tenant,
+    deleteDialogOpen,
+    isDeleting,
+    setDeleteDialogOpen,
+    handleDelete,
+  } = useTenantDetail({ tenantId, onBack });
 
   if (!tenant) {
     return (
       <div className="space-y-6">
-        <Button variant="ghost" onClick={onBack} className="gap-2">
-          <ArrowLeft className="h-4 w-4" />
-          Quay lại
-        </Button>
+        <PageBackButton onClick={onBack} />
         <div className="rounded-lg border border-dashed bg-card/50 p-12 text-center">
           <h3 className="text-base font-semibold">Không tìm thấy khách thuê</h3>
           <p className="mt-1 text-sm text-muted-foreground">
@@ -55,21 +54,10 @@ export const TenantDetailPage = ({
     );
   }
 
-  const handleDelete = async () => {
-    setIsDeleting(true);
-    await new Promise((resolve) => setTimeout(resolve, 500));
-    setIsDeleting(false);
-    setDeleteDialogOpen(false);
-    onBack?.();
-  };
-
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <Button variant="ghost" onClick={onBack} className="gap-2">
-          <ArrowLeft className="h-4 w-4" />
-          Quay lại
-        </Button>
+        <PageBackButton onClick={onBack} />
         <div className="flex items-center gap-2">
           <Button variant="outline" size="sm" className="gap-2">
             <Download className="h-4 w-4" />

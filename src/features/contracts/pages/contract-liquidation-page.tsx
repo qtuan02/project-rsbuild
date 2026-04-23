@@ -1,8 +1,9 @@
-import { AlertTriangle, ArrowLeft } from "lucide-react";
+import { AlertTriangle } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 
 import { InfoRow } from "@/components/shared/cards/info-card";
+import { PageBackButton } from "@/components/shared/navigation";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -57,10 +58,7 @@ export const ContractLiquidationPage = ({
   if (!contract) {
     return (
       <div className="space-y-6">
-        <Button variant="ghost" onClick={onBack} className="gap-2">
-          <ArrowLeft className="h-4 w-4" />
-          Quay lại
-        </Button>
+        <PageBackButton onClick={onBack} />
         <Card>
           <CardContent className="pt-6">
             <p className="text-center text-muted-foreground">
@@ -130,10 +128,7 @@ export const ContractLiquidationPage = ({
 
   return (
     <div className="space-y-6">
-      <Button variant="ghost" onClick={onBack} className="gap-2">
-        <ArrowLeft className="h-4 w-4" />
-        Quay lại
-      </Button>
+      <PageBackButton onClick={onBack} />
 
       {/* Alert */}
       <Alert className="border-orange-200 bg-orange-50">

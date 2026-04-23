@@ -1,9 +1,15 @@
-import { Mail, MessageSquare, Send } from "lucide-react";
+import { Mail, MessageSquare, Send, CheckCircle2 } from "lucide-react";
 import { useState } from "react";
 
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardFooter,
+} from "@/components/ui/card";
+import { cn } from "@/lib/cn";
 
 import type { NotificationTemplate } from "../data/communications.mock";
 
@@ -15,27 +21,37 @@ interface TemplateListProps {
 export const TemplateList = ({ templates, onSend }: TemplateListProps) => {
   const [sentTemplate, setSentTemplate] = useState<string | null>(null);
 
-  const getChannelIcon = (channel: string) => {
+  const getChannelConfig = (channel: string) => {
     switch (channel) {
       case "sms":
-        return <MessageSquare className="h-4 w-4" />;
+        return {
+          icon: MessageSquare,
+          color: "text-blue-600",
+          bg: "bg-blue-100 dark:bg-blue-900/30",
+          label: "SMS",
+        };
       case "email":
-        return <Mail className="h-4 w-4" />;
+        return {
+          icon: Mail,
+          color: "text-purple-600",
+          bg: "bg-purple-100 dark:bg-purple-900/30",
+          label: "Email",
+        };
       case "zalo":
-        return <Send className="h-4 w-4" />;
+        return {
+          icon: Send,
+          color: "text-cyan-600",
+          bg: "bg-cyan-100 dark:bg-cyan-900/30",
+          label: "Zalo",
+        };
       default:
-        return null;
+        return {
+          icon: MessageSquare,
+          color: "text-gray-600",
+          bg: "bg-gray-100",
+          label: "Hệ thống",
+        };
     }
-  };
-
-  const getChannelBadge = (channel: string) => {
-    const colors: Record<string, string> = {
-      sms: "bg-blue-100 text-blue-800",
-      email: "bg-purple-100 text-purple-800",
-      zalo: "bg-cyan-100 text-cyan-800",
-      in_app: "bg-green-100 text-green-800",
-    };
-    return colors[channel] || "bg-gray-100 text-gray-800";
   };
 
   const handleSend = (template: NotificationTemplate) => {
@@ -45,50 +61,76 @@ export const TemplateList = ({ templates, onSend }: TemplateListProps) => {
   };
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle className="text-base">Mẫu thông báo</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <div className="space-y-3">
-          {templates.map((template) => (
+    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {templates.map((template) => {
+        const config = getChannelConfig(template.channel);
+        const Icon = config.icon;
+        const isSent = sentTemplate === template.id;
+
+        return (
+          <Card
+            key={template.id}
+            className="group relative overflow-hidden flex flex-col transition-all duration-300 hover:shadow-md border-muted"
+          >
             <div
-              key={template.id}
-              className="rounded-lg border p-4 hover:bg-muted/50 transition-colors"
-            >
-              <div className="flex items-start justify-between gap-3 mb-3">
-                <div className="flex-1 min-w-0">
-                  <p className="font-medium text-sm">{template.name}</p>
-                  <p className="text-xs text-muted-foreground mt-1">
+              className={cn(
+                "absolute inset-x-0 top-0 h-1 opacity-0 transition-opacity group-hover:opacity-100",
+                config.bg.replace("bg-", "bg-").split(" ")[0],
+              )}
+            />
+
+            <CardHeader className="p-4 pb-2">
+              <div className="flex items-start justify-between gap-3">
+                <div className="min-w-0">
+                  <CardTitle className="text-sm font-bold truncate group-hover:text-primary transition-colors">
+                    {template.name}
+                  </CardTitle>
+                  <p className="text-[11px] text-muted-foreground mt-1 line-clamp-1">
                     {template.description}
                   </p>
                 </div>
-                <Badge
-                  className={getChannelBadge(template.channel)}
-                  variant="secondary"
+                <div
+                  className={cn(
+                    "shrink-0 rounded-lg p-1.5",
+                    config.bg,
+                    config.color,
+                  )}
                 >
-                  {getChannelIcon(template.channel)}
-                  <span className="ml-1 capitalize">{template.channel}</span>
-                </Badge>
+                  <Icon className="h-4 w-4" />
+                </div>
               </div>
+            </CardHeader>
 
-              <div className="bg-muted p-3 rounded mb-3 text-xs text-muted-foreground">
+            <CardContent className="p-4 pt-2 flex-1">
+              <div className="bg-muted/50 rounded-xl p-3 text-[11px] text-muted-foreground font-mono leading-relaxed ring-1 ring-inset ring-border/50">
                 {template.preview}
               </div>
+            </CardContent>
 
+            <CardFooter className="p-4 pt-0">
               <Button
                 size="sm"
-                variant="outline"
+                variant={isSent ? "secondary" : "default"}
                 onClick={() => handleSend(template)}
-                disabled={sentTemplate === template.id}
-                className="w-full"
+                disabled={isSent}
+                className="w-full h-9 rounded-lg transition-all"
               >
-                {sentTemplate === template.id ? "Đã gửi!" : "Gửi"}
+                {isSent ? (
+                  <>
+                    <CheckCircle2 className="mr-2 h-4 w-4 text-emerald-500" />
+                    Đã gửi!
+                  </>
+                ) : (
+                  <>
+                    <Send className="mr-2 h-3.5 w-3.5" />
+                    Gửi ngay
+                  </>
+                )}
               </Button>
-            </div>
-          ))}
-        </div>
-      </CardContent>
-    </Card>
+            </CardFooter>
+          </Card>
+        );
+      })}
+    </div>
   );
 };
