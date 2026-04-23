@@ -25,6 +25,9 @@ const config: StorybookConfig = {
           "@": path.resolve(__dirname, "../src"),
         },
       },
+      output: {
+        assetPrefix: "/storybook/",
+      },
     });
   },
 };
