@@ -16,8 +16,9 @@ export const roomStatusConfig: Record<
     label: "Trống",
     variant: "outline",
     icon: Circle,
-    className:
-      cn("border-orange-300 bg-orange-50 text-orange-700 dark:bg-orange-950 dark:text-orange-300 dark:border-orange-800"),
+    className: cn(
+      "border-orange-300 bg-orange-50 text-orange-700 dark:bg-orange-950 dark:text-orange-300 dark:border-orange-800",
+    ),
   },
   occupied: {
     label: "Đã thuê",
@@ -29,15 +30,17 @@ export const roomStatusConfig: Record<
     label: "Bảo trì",
     variant: "secondary",
     icon: Wrench,
-    className:
-      cn("border-red-300 bg-red-50 text-red-700 dark:bg-red-950 dark:text-red-300 dark:border-red-800"),
+    className: cn(
+      "border-red-300 bg-red-50 text-red-700 dark:bg-red-950 dark:text-red-300 dark:border-red-800",
+    ),
   },
   reserved: {
     label: "Đã đặt",
     variant: "secondary",
     icon: Clock,
-    className:
-      cn("border-blue-300 bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300 dark:border-blue-800"),
+    className: cn(
+      "border-blue-300 bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300 dark:border-blue-800",
+    ),
   },
 };
 

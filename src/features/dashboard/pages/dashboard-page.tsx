@@ -21,8 +21,6 @@ import { CashFlowChart } from "../components/cash-flow-chart";
 import { OccupancyDonutChart } from "../components/occupancy-donut-chart";
 import { RevenueChart } from "../components/revenue-chart";
 
-import { RevenueChart } from "../components/revenue-chart";
-
 interface StatCardProps {
   title: string;
   value: string;
