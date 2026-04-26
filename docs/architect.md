@@ -31,7 +31,6 @@ src/
       domain/                # pure business logic (rules, filters, mapping, stats)
       data/                  # repository/api/mock mapping (data access layer)
       constants/             # optional: constants nội bộ feature nếu cần
-      index.ts               # optional: public entry cho cross-feature access
 
   components/
     ui/                       # shadcn/radix primitives (Button, Card, Input...)
@@ -174,6 +173,19 @@ shared component -> không phụ thuộc feature-specific code
 - Pattern dùng chung (table/filter/panel/dialog): `components/shared`.
 - Thiết kế mobile-first: không phụ thuộc hover cho hành động quan trọng.
 - Action chính (vd. xem detail) phải luôn truy cập được trên mobile.
+
+### UI reuse guardrails
+
+- List pages ưu tiên dùng:
+  - `ListPageHeader`,
+  - `GridTableSwitch`,
+  - `DataTableToolbar`,
+  - `DataTablePagination`,
+  - `DataTableView` hoặc `DataTable`.
+- Không tạo table tay mới nếu dùng được `DataTable` stack.
+- Card item đa feature ưu tiên `EntityListCard`; action menu ưu tiên `EntityActionMenu`.
+- Detail pages ưu tiên thống nhất theo `DetailPageShell` + `InfoCard/InfoRow`.
+- KPI stats ưu tiên `SummaryCard` variants thay vì dựng lại `Card` custom ở từng feature.
 
 ## Checklist khi tạo/chỉnh feature mới
 

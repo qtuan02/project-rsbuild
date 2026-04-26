@@ -1,0 +1,49 @@
+---
+description: Rules for shared components, UI primitives, and cross-feature reuse
+globs: src/components/**/*.{ts,tsx}
+---
+
+# Shared Component Rules
+
+## Promotion Policy
+
+| Scope | Location |
+|---|---|
+| Used in 1 feature only | `features/<n>/components/` |
+| Used in 2+ features | `components/shared/` |
+| Base primitive (button/input/card) | `components/ui/` (shadcn) |
+| Pure utility function | `lib/` |
+| Shared type/interface | `types/` |
+
+> Default: keep code in the feature. Promote only when reuse is confirmed.
+
+## components/ui
+
+- Shadcn/Radix primitives only
+- Do not add business logic here
+- Extend via `components/shared/`, not by modifying `ui/` directly
+
+## components/shared
+
+Organized by pattern type:
+```
+shared/
+  badges/     # status/semantic badges
+  cards/      # summary/info cards
+  dialogs/    # confirm/action dialogs
+  filters/    # search/filter toolkits
+  navigation/ # back button, nav controls
+  pagination/ # pagination widgets
+  panels/     # loading/empty/error states
+  table/      # data-table ecosystem
+```
+
+- Must not import from any `features/*`
+- Must not contain feature-specific business rules
+- Must be props-driven, no global state
+
+## UI Conventions
+
+- Mobile-first: critical actions must be reachable without hover
+- Use `components/ui` before creating new primitives
+- Use `components/shared` before duplicating pattern across features

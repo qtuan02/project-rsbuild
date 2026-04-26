@@ -1,6 +1,9 @@
+import { zodResolver } from "@hookform/resolvers/zod";
 import { AlertCircle, CheckCircle2 } from "lucide-react";
 import { useState } from "react";
+import { useForm, useWatch } from "react-hook-form";
 import { toast } from "sonner";
+import * as z from "zod";
 
 import { InfoRow } from "@/components/shared/cards/info-card";
 import { PageBackButton } from "@/components/shared/navigation";
@@ -13,30 +16,54 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { formatCurrency } from "@/utils/currency";
 
-import { getContracts } from "../data/contract.repository";
+import { useContractRenew } from "../hooks/use-contract-renew";
 
 interface ContractRenewPageProps {
   contractId: string;
   onBack?: () => void;
 }
 
+const renewContractSchema = z.object({
+  newEndDate: z.string().min(1, "Vui lòng chọn ngày kết thúc mới"),
+  newRentAmount: z.string().min(1, "Vui lòng nhập tiền thuê mới"),
+  notes: z.string().optional(),
+});
+
+type RenewContractValues = z.infer<typeof renewContractSchema>;
+
 export const ContractRenewPage = ({
   contractId,
   onBack,
 }: ContractRenewPageProps) => {
-  const contract = getContracts().find((c) => c.id === contractId);
+  const { contract } = useContractRenew(contractId);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
-  const [formData, setFormData] = useState({
-    newEndDate: "",
-    newRentAmount: contract?.rentAmount || 0,
-    notes: "",
+  const form = useForm<RenewContractValues>({
+    resolver: zodResolver(renewContractSchema),
+    defaultValues: {
+      newEndDate: "",
+      newRentAmount: String(contract?.rentAmount ?? 0),
+      notes: "",
+    },
   });
+
+  const newEndDate = useWatch({ control: form.control, name: "newEndDate" });
+  const newRentAmount = Number.parseInt(
+    useWatch({ control: form.control, name: "newRentAmount" }) || "0",
+    10,
+  );
 
   if (!contract) {
     return (
@@ -53,8 +80,7 @@ export const ContractRenewPage = ({
     );
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = () => {
     setShowConfirm(true);
   };
 
@@ -104,64 +130,74 @@ export const ContractRenewPage = ({
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="space-y-2">
-                  <Label htmlFor="newEndDate">Ngày kết thúc mới *</Label>
-                  <Input
-                    id="newEndDate"
-                    type="date"
-                    value={formData.newEndDate}
-                    onChange={(e) =>
-                      setFormData({ ...formData, newEndDate: e.target.value })
-                    }
-                    required
+              <Form {...form}>
+                <form
+                  onSubmit={form.handleSubmit(handleSubmit)}
+                  className="space-y-6"
+                >
+                  <FormField
+                    control={form.control}
+                    name="newEndDate"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Ngày kết thúc mới *</FormLabel>
+                        <FormControl>
+                          <Input type="date" {...field} />
+                        </FormControl>
+                        <p className="text-xs text-muted-foreground">
+                          Hợp đồng hiện tại sẽ kết thúc vào {contract.endDate}
+                        </p>
+                        <FormMessage />
+                      </FormItem>
+                    )}
                   />
-                  <p className="text-xs text-muted-foreground">
-                    Hợp đồng hiện tại sẽ kết thúc vào {contract.endDate}
-                  </p>
-                </div>
 
-                <div className="space-y-2">
-                  <Label htmlFor="newRent">Tiền thuê mới (VND) *</Label>
-                  <Input
-                    id="newRent"
-                    type="number"
-                    value={formData.newRentAmount}
-                    onChange={(e) =>
-                      setFormData({
-                        ...formData,
-                        newRentAmount: Number(e.target.value),
-                      })
-                    }
-                    required
+                  <FormField
+                    control={form.control}
+                    name="newRentAmount"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Tiền thuê mới (VND) *</FormLabel>
+                        <FormControl>
+                          <Input type="number" {...field} />
+                        </FormControl>
+                        <p className="text-xs text-muted-foreground">
+                          Tiền thuê hiện tại:{" "}
+                          {formatCurrency(contract.rentAmount)}
+                        </p>
+                        <FormMessage />
+                      </FormItem>
+                    )}
                   />
-                  <p className="text-xs text-muted-foreground">
-                    Tiền thuê hiện tại: {formatCurrency(contract.rentAmount)}
-                  </p>
-                </div>
 
-                <div className="space-y-2">
-                  <Label htmlFor="notes">Ghi chú</Label>
-                  <Textarea
-                    id="notes"
-                    placeholder="Nhập các ghi chú hoặc điều khoản bổ sung..."
-                    value={formData.notes}
-                    onChange={(e) =>
-                      setFormData({ ...formData, notes: e.target.value })
-                    }
-                    rows={4}
+                  <FormField
+                    control={form.control}
+                    name="notes"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Ghi chú</FormLabel>
+                        <FormControl>
+                          <Textarea
+                            placeholder="Nhập các ghi chú hoặc điều khoản bổ sung..."
+                            rows={4}
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
                   />
-                </div>
 
-                {!showConfirm && (
-                  <div className="flex gap-3">
-                    <Button variant="outline" type="button" onClick={onBack}>
-                      Hủy
-                    </Button>
-                    <Button type="submit">Tiếp tục</Button>
-                  </div>
-                )}
-              </form>
+                  {!showConfirm && (
+                    <div className="flex gap-3">
+                      <Button variant="outline" type="button" onClick={onBack}>
+                        Hủy
+                      </Button>
+                      <Button type="submit">Tiếp tục</Button>
+                    </div>
+                  )}
+                </form>
+              </Form>
             </CardContent>
           </Card>
         </div>
@@ -189,12 +225,12 @@ export const ContractRenewPage = ({
                     <span className="text-muted-foreground">
                       Ngày kết thúc mới
                     </span>
-                    <span className="font-medium">{formData.newEndDate}</span>
+                    <span className="font-medium">{newEndDate}</span>
                   </div>
                   <div className="flex justify-between text-sm">
                     <span className="text-muted-foreground">Tiền thuê mới</span>
                     <span className="font-medium">
-                      {formatCurrency(formData.newRentAmount)}
+                      {formatCurrency(newRentAmount)}
                     </span>
                   </div>
                   <div className="border-t pt-3">
@@ -202,17 +238,13 @@ export const ContractRenewPage = ({
                       Thay đổi tiền thuê:{" "}
                       <span
                         className={
-                          formData.newRentAmount > contract.rentAmount
+                          newRentAmount > contract.rentAmount
                             ? "text-red-600"
                             : "text-green-600"
                         }
                       >
-                        {formData.newRentAmount > contract.rentAmount
-                          ? "+"
-                          : ""}
-                        {formatCurrency(
-                          formData.newRentAmount - contract.rentAmount,
-                        )}
+                        {newRentAmount > contract.rentAmount ? "+" : ""}
+                        {formatCurrency(newRentAmount - contract.rentAmount)}
                       </span>
                     </p>
                   </div>

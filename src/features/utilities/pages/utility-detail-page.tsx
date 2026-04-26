@@ -9,11 +9,11 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { routes } from "@/config/routes";
 
 import { utilityStatusUiConfig } from "../components/utility-ui-config";
-import { getUtilityById } from "../data/utility.repository";
 import {
   utilityStatusConfig,
   utilityTypeConfig,
 } from "../domain/utility-display-config";
+import { useUtilityDetail } from "../hooks/use-utility-detail";
 
 const InfoRow = ({
   label,
@@ -32,31 +32,7 @@ export const UtilityDetailPage: React.FC = () => {
   const navigate = useNavigate();
   const { utilityId } = useParams<{ utilityId: string }>();
 
-  const [isLoading, setIsLoading] = React.useState(true);
-  const [utility, setUtility] = React.useState(getUtilityById(utilityId || ""));
-  const [error, setError] = React.useState<string | null>(null);
-
-  React.useEffect(() => {
-    try {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
-      setIsLoading(true);
-      setError(null);
-      if (!utilityId) {
-        setError("Invalid utility ID");
-        return;
-      }
-      const data = getUtilityById(utilityId);
-      if (!data) {
-        setError("Utility not found");
-        return;
-      }
-      setUtility(data);
-    } catch {
-      setError("Error loading utility");
-    } finally {
-      setIsLoading(false);
-    }
-  }, [utilityId]);
+  const { isLoading, utility, error } = useUtilityDetail({ utilityId });
 
   if (isLoading) {
     return <LoadingPanel />;

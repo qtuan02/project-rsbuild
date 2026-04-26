@@ -1,10 +1,9 @@
+import { PaginationBar } from "./pagination-bar";
 import {
   DEFAULT_PAGINATION_LABELS,
   DEFAULT_PAGINATION_PAGE_SIZE_OPTIONS,
   type PaginationLabels,
 } from "./pagination-contracts";
-import { PaginationNavigation } from "./pagination-navigation";
-import { PaginationPageSizeSelect } from "./pagination-page-size-select";
 import { clampPage, getPageItems } from "./pagination-utils";
 
 interface PaginationProps {
@@ -34,33 +33,28 @@ export const Pagination = ({
   const pageItems = getPageItems(safeCurrentPage, totalPages);
 
   return (
-    <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-      <div className="flex items-center gap-3">
-        <p className="text-sm text-muted-foreground">
-          {labels.showing}{" "}
-          <span className="font-medium text-foreground">
-            {startItem}-{endItem}
-          </span>{" "}
-          / <span className="font-medium text-foreground">{totalItems}</span>
-        </p>
-        <div className="flex items-center gap-1.5">
-          <span className="text-xs text-muted-foreground">
-            {labels.perPage}
-          </span>
-          <PaginationPageSizeSelect
-            pageSize={pageSize}
-            pageSizeOptions={pageSizeOptions}
-            onPageSizeChange={onPageSizeChange}
-          />
+    <PaginationBar
+      className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between"
+      leftContent={
+        <div className="flex items-center gap-3">
+          <p className="text-sm text-muted-foreground">
+            {labels.showing}{" "}
+            <span className="font-medium text-foreground">
+              {startItem}-{endItem}
+            </span>{" "}
+            / <span className="font-medium text-foreground">{totalItems}</span>
+          </p>
         </div>
-      </div>
-
-      <PaginationNavigation
-        currentPage={safeCurrentPage}
-        totalPages={totalPages}
-        onPageChange={onPageChange}
-        pageItems={pageItems}
-      />
-    </div>
+      }
+      currentPage={safeCurrentPage}
+      totalPages={totalPages}
+      pageSize={pageSize}
+      pageSizeOptions={pageSizeOptions}
+      perPageLabel={labels.perPage}
+      onPageSizeChange={onPageSizeChange}
+      onPageChange={onPageChange}
+      pageItems={pageItems}
+      triggerClassName="h-8 w-[70px]"
+    />
   );
 };

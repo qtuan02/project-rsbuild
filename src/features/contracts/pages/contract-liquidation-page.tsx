@@ -12,9 +12,7 @@ import { formatCurrency } from "@/utils/currency";
 import { ContractLifecycleStepper } from "../components/contract-lifecycle-stepper";
 import { LiquidationChecklist } from "../components/liquidation-checklist";
 import { LiquidationSummaryCard } from "../components/liquidation-summary-card";
-import { getContracts } from "../data/contract.repository";
-
-import type { ChecklistItem } from "../components/liquidation-checklist";
+import { useContractLiquidation } from "../hooks/use-contract-liquidation";
 
 interface ContractLiquidationPageProps {
   contractId: string;
@@ -25,35 +23,17 @@ export const ContractLiquidationPage = ({
   contractId,
   onBack,
 }: ContractLiquidationPageProps) => {
-  const contract = getContracts().find((c) => c.id === contractId);
+  const {
+    contract,
+    currentStep,
+    setCurrentStep,
+    checklistItems,
+    canProceedToSettlement,
+    settlementSummary,
+    steps,
+    toggleChecklistItem,
+  } = useContractLiquidation(contractId);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [currentStep, setCurrentStep] = useState(1);
-  const [checklistItems, setChecklistItems] = useState<ChecklistItem[]>([
-    {
-      id: "asset-check",
-      title: "Kiểm tra tài sản",
-      description: "Kiểm tra điều kiện phòng, nội thất và trang thiết bị",
-      completed: false,
-    },
-    {
-      id: "settle-utilities",
-      title: "Thanh toán tiện ích",
-      description: "Thanh toán hóa đơn điện nước còn nợ",
-      completed: false,
-    },
-    {
-      id: "collect-keys",
-      title: "Tập hợp chìa khóa",
-      description: "Thu hồi chìa khóa phòng từ khách",
-      completed: false,
-    },
-    {
-      id: "final-inspection",
-      title: "Kiểm tra cuối cùng",
-      description: "Xác nhận trạng thái phòng với khách",
-      completed: false,
-    },
-  ]);
 
   if (!contract) {
     return (
@@ -70,20 +50,6 @@ export const ContractLiquidationPage = ({
     );
   }
 
-  const handleChecklistToggle = (itemId: string) => {
-    setChecklistItems(
-      checklistItems.map((item) =>
-        item.id === itemId ? { ...item, completed: !item.completed } : item,
-      ),
-    );
-  };
-
-  const checklistCompletion =
-    (checklistItems.filter((item) => item.completed).length /
-      checklistItems.length) *
-    100;
-  const canProceedToSettlement = checklistCompletion === 100;
-
   const handleSubmit = async () => {
     setIsSubmitting(true);
     await new Promise((resolve) => setTimeout(resolve, 1000));
@@ -92,38 +58,6 @@ export const ContractLiquidationPage = ({
       description: "Đã mô phỏng thanh lý thành công (UI-only).",
     });
     onBack?.();
-  };
-
-  const steps = [
-    {
-      id: "check-assets",
-      title: "Kiểm tra tài sản",
-      description: "Kiểm tra toàn bộ tài sản và điều kiện phòng",
-      completed: currentStep > 1,
-      active: currentStep === 1,
-    },
-    {
-      id: "settle-fees",
-      title: "Thanh toán phí",
-      description: "Tính toán và thanh toán các khoản phí",
-      completed: currentStep > 2,
-      active: currentStep === 2,
-    },
-    {
-      id: "finalize",
-      title: "Hoàn tất",
-      description: "Xác nhận thanh lý và hoàn trả tiền đặt cọc",
-      completed: currentStep > 3,
-      active: currentStep === 3,
-    },
-  ];
-
-  // Mock settlement summary
-  const settlementSummary = {
-    depositAmount: contract.depositAmount || 2000000,
-    outstandingFees: 500000,
-    refundAmount: 0,
-    penaltyAmount: 300000,
   };
 
   return (
@@ -176,7 +110,7 @@ export const ContractLiquidationPage = ({
             <>
               <LiquidationChecklist
                 items={checklistItems}
-                onItemToggle={handleChecklistToggle}
+                onItemToggle={toggleChecklistItem}
                 title="Danh sách kiểm tra tài sản"
               />
               <div className="flex gap-3">

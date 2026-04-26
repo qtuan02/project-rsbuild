@@ -9,12 +9,23 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { mockBuildings } from "@/features/buildings/data/buildings";
 
-import {
-  BUILDING_OPTIONS,
-  FLOOR_OPTIONS,
-  STATUS_OPTIONS,
-} from "../domain/reports-filters";
+import { STATUS_OPTIONS } from "../domain/reports-filters";
+
+const BUILDING_OPTIONS = [
+  { value: "all", label: "Tất cả tòa" },
+  ...mockBuildings.map((b) => ({ value: b.name, label: b.name })),
+];
+
+const FLOOR_OPTIONS = [
+  { value: "all", label: "Tất cả tầng" },
+  { value: "floor-1", label: "Tầng 1" },
+  { value: "floor-2", label: "Tầng 2" },
+  { value: "floor-3", label: "Tầng 3" },
+  { value: "floor-4", label: "Tầng 4" },
+  { value: "floor-5", label: "Tầng 5" },
+];
 
 import type { ReportFilterParams } from "../domain/reports-filter-params";
 

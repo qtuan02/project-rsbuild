@@ -1,5 +1,5 @@
+import { tenantStatusBadgeConfig } from "@/components/shared/badges/status-configs";
 import { Badge } from "@/components/ui/badge";
-import { tenantStatusConfig } from "@/features/tenants/domain/tenant-status-config";
 import { cn } from "@/lib/cn";
 import type { TenantStatus } from "@/types/tenant";
 
@@ -16,7 +16,7 @@ export const TenantStatusBadge = ({
   className,
   ...props
 }: TenantStatusBadgeProps) => {
-  const config = tenantStatusConfig[status];
+  const config = tenantStatusBadgeConfig[status];
 
   return (
     <Badge

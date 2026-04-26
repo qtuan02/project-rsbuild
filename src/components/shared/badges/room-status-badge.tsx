@@ -1,5 +1,5 @@
+import { roomStatusBadgeConfig } from "@/components/shared/badges/status-configs";
 import { Badge } from "@/components/ui/badge";
-import { roomStatusConfig } from "@/features/rooms/domain/room-display-config";
 import { cn } from "@/lib/cn";
 import type { RoomStatus } from "@/types/room";
 
@@ -16,7 +16,7 @@ export const RoomStatusBadge = ({
   className,
   ...props
 }: RoomStatusBadgeProps) => {
-  const config = roomStatusConfig[status];
+  const config = roomStatusBadgeConfig[status];
   const Icon = config.icon;
 
   return (

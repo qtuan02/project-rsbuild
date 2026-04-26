@@ -2,8 +2,7 @@ import {
   DEFAULT_DATA_TABLE_PAGINATION_LABELS,
   DEFAULT_DATA_TABLE_PAGE_SIZE_OPTIONS,
   type DataTablePaginationLabels,
-  PaginationNavigation,
-  PaginationPageSizeSelect,
+  PaginationBar,
 } from "@/components/shared/pagination";
 import { clampPage } from "@/components/shared/pagination/pagination-utils";
 
@@ -27,9 +26,9 @@ export function DataTablePagination<TData>({
   );
 
   return (
-    <div className="flex flex-col items-center justify-between gap-4 px-2 sm:flex-row">
-      <div className="flex-1 text-sm text-muted-foreground">
-        {table.getFilteredSelectedRowModel().rows.length > 0 ? (
+    <PaginationBar
+      leftContent={
+        table.getFilteredSelectedRowModel().rows.length > 0 ? (
           <span>
             {labels.selected}{" "}
             <span className="font-medium text-foreground">
@@ -49,24 +48,22 @@ export function DataTablePagination<TData>({
             </span>{" "}
             {labels.results}
           </span>
-        )}
-      </div>
-
-      <div className="flex items-center gap-4 lg:gap-6">
-        <div className="flex items-center gap-2">
-          <p className="text-sm text-muted-foreground whitespace-nowrap">
-            {labels.perPage}
-          </p>
-          <PaginationPageSizeSelect
-            pageSize={table.getState().pagination.pageSize}
-            pageSizeOptions={pageSizeOptions}
-            onPageSizeChange={(value) => {
-              table.setPageSize(value);
-            }}
-            triggerClassName="h-8 w-[70px]"
-          />
-        </div>
-
+        )
+      }
+      currentPage={currentPage}
+      totalPages={totalPages}
+      pageSize={table.getState().pagination.pageSize}
+      pageSizeOptions={pageSizeOptions}
+      perPageLabel={labels.perPage}
+      onPageSizeChange={(value) => {
+        table.setPageSize(value);
+      }}
+      onPageChange={(page) => {
+        table.setPageIndex(page - 1);
+      }}
+      showFirstLast
+      triggerClassName="h-8 w-[70px]"
+      pageIndicator={
         <div className="flex items-center text-sm text-muted-foreground">
           {labels.page}{" "}
           <span className="mx-1 font-medium text-foreground">
@@ -75,16 +72,7 @@ export function DataTablePagination<TData>({
           /{" "}
           <span className="ml-1 font-medium text-foreground">{totalPages}</span>
         </div>
-
-        <PaginationNavigation
-          currentPage={currentPage}
-          totalPages={totalPages}
-          onPageChange={(page) => {
-            table.setPageIndex(page - 1);
-          }}
-          showFirstLast
-        />
-      </div>
-    </div>
+      }
+    />
   );
 }

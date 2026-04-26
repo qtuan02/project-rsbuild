@@ -1,32 +1,16 @@
-import { flexRender } from "@tanstack/react-table";
-import {
-  Activity,
-  AlertCircle,
-  Clock,
-  LayoutGrid,
-  List,
-  Plus,
-} from "lucide-react";
+import { Activity, AlertCircle, Clock, Plus } from "lucide-react";
 import * as React from "react";
 
 import { SummaryCard } from "@/components/shared/cards/summary-card";
-import { EmptyPanel, LoadingPanel } from "@/components/shared/panels";
+import { ListPageHeader, ListPageShell } from "@/components/shared/list";
+import { LoadingPanel } from "@/components/shared/panels";
 import {
+  DataTableView,
   DataTablePagination,
   DataTableToolbar,
   useDataTable,
 } from "@/components/shared/table";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Tabs, TabsContent } from "@/components/ui/tabs";
 
 import { UtilityCard } from "../components/utility-card";
 import { utilityColumns } from "../components/utility-columns";
@@ -55,24 +39,22 @@ export const UtilityListPage = () => {
 
   return (
     <div className="space-y-6">
-      {/* Header */}
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <div>
-          <h1 className="text-3xl font-bold tracking-tight">Tiện ích</h1>
-          <p className="text-sm text-muted-foreground">
-            Quản lý chỉ số điện nước và tiêu thụ hàng tháng.
-          </p>
-        </div>
-        <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto">
-          <Button variant="outline" size="sm" className="w-full sm:w-auto">
-            Lịch sử chốt
-          </Button>
-          <Button size="sm" className="w-full sm:w-auto">
-            <Plus className="mr-2 h-4 w-4" />
-            Thêm chỉ số
-          </Button>
-        </div>
-      </div>
+      <ListPageHeader
+        title="Tiện ích"
+        description="Quản lý chỉ số điện nước và tiêu thụ hàng tháng."
+        actions={[
+          {
+            key: "history",
+            label: "Lịch sử chốt",
+            variant: "outline",
+          },
+          {
+            key: "add",
+            label: "Thêm chỉ số",
+            icon: <Plus className="mr-2 h-4 w-4" />,
+          },
+        ]}
+      />
 
       {/* KPI Summary Cards */}
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
@@ -101,113 +83,48 @@ export const UtilityListPage = () => {
       </div>
 
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <LayoutGrid className="h-4 w-4 text-muted-foreground" />
-            <span className="text-sm text-muted-foreground font-medium">
-              {table.getFilteredRowModel().rows.length} chỉ số được tìm thấy
-            </span>
-            {table.getState().columnFilters.length > 0 && (
-              <Badge variant="secondary" className="text-[10px]">
-                Đang lọc
-              </Badge>
-            )}
-          </div>
-          <TabsList className="bg-muted/50">
-            <TabsTrigger value="grid" className="gap-2 px-4">
-              <LayoutGrid className="h-4 w-4" />
-              <span className="hidden sm:inline">Dạng thẻ</span>
-            </TabsTrigger>
-            <TabsTrigger value="table" className="gap-2 px-4">
-              <List className="h-4 w-4" />
-              <span className="hidden sm:inline">Dạng bảng</span>
-            </TabsTrigger>
-          </TabsList>
-        </div>
-
-        <DataTableToolbar
-          table={table}
-          searchableColumns={searchableColumns}
-          filterableColumns={filterableColumns}
-          showViewOptions={activeTab === "table"}
-        />
-
-        <TabsContent value="grid" className="mt-0 outline-none">
-          {hasRows ? (
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {rows.map((row) => (
-                <UtilityCard key={row.id} utility={row.original} />
-              ))}
-            </div>
-          ) : (
-            <div className="py-12 border-2 border-dashed rounded-xl">
-              <EmptyPanel
-                title="Không có dữ liệu"
-                description="Thử thay đổi bộ lọc hoặc từ khóa tìm kiếm để xem kết quả."
-                action={{
-                  label: "Xóa toàn bộ bộ lọc",
-                  onClick: () => table.resetColumnFilters(),
-                }}
-              />
-            </div>
-          )}
-        </TabsContent>
-
-        <TabsContent value="table" className="mt-0 outline-none">
-          {hasRows ? (
-            <div className="overflow-hidden rounded-xl border bg-card shadow-sm">
-              <Table>
-                <TableHeader>
-                  {table.getHeaderGroups().map((headerGroup) => (
-                    <TableRow
-                      key={headerGroup.id}
-                      className="bg-muted/40 hover:bg-muted/40"
-                    >
-                      {headerGroup.headers.map((header) => (
-                        <TableHead key={header.id}>
-                          {header.isPlaceholder
-                            ? null
-                            : flexRender(
-                                header.column.columnDef.header,
-                                header.getContext(),
-                              )}
-                        </TableHead>
-                      ))}
-                    </TableRow>
-                  ))}
-                </TableHeader>
-                <TableBody>
+        <ListPageShell
+          resultLabel={`${table.getFilteredRowModel().rows.length} chỉ số được tìm thấy`}
+          isFiltering={table.getState().columnFilters.length > 0}
+          toolbar={
+            <DataTableToolbar
+              table={table}
+              searchableColumns={searchableColumns}
+              filterableColumns={filterableColumns}
+              showViewOptions={activeTab === "table"}
+            />
+          }
+          gridContent={
+            <TabsContent value="grid" className="mt-0 outline-none">
+              {hasRows ? (
+                <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                   {rows.map((row) => (
-                    <TableRow
-                      key={row.id}
-                      data-state={row.getIsSelected() && "selected"}
-                    >
-                      {row.getVisibleCells().map((cell) => (
-                        <TableCell key={cell.id}>
-                          {flexRender(
-                            cell.column.columnDef.cell,
-                            cell.getContext(),
-                          )}
-                        </TableCell>
-                      ))}
-                    </TableRow>
+                    <UtilityCard key={row.id} utility={row.original} />
                   ))}
-                </TableBody>
-              </Table>
-            </div>
-          ) : (
-            <div className="py-12 border-2 border-dashed rounded-xl">
-              <EmptyPanel
-                title="Không có dữ liệu"
-                description="Thử thay đổi bộ lọc hoặc từ khóa tìm kiếm để xem kết quả."
-                action={{
-                  label: "Xóa toàn bộ bộ lọc",
-                  onClick: () => table.resetColumnFilters(),
-                }}
+                </div>
+              ) : (
+                <DataTableView
+                  table={table}
+                  columns={utilityColumns}
+                  emptyTitle="Không có dữ liệu"
+                  emptyDescription="Thử thay đổi bộ lọc hoặc từ khóa tìm kiếm để xem kết quả."
+                  resetFilters={() => table.resetColumnFilters()}
+                />
+              )}
+            </TabsContent>
+          }
+          tableContent={
+            <TabsContent value="table" className="mt-0 outline-none">
+              <DataTableView
+                table={table}
+                columns={utilityColumns}
+                emptyTitle="Không có dữ liệu"
+                emptyDescription="Thử thay đổi bộ lọc hoặc từ khóa tìm kiếm để xem kết quả."
+                resetFilters={() => table.resetColumnFilters()}
               />
-            </div>
-          )}
-        </TabsContent>
+            </TabsContent>
+          }
+        />
       </Tabs>
 
       {hasRows && <DataTablePagination table={table} />}

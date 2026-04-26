@@ -1,45 +1,57 @@
 ---
-description: Architecture boundaries and import direction for feature-layer frontend code
+description: Core architecture boundaries and layer responsibilities for all frontend code
 globs: src/**/*.{ts,tsx}
+alwaysApply: true
 ---
 
-# Architecture Rules
+# Architecture Overview
 
-## Canonical Structure
-- Follow this module layout for each feature:
-  - `features/<feature>/data`
-  - `features/<feature>/domain`
-  - `features/<feature>/hooks`
-  - `features/<feature>/components`
-  - `features/<feature>/pages`
-- Shared reusable building blocks belong in:
-  - `components/ui` for shadcn primitives
-  - `components/shared` for app-level reusable widgets
-  - `lib` for framework-agnostic helpers
-  - `types` for shared domain contracts
+## Folder Layout
 
-## Layer Responsibilities
-- `domain` contains pure business logic and data transformation only.
-- `data` contains API calls, repositories, DTO mapping, and query functions.
-- `hooks` orchestrates UI state, query hooks, and form wiring.
-- `components` stays presentational and receives data through props.
-- `pages` composes feature screens and route-level wiring.
+```
+src/
+  features/<feature>/
+    pages/       # route-level screen composition only
+    hooks/       # orchestration: state, async, actions
+    domain/      # pure business logic, no React/side-effects
+    data/        # API calls, repositories, DTO mapping
+    components/  # presentational, feature-specific
+  components/
+    ui/          # shadcn/radix primitives
+    shared/      # reusable app-level widgets (2+ features)
+  config/
+    routes.ts    # route path source-of-truth
+  lib/           # framework-agnostic utilities
+  types/         # shared domain contracts
+  utils/         # app-specific runtime helpers
+```
 
-## Dependency Direction
-- Allowed dependency direction inside a feature:
-  - `pages -> hooks -> domain/data`
-  - `components -> hooks` (when container/presentational split is needed)
-  - `domain` must not depend on `data`, `hooks`, `components`, or `pages`.
-- `data` must not import from `components` or `pages`.
-- `components` must not call API clients directly.
-- `pages` should not contain raw business logic; move logic to `domain` or `hooks`.
+## Dependency Direction (strict)
 
-## Cross-Feature Imports
-- Avoid direct imports from another feature's internals.
-- If multiple features need the same logic, move it to `lib`, `types`, or `components/shared`.
-- Cross-feature access is allowed only through explicit public entry points when needed.
+```
+pages → hooks → domain / data
+component → props ← page/hook
+shared → no feature-specific imports
+```
 
-## Shared UI Policy
-- Use `components/ui` (shadcn) before creating new primitive UI controls.
-- Use `components/shared` for composed reusable widgets tied to app conventions.
-- Keep feature-specific UI inside that feature's `components` directory.
+## Layer Contracts
+
+| Layer | Allowed | Forbidden |
+|---|---|---|
+| `domain` | pure TS, no imports from other layers | React, side effects, API calls |
+| `data` | API/fetch, DTO mapping | UI components, React hooks |
+| `hooks` | state, async, React hooks, domain/data | direct API calls bypassing data layer |
+| `pages` | layout, routing, wiring hook+component | business logic, direct repo calls |
+| `components` | props-driven UI | direct API calls, global state mutation |
+
+## Cross-Feature Rule
+
+- Import across features only via `features/<name>/index.ts`
+- Never import `@/features/x/data/*` or `@/features/x/domain/*` directly
+- Shared logic used in 2+ features → move to `lib`, `types`, or `components/shared`
+
+## Route Convention
+
+- All paths declared in `src/config/routes.ts`
+- Never hardcode path strings (e.g. `"/tenants/123"`) — use `routePathBuilders.*`
+- New route: add to `routes.ts` → register in `app-routes.tsx` → update nav if needed

@@ -1,5 +1,4 @@
 import { Edit, Download, Trash2 } from "lucide-react";
-import { useState } from "react";
 
 import { RoomStatusBadge } from "@/components/shared/badges/room-status-badge";
 import { InfoCard, InfoRow } from "@/components/shared/cards/info-card";
@@ -10,8 +9,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { formatCurrency } from "@/utils/currency";
 
-import { getRooms } from "../data/room.repository";
 import { roomTypeConfig } from "../domain/room-display-config";
+import { useRoomDetail } from "../hooks/use-room-detail";
 
 interface RoomDetailPageProps {
   roomId: string;
@@ -19,10 +18,13 @@ interface RoomDetailPageProps {
 }
 
 export const RoomDetailPage = ({ roomId, onBack }: RoomDetailPageProps) => {
-  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
-  const [isDeleting, setIsDeleting] = useState(false);
-
-  const room = getRooms().find((r) => r.id === roomId);
+  const {
+    room,
+    deleteDialogOpen,
+    isDeleting,
+    setDeleteDialogOpen,
+    handleDelete,
+  } = useRoomDetail({ roomId, onBack });
 
   if (!room) {
     return (
@@ -37,15 +39,6 @@ export const RoomDetailPage = ({ roomId, onBack }: RoomDetailPageProps) => {
       </div>
     );
   }
-
-  const handleDelete = async () => {
-    setIsDeleting(true);
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 500));
-    setIsDeleting(false);
-    setDeleteDialogOpen(false);
-    onBack?.();
-  };
 
   return (
     <div className="space-y-6">

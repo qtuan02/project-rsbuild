@@ -1,5 +1,5 @@
+import { contractStatusBadgeConfig } from "@/components/shared/badges/status-configs";
 import { Badge } from "@/components/ui/badge";
-import { contractStatusConfig } from "@/features/contracts/domain/contract-display-config";
 import { cn } from "@/lib/cn";
 import type { ContractStatus } from "@/types/contract";
 
@@ -16,7 +16,7 @@ export const ContractStatusBadge = ({
   className,
   ...props
 }: ContractStatusBadgeProps) => {
-  const config = contractStatusConfig[status];
+  const config = contractStatusBadgeConfig[status];
 
   return (
     <Badge

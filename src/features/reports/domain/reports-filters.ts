@@ -1,20 +1,6 @@
 import type { ReportFilterParams } from "./reports-filter-params";
 import type { ReportData } from "../data/reports.mock";
 
-export const BUILDING_OPTIONS = [
-  { value: "all", label: "Tất cả tòa" },
-  { value: "toa-a", label: "Tòa A" },
-  { value: "toa-b", label: "Tòa B" },
-  { value: "toa-c", label: "Tòa C" },
-];
-
-export const FLOOR_OPTIONS = [
-  { value: "all", label: "Tất cả tầng" },
-  { value: "floor-1", label: "Tầng 1" },
-  { value: "floor-2", label: "Tầng 2" },
-  { value: "floor-3", label: "Tầng 3" },
-];
-
 export const STATUS_OPTIONS = [
   { value: "all", label: "Tất cả trạng thái" },
   { value: "good", label: "Tốt" },
@@ -22,16 +8,12 @@ export const STATUS_OPTIONS = [
   { value: "critical", label: "Nguy hiểm" },
 ];
 
-const BUILDING_SLUG_TO_LABEL: Record<string, string> = {
-  "toa-a": "Tòa A",
-  "toa-b": "Tòa B",
-  "toa-c": "Tòa C",
-};
-
 const FLOOR_SLUG_TO_LABEL: Record<string, string> = {
   "floor-1": "Tầng 1",
   "floor-2": "Tầng 2",
   "floor-3": "Tầng 3",
+  "floor-4": "Tầng 4",
+  "floor-5": "Tầng 5",
 };
 
 const reportStatusBucket = (
@@ -54,7 +36,7 @@ export const filterReports = (
     if (
       filters.building &&
       filters.building !== "all" &&
-      report.building !== BUILDING_SLUG_TO_LABEL[filters.building]
+      report.building !== filters.building
     ) {
       return false;
     }
