@@ -1,4 +1,5 @@
 import { CheckCircle2, Clock, AlertCircle, XCircle } from "lucide-react";
+import { STATUS_COLORS } from "@/config/colors";
 
 import type { ContractStatus } from "@/types/contract";
 
@@ -17,29 +18,25 @@ export const contractStatusConfig: Record<
     label: "Đang hoạt động",
     variant: "default",
     icon: CheckCircle2,
-    className:
-      "bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 border-emerald-300 dark:border-emerald-800",
+    className: `${STATUS_COLORS.success.light.bg} ${STATUS_COLORS.success.dark.bg} ${STATUS_COLORS.success.light.text} ${STATUS_COLORS.success.dark.text} ${STATUS_COLORS.success.light.border} ${STATUS_COLORS.success.dark.border}`,
   },
   ending: {
     label: "Sắp hết hạn",
     variant: "secondary",
     icon: AlertCircle,
-    className:
-      "border-amber-300 bg-amber-50 text-amber-700 dark:bg-amber-950 dark:text-amber-300 dark:border-amber-800",
+    className: `${STATUS_COLORS.warning.light.border} ${STATUS_COLORS.warning.light.bg} ${STATUS_COLORS.warning.light.text} ${STATUS_COLORS.warning.dark.bg} ${STATUS_COLORS.warning.dark.text} ${STATUS_COLORS.warning.dark.border}`,
   },
   ended: {
     label: "Đã hết hạn",
     variant: "outline",
     icon: XCircle,
-    className:
-      "border-slate-300 bg-slate-50 text-slate-700 dark:bg-slate-950 dark:text-slate-300 dark:border-slate-800",
+    className: `${STATUS_COLORS.neutral2.light.border} ${STATUS_COLORS.neutral2.light.bg} ${STATUS_COLORS.neutral2.light.text} ${STATUS_COLORS.neutral2.dark.bg} ${STATUS_COLORS.neutral2.dark.text} ${STATUS_COLORS.neutral2.dark.border}`,
   },
   pending: {
     label: "Chờ xử lý",
     variant: "secondary",
     icon: Clock,
-    className:
-      "border-blue-300 bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300 dark:border-blue-800",
+    className: `${STATUS_COLORS.info.light.border} ${STATUS_COLORS.info.light.bg} ${STATUS_COLORS.info.light.text} ${STATUS_COLORS.info.dark.bg} ${STATUS_COLORS.info.dark.text} ${STATUS_COLORS.info.dark.border}`,
   },
 };
 
