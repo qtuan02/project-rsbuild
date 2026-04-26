@@ -2,15 +2,17 @@ import { Plus } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { Button } from "@/components/ui/button";
+import { EntityListCard } from "@/components/shared/cards/entity-list-card";
+import { ListPageHeader } from "@/components/shared/list";
 import {
-  Card,
   CardContent,
   CardHeader,
   CardTitle,
   CardDescription,
 } from "@/components/ui/card";
 import { routePathBuilders } from "@/config/routes";
+import { STATUS_COLORS } from "@/config/colors";
+import { cn } from "@/lib/cn";
 
 import { BuildingFormDialog } from "../components/building-form-dialog";
 import { useBuildingList } from "../hooks/use-building-list";
@@ -22,65 +24,87 @@ export const BuildingListPage = () => {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-bold tracking-tight">Quản lý Tòa nhà</h1>
-          <p className="text-sm text-muted-foreground mt-1">
-            Quản lý danh sách các khu trọ, tòa nhà của bạn
-          </p>
-        </div>
-        <Button onClick={() => setIsFormOpen(true)}>
-          <Plus className="mr-2 h-4 w-4" />
-          Thêm tòa nhà
-        </Button>
-      </div>
+      <ListPageHeader
+        title="Quản lý Tòa nhà"
+        description="Quản lý danh sách các khu trọ, tòa nhà của bạn"
+        actions={[
+          {
+            key: "add",
+            label: "Thêm tòa nhà",
+            icon: <Plus className="mr-2 h-4 w-4" />,
+            onClick: () => setIsFormOpen(true),
+          },
+        ]}
+      />
 
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {buildings.map((building) => {
           const occupancyRate = building.occupancyRate;
+          const occupancyColor =
+            occupancyRate >= 90
+              ? "bg-primary"
+              : occupancyRate >= 50
+                ? "bg-amber-500"
+                : "bg-destructive";
+
           return (
-            <Card
+            <EntityListCard
               key={building.id}
-              className="cursor-pointer hover:border-primary transition-colors"
+              header={
+                <CardHeader className="pb-3">
+                  <CardTitle className="text-lg">{building.name}</CardTitle>
+                  <CardDescription>{building.address}</CardDescription>
+                </CardHeader>
+              }
+              content={
+                <CardContent className="space-y-4">
+                  <div className="grid grid-cols-2 gap-3 text-sm">
+                    <div>
+                      <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
+                        Tổng phòng
+                      </p>
+                      <p className="mt-1.5 text-base font-semibold">
+                        {building.totalRooms}
+                      </p>
+                    </div>
+                    <div>
+                      <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
+                        Phòng trống
+                      </p>
+                      <p
+                        className={cn(
+                          "mt-1.5 text-base font-semibold",
+                          STATUS_COLORS.success.light.text,
+                        )}
+                      >
+                        {building.availableRooms}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div>
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
+                        Lấp đầy
+                      </span>
+                      <span className="text-sm font-semibold">
+                        {occupancyRate}%
+                      </span>
+                    </div>
+                    <div className="h-2 w-full overflow-hidden rounded-full bg-secondary">
+                      <div
+                        className="h-full bg-primary transition-all duration-300"
+                        style={{ width: `${occupancyRate}%` }}
+                      />
+                    </div>
+                  </div>
+                </CardContent>
+              }
+              className="cursor-pointer"
               onClick={() =>
                 navigate(routePathBuilders.buildingDetail(building.id))
               }
-            >
-              <CardHeader className="pb-3">
-                <CardTitle className="text-lg">{building.name}</CardTitle>
-                <CardDescription>{building.address}</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="flex flex-col gap-2">
-                  <div className="flex justify-between text-sm">
-                    <span className="text-muted-foreground">
-                      Tổng số phòng:
-                    </span>
-                    <span className="font-medium">{building.totalRooms}</span>
-                  </div>
-                  <div className="flex justify-between text-sm">
-                    <span className="text-muted-foreground">Phòng trống:</span>
-                    <span className="font-medium text-green-600">
-                      {building.availableRooms}
-                    </span>
-                  </div>
-                  <div className="flex justify-between text-sm">
-                    <span className="text-muted-foreground">
-                      Tỷ lệ lấp đầy:
-                    </span>
-                    <span className="font-medium">{occupancyRate}%</span>
-                  </div>
-
-                  {/* Progress bar */}
-                  <div className="mt-2 h-2 w-full overflow-hidden rounded-full bg-secondary">
-                    <div
-                      className={`h-full ${occupancyRate >= 90 ? "bg-primary" : occupancyRate >= 50 ? "bg-amber-500" : "bg-red-500"}`}
-                      style={{ width: `${occupancyRate}%` }}
-                    />
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
+            />
           );
         })}
       </div>

@@ -1,21 +1,38 @@
-import { Download, LayoutGrid, List, Plus } from "lucide-react";
+import { Download, FileText, Plus } from "lucide-react";
+import * as React from "react";
 
-import { DataTable } from "@/components/shared/table";
-import type {
-  DataTableFilterableColumn,
-  DataTableSearchableColumn,
+import { ListPageHeader, ListPageShell } from "@/components/shared/list";
+import {
+  DataTable,
+  DataTableView,
+  DataTablePagination,
+  DataTableToolbar,
+  useDataTable,
+  type DataTableFilterableColumn,
+  type DataTableSearchableColumn,
 } from "@/components/shared/table";
-import { Button } from "@/components/ui/button";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Tabs, TabsContent } from "@/components/ui/tabs";
 import type { Room } from "@/types/room";
 
-import { columns } from "../components/room-columns";
 import { RoomGrid } from "../components/room-grid";
+import { columns } from "../components/room-columns";
 import { useRoomList } from "../hooks/use-room-list";
 
 export const RoomListPage = () => {
   const { data, searchableColumns, filterableColumns, onRowReorder } =
     useRoomList();
+  const [activeTab, setActiveTab] = React.useState("grid");
+
+  const { table } = useDataTable({
+    data,
+    columns,
+    getRowId: (row) => row.id,
+    initialPageSize: 12,
+  });
+
+  const rows = table.getRowModel().rows;
+  const hasRows = rows.length > 0;
+
   const tableSearchableColumns: DataTableSearchableColumn<Room>[] =
     searchableColumns;
   const tableFilterableColumns: DataTableFilterableColumn<Room>[] =
@@ -23,57 +40,69 @@ export const RoomListPage = () => {
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <div>
-          <h2 className="text-2xl font-bold tracking-tight">
-            Danh sách phòng trọ
-          </h2>
-          <p className="mt-1 text-sm text-muted-foreground">
-            Quản lý toàn bộ phòng trọ, trạng thái và thông tin khách thuê.
-          </p>
-        </div>
-        <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto">
-          <Button variant="outline" size="sm" className="w-full sm:w-auto">
-            <Download className="mr-2 h-4 w-4" />
-            Xuất Excel
-          </Button>
-          <Button size="sm" className="w-full sm:w-auto">
-            <Plus className="mr-2 h-4 w-4" />
-            Thêm phòng
-          </Button>
-        </div>
-      </div>
+      <ListPageHeader
+        title="Danh sách phòng trọ"
+        description="Quản lý toàn bộ phòng trọ, trạng thái và thông tin khách thuê."
+        actions={[
+          {
+            key: "export",
+            label: "Xuất Excel",
+            icon: <Download className="mr-2 h-4 w-4" />,
+            variant: "outline",
+          },
+          {
+            key: "add",
+            label: "Thêm phòng",
+            icon: <Plus className="mr-2 h-4 w-4" />,
+          },
+        ]}
+      />
 
-      <Tabs defaultValue="grid" className="w-full">
-        <div className="flex items-center justify-between">
-          <TabsList>
-            <TabsTrigger value="grid" className="gap-2">
-              <LayoutGrid className="h-4 w-4" />
-              Sơ đồ
-            </TabsTrigger>
-            <TabsTrigger value="table" className="gap-2">
-              <List className="h-4 w-4" />
-              Danh sách
-            </TabsTrigger>
-          </TabsList>
-        </div>
-
-        <TabsContent value="grid" className="mt-0">
-          <RoomGrid data={data} />
-        </TabsContent>
-
-        <TabsContent value="table" className="mt-0">
-          <DataTable
-            columns={columns}
-            data={data}
-            searchableColumns={tableSearchableColumns}
-            filterableColumns={tableFilterableColumns}
-            enableRowDrag
-            getRowId={(row) => row.id}
-            onRowReorder={onRowReorder}
-          />
-        </TabsContent>
+      <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+        <ListPageShell
+          resultLabel={`${table.getFilteredRowModel().rows.length} phòng được tìm thấy`}
+          isFiltering={table.getState().columnFilters.length > 0}
+          toolbar={
+            <DataTableToolbar
+              table={table}
+              searchableColumns={tableSearchableColumns}
+              filterableColumns={tableFilterableColumns}
+              showViewOptions={activeTab === "table"}
+            />
+          }
+          gridContent={
+            <TabsContent value="grid" className="mt-0 outline-none">
+              {hasRows ? (
+                <RoomGrid data={rows.map((row) => row.original)} />
+              ) : (
+                <DataTableView
+                  table={table}
+                  columns={columns}
+                  emptyIcon={FileText}
+                  emptyTitle="Không tìm thấy phòng"
+                  emptyDescription="Thử thay đổi bộ lọc hoặc từ khóa tìm kiếm để xem kết quả."
+                  resetFilters={() => table.resetColumnFilters()}
+                />
+              )}
+            </TabsContent>
+          }
+          tableContent={
+            <TabsContent value="table" className="mt-0 outline-none">
+              <DataTable
+                columns={columns}
+                data={rows.map((row) => row.original)}
+                searchableColumns={tableSearchableColumns}
+                filterableColumns={tableFilterableColumns}
+                enableRowDrag
+                getRowId={(row) => row.id}
+                onRowReorder={onRowReorder}
+              />
+            </TabsContent>
+          }
+        />
       </Tabs>
+
+      {hasRows && <DataTablePagination table={table} />}
     </div>
   );
 };

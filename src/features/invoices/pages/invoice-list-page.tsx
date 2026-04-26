@@ -24,6 +24,8 @@ import { InvoiceCard } from "../components/invoice-card";
 import { invoiceColumns } from "../components/invoice-columns";
 import { useInvoiceList } from "../hooks/use-invoice-list";
 
+import { STATUS_COLORS } from "@/config/colors";
+
 const summaryStatConfigs = [
   {
     key: "total",
@@ -36,22 +38,22 @@ const summaryStatConfigs = [
     key: "paidAmount",
     label: "Đã thanh toán",
     icon: CheckCircle2,
-    color: "text-emerald-600 dark:text-emerald-400",
-    bg: "bg-emerald-100 dark:bg-emerald-900/30",
+    color: STATUS_COLORS.success.light.text,
+    bg: STATUS_COLORS.success.light.bg,
   },
   {
     key: "pendingAmount",
     label: "Chờ thanh toán",
     icon: Clock,
-    color: "text-blue-600 dark:text-blue-400",
-    bg: "bg-blue-100 dark:bg-blue-900/30",
+    color: STATUS_COLORS.info.light.text,
+    bg: STATUS_COLORS.info.light.bg,
   },
   {
     key: "overdueAmount",
     label: "Quá hạn",
     icon: AlertCircle,
-    color: "text-red-600 dark:text-red-400",
-    bg: "bg-red-100 dark:bg-red-900/30",
+    color: STATUS_COLORS.error.light.text,
+    bg: STATUS_COLORS.error.light.bg,
   },
 ] as const;
 
