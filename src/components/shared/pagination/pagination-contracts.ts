@@ -12,8 +12,8 @@ export interface DataTablePaginationLabels {
   page: string;
 }
 
-export const DEFAULT_PAGINATION_PAGE_SIZE_OPTIONS = [6, 9, 12, 18];
-export const DEFAULT_DATA_TABLE_PAGE_SIZE_OPTIONS = [10, 20, 30, 50];
+export const DEFAULT_PAGINATION_OPTIONS = 12;
+export const DEFAULT_PAGINATION_PAGE_SIZE_OPTIONS = [12, 24, 36, 48, 60];
 
 export const DEFAULT_PAGINATION_LABELS: PaginationLabels = {
   showing: "Hiển thị",

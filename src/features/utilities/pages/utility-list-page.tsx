@@ -3,6 +3,7 @@ import * as React from "react";
 
 import { SummaryCard } from "@/components/shared/cards/summary-card";
 import { ListPageHeader, ListPageShell } from "@/components/shared/list";
+import { DEFAULT_PAGINATION_OPTIONS } from "@/components/shared/pagination/pagination-contracts";
 import { LoadingPanel } from "@/components/shared/panels";
 import {
   DataTableView,
@@ -25,7 +26,7 @@ export const UtilityListPage = () => {
     data,
     columns: utilityColumns,
     getRowId: (row) => row.id,
-    initialPageSize: 6,
+    initialPageSize: DEFAULT_PAGINATION_OPTIONS,
   });
 
   const isLoading = false;

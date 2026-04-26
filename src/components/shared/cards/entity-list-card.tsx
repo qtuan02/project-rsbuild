@@ -9,6 +9,7 @@ interface EntityListCardProps {
   content: ReactNode;
   footer?: ReactNode;
   className?: string;
+  onClick?: () => void;
 }
 
 export const EntityListCard = ({
@@ -17,6 +18,7 @@ export const EntityListCard = ({
   content,
   footer,
   className,
+  onClick,
 }: EntityListCardProps) => {
   return (
     <Card
@@ -24,6 +26,7 @@ export const EntityListCard = ({
         "group relative overflow-hidden transition-all duration-300 hover:shadow-lg hover:shadow-primary/5 hover:-translate-y-0.5",
         className,
       )}
+      onClick={onClick}
     >
       <div
         className={cn(

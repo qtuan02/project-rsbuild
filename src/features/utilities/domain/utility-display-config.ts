@@ -1,3 +1,4 @@
+import { STATUS_COLORS, TYPE_COLORS } from "@/config/colors";
 import type { UtilityStatus, UtilityType } from "@/types/utility";
 
 interface StatusConfig {
@@ -18,20 +19,17 @@ export const utilityStatusConfig: Record<UtilityStatus, StatusConfig> = {
   draft: {
     label: "Nháp",
     value: "draft",
-    className:
-      "border-zinc-200 bg-zinc-50 text-zinc-500 dark:bg-zinc-900/50 dark:text-zinc-400 dark:border-zinc-700",
+    className: `${STATUS_COLORS.neutral.light.border} ${STATUS_COLORS.neutral.light.bg} ${STATUS_COLORS.neutral.light.text} ${STATUS_COLORS.neutral.dark.bg} ${STATUS_COLORS.neutral.dark.text} ${STATUS_COLORS.neutral.dark.border}`,
   },
   verified: {
     label: "Đã xác minh",
     value: "verified",
-    className:
-      "border-emerald-200 bg-emerald-50 text-emerald-700 dark:bg-emerald-950/50 dark:text-emerald-300 dark:border-emerald-800",
+    className: `${STATUS_COLORS.success.light.border} ${STATUS_COLORS.success.light.bg} ${STATUS_COLORS.success.light.text} ${STATUS_COLORS.success.dark.bg} ${STATUS_COLORS.success.dark.text} ${STATUS_COLORS.success.dark.border}`,
   },
   anomaly: {
     label: "Bất thường",
     value: "anomaly",
-    className:
-      "border-red-200 bg-red-50 text-red-700 dark:bg-red-950/50 dark:text-red-300 dark:border-red-800",
+    className: `${STATUS_COLORS.error.light.border} ${STATUS_COLORS.error.light.bg} ${STATUS_COLORS.error.light.text} ${STATUS_COLORS.error.dark.bg} ${STATUS_COLORS.error.dark.text} ${STATUS_COLORS.error.dark.border}`,
   },
 };
 
@@ -39,16 +37,16 @@ export const utilityTypeConfig: Record<UtilityType, TypeConfig> = {
   electricity: {
     label: "Điện",
     value: "electricity",
-    color: "text-amber-600 dark:text-amber-400",
-    bgColor: "bg-amber-100 dark:bg-amber-900/30",
-    accentColor: "bg-amber-500",
+    color: TYPE_COLORS.electricity.text,
+    bgColor: TYPE_COLORS.electricity.bg,
+    accentColor: TYPE_COLORS.electricity.accent,
   },
   water: {
     label: "Nước",
     value: "water",
-    color: "text-blue-600 dark:text-blue-400",
-    bgColor: "bg-blue-100 dark:bg-blue-900/30",
-    accentColor: "bg-blue-500",
+    color: TYPE_COLORS.water.text,
+    bgColor: TYPE_COLORS.water.bg,
+    accentColor: TYPE_COLORS.water.accent,
   },
 };
 

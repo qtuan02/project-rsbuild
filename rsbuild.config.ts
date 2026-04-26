@@ -9,6 +9,9 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 // Docs: https://rsbuild.rs/config/
 export default defineConfig({
   plugins: [pluginReact()],
+  html: {
+    title: "Quản lý phòng trọ",
+  },
   server: {
     historyApiFallback: true,
   },

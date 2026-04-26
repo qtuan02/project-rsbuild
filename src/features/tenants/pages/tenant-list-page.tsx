@@ -9,6 +9,7 @@ import {
 import * as React from "react";
 
 import { ListPageHeader, ListPageShell } from "@/components/shared/list";
+import { DEFAULT_PAGINATION_OPTIONS } from "@/components/shared/pagination/pagination-contracts";
 import {
   DataTableView,
   DataTablePagination,
@@ -65,7 +66,7 @@ export const TenantListPage = () => {
     data,
     columns: tenantColumns,
     getRowId: (row) => row.id,
-    initialPageSize: 6,
+    initialPageSize: DEFAULT_PAGINATION_OPTIONS,
   });
 
   const rows = table.getRowModel().rows;

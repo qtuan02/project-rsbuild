@@ -2,10 +2,14 @@ import { Activity, Plus, Receipt } from "lucide-react";
 
 import { SummaryCard } from "@/components/shared/cards";
 import { ListPageHeader } from "@/components/shared/list";
+import { DEFAULT_PAGINATION_OPTIONS } from "@/components/shared/pagination/pagination-contracts";
 import {
-  DataTable,
+  DataTablePagination,
+  DataTableToolbar,
+  DataTableView,
   type DataTableFilterableColumn,
   type DataTableSearchableColumn,
+  useDataTable,
 } from "@/components/shared/table";
 import type { SupplierBill } from "@/types/supplier-bill";
 import { formatCurrency } from "@/utils/currency";
@@ -32,6 +36,13 @@ export const SupplierBillListPage = () => {
       ],
     },
   ];
+  const { table } = useDataTable({
+    data: bills,
+    columns: supplierBillColumns,
+    getRowId: (row) => row.id,
+    initialPageSize: DEFAULT_PAGINATION_OPTIONS,
+  });
+  const hasRows = table.getRowModel().rows.length > 0;
 
   return (
     <div className="space-y-6">
@@ -63,12 +74,23 @@ export const SupplierBillListPage = () => {
         <SummaryCard label="Số hóa đơn" value={totals.count} icon={Receipt} />
       </div>
 
-      <DataTable
-        data={bills}
-        columns={supplierBillColumns}
-        searchableColumns={searchableColumns}
-        filterableColumns={filterableColumns}
-      />
+      <div className="space-y-4">
+        <DataTableToolbar
+          table={table}
+          searchableColumns={searchableColumns}
+          filterableColumns={filterableColumns}
+          showViewOptions={false}
+        />
+        <DataTableView
+          table={table}
+          columns={supplierBillColumns}
+          emptyIcon={Receipt}
+          emptyTitle="Không tìm thấy hóa đơn nhà cung cấp"
+          emptyDescription="Thử thay đổi bộ lọc hoặc từ khóa tìm kiếm để xem kết quả."
+          resetFilters={() => table.resetColumnFilters()}
+        />
+        {hasRows && <DataTablePagination table={table} />}
+      </div>
     </div>
   );
 };

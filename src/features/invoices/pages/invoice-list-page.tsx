@@ -9,6 +9,7 @@ import {
 import * as React from "react";
 
 import { ListPageHeader, ListPageShell } from "@/components/shared/list";
+import { DEFAULT_PAGINATION_OPTIONS } from "@/components/shared/pagination/pagination-contracts";
 import {
   DataTableView,
   DataTablePagination,
@@ -17,6 +18,7 @@ import {
 } from "@/components/shared/table";
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent } from "@/components/ui/tabs";
+import { STATUS_COLORS } from "@/config/colors";
 import { cn } from "@/lib/cn";
 import { formatCurrency } from "@/utils/currency";
 
@@ -36,22 +38,22 @@ const summaryStatConfigs = [
     key: "paidAmount",
     label: "Đã thanh toán",
     icon: CheckCircle2,
-    color: "text-emerald-600 dark:text-emerald-400",
-    bg: "bg-emerald-100 dark:bg-emerald-900/30",
+    color: STATUS_COLORS.success.light.text,
+    bg: STATUS_COLORS.success.light.bg,
   },
   {
     key: "pendingAmount",
     label: "Chờ thanh toán",
     icon: Clock,
-    color: "text-blue-600 dark:text-blue-400",
-    bg: "bg-blue-100 dark:bg-blue-900/30",
+    color: STATUS_COLORS.info.light.text,
+    bg: STATUS_COLORS.info.light.bg,
   },
   {
     key: "overdueAmount",
     label: "Quá hạn",
     icon: AlertCircle,
-    color: "text-red-600 dark:text-red-400",
-    bg: "bg-red-100 dark:bg-red-900/30",
+    color: STATUS_COLORS.error.light.text,
+    bg: STATUS_COLORS.error.light.bg,
   },
 ] as const;
 
@@ -64,7 +66,7 @@ export const InvoiceListPage = () => {
     data,
     columns: invoiceColumns,
     getRowId: (row) => row.id,
-    initialPageSize: 6,
+    initialPageSize: DEFAULT_PAGINATION_OPTIONS,
   });
 
   const rows = table.getRowModel().rows;

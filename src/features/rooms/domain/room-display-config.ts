@@ -1,5 +1,6 @@
 import { CheckCircle2, Circle, Clock, Wrench } from "lucide-react";
 
+import { STATUS_COLORS } from "@/config/colors";
 import { cn } from "@/lib/cn";
 import type { RoomStatus, RoomType } from "@/types/room";
 
@@ -17,7 +18,7 @@ export const roomStatusConfig: Record<
     variant: "outline",
     icon: Circle,
     className: cn(
-      "border-orange-300 bg-orange-50 text-orange-700 dark:bg-orange-950 dark:text-orange-300 dark:border-orange-800",
+      `${STATUS_COLORS.success.light.border} ${STATUS_COLORS.success.light.bg} ${STATUS_COLORS.success.light.text} ${STATUS_COLORS.success.dark.bg} ${STATUS_COLORS.success.dark.text} ${STATUS_COLORS.success.dark.border}`,
     ),
   },
   occupied: {
@@ -31,7 +32,7 @@ export const roomStatusConfig: Record<
     variant: "secondary",
     icon: Wrench,
     className: cn(
-      "border-red-300 bg-red-50 text-red-700 dark:bg-red-950 dark:text-red-300 dark:border-red-800",
+      `${STATUS_COLORS.error.light.border} ${STATUS_COLORS.error.light.bg} ${STATUS_COLORS.error.light.text} ${STATUS_COLORS.error.dark.bg} ${STATUS_COLORS.error.dark.text} ${STATUS_COLORS.error.dark.border}`,
     ),
   },
   reserved: {
@@ -39,7 +40,7 @@ export const roomStatusConfig: Record<
     variant: "secondary",
     icon: Clock,
     className: cn(
-      "border-blue-300 bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300 dark:border-blue-800",
+      `${STATUS_COLORS.info.light.border} ${STATUS_COLORS.info.light.bg} ${STATUS_COLORS.info.light.text} ${STATUS_COLORS.info.dark.bg} ${STATUS_COLORS.info.dark.text} ${STATUS_COLORS.info.dark.border}`,
     ),
   },
 };
