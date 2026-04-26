@@ -1,6 +1,7 @@
 import { FileText } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 
+import { BuildingSelector } from "@/components/shared/layout/building-selector";
 import { NavUser } from "@/components/shared/layout/nav-user";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import {
@@ -46,7 +47,7 @@ export const AppSidebar = () => {
 
   return (
     <Sidebar collapsible="icon" className="border-r-0">
-      <SidebarHeader className="h-14 border-b px-4 md:h-[60px] lg:px-6 group-data-[collapsible=icon]:p-0 group-data-[collapsible=icon]:items-center group-data-[collapsible=icon]:justify-center">
+      <SidebarHeader className="border-b px-4 py-3 lg:px-6 group-data-[collapsible=icon]:p-0 group-data-[collapsible=icon]:items-center group-data-[collapsible=icon]:justify-center">
         <Link
           to={routes.home}
           className="flex flex-1 items-center gap-2.5 font-semibold group-data-[collapsible=icon]:justify-center"
@@ -63,6 +64,9 @@ export const AppSidebar = () => {
             </span>
           </div>
         </Link>
+        <div className="w-full group-data-[collapsible=icon]:hidden">
+          <BuildingSelector />
+        </div>
       </SidebarHeader>
 
       <SidebarContent className="overflow-hidden p-0">

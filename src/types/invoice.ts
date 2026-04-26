@@ -9,6 +9,7 @@ export const INVOICE_STATUSES = [
 
 export interface Invoice {
   id: string;
+  buildingId?: string;
   invoiceNumber: string;
   tenant: string;
   room: string;

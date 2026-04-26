@@ -5,12 +5,20 @@ import {
   DollarSign,
   TrendingUp,
   UserCheck,
-  Users,
 } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
+import { CashFlowChart } from "../components/cash-flow-chart";
+import { OccupancyDonutChart } from "../components/occupancy-donut-chart";
 import { RevenueChart } from "../components/revenue-chart";
 
 interface StatCardProps {
@@ -67,31 +75,31 @@ const StatCard = ({
 const stats: StatCardProps[] = [
   {
     title: "Tổng số phòng",
-    value: "48",
-    description: "so với tháng trước",
+    value: "145",
+    description: "trên toàn bộ tòa nhà",
     icon: Building2,
-    trend: { value: "+2", positive: true },
+    trend: { value: "+12", positive: true },
   },
   {
-    title: "Đã cho thuê",
-    value: "42",
-    description: "tỷ lệ lấp đầy 87.5%",
+    title: "Tỷ lệ lấp đầy",
+    value: "94.2%",
+    description: "hiệu suất tối ưu",
     icon: UserCheck,
-    trend: { value: "+5.2%", positive: true },
-  },
-  {
-    title: "Khách thuê",
-    value: "67",
-    description: "so với tháng trước",
-    icon: Users,
-    trend: { value: "+3", positive: true },
+    trend: { value: "+2.5%", positive: true },
   },
   {
     title: "Doanh thu tháng",
-    value: "126.5tr",
-    description: "so với tháng trước",
+    value: "545.2tr",
+    description: "kỳ báo cáo tháng 4",
     icon: DollarSign,
-    trend: { value: "+12.3%", positive: true },
+    trend: { value: "+15.3%", positive: true },
+  },
+  {
+    title: "Chi phí vận hành",
+    value: "123.5tr",
+    description: "tiền điện, nước, dịch vụ",
+    icon: TrendingUp,
+    trend: { value: "-4.2%", positive: false },
   },
 ];
 
@@ -157,23 +165,69 @@ export const DashboardPage = () => {
 
       {/* Content grid */}
       <div className="grid gap-4 lg:grid-cols-7">
-        {/* Revenue chart placeholder */}
+        {/* Revenue chart */}
         <Card className="lg:col-span-4">
-          <CardHeader className="flex flex-row items-center justify-between">
-            <CardTitle className="text-base font-semibold">Doanh thu</CardTitle>
-            <div className="flex items-center gap-1 text-xs text-emerald-600">
+          <CardHeader className="flex flex-row items-center justify-between pb-2">
+            <div>
+              <CardTitle className="text-base font-semibold">
+                Doanh thu & Thu chi
+              </CardTitle>
+              <CardDescription>
+                Xu hướng tài chính trong 6 tháng qua
+              </CardDescription>
+            </div>
+            <div className="flex items-center gap-1 text-xs text-emerald-600 bg-emerald-50 px-2 py-1 rounded-full">
               <TrendingUp className="h-3.5 w-3.5" />
               <span className="font-medium">+12.3% tháng này</span>
             </div>
           </CardHeader>
           <CardContent className="pl-0">
-            <RevenueChart />
+            <Tabs defaultValue="revenue" className="w-full">
+              <div className="px-6 mb-4">
+                <TabsList>
+                  <TabsTrigger value="revenue">Doanh thu</TabsTrigger>
+                  <TabsTrigger value="cashflow">Thu vs Chi</TabsTrigger>
+                </TabsList>
+              </div>
+              <TabsContent value="revenue">
+                <RevenueChart />
+              </TabsContent>
+              <TabsContent value="cashflow">
+                <CashFlowChart />
+              </TabsContent>
+            </Tabs>
           </CardContent>
         </Card>
 
-        <div className="flex flex-col gap-4 lg:col-span-3">
+        {/* Occupancy Donut */}
+        <Card className="lg:col-span-3">
+          <CardHeader>
+            <CardTitle className="text-base font-semibold">
+              Tỷ lệ lấp đầy
+            </CardTitle>
+            <CardDescription>
+              Trạng thái phòng hiện tại của tòa nhà
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <OccupancyDonutChart />
+            <div className="mt-4 grid grid-cols-2 gap-4">
+              <div className="flex flex-col items-center justify-center p-3 rounded-lg bg-primary/5">
+                <span className="text-sm text-muted-foreground">Đang thuê</span>
+                <span className="text-xl font-bold text-primary">42</span>
+              </div>
+              <div className="flex flex-col items-center justify-center p-3 rounded-lg bg-muted/50">
+                <span className="text-sm text-muted-foreground">Còn trống</span>
+                <span className="text-xl font-bold">6</span>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Task List & Activity (New Layout) */}
+        <div className="lg:col-span-4 space-y-4">
           {/* Task List */}
-          <Card className="flex-1">
+          <Card>
             <CardHeader>
               <CardTitle className="text-base font-semibold">
                 Việc cần làm
@@ -221,9 +275,11 @@ export const DashboardPage = () => {
               </div>
             </CardContent>
           </Card>
+        </div>
 
+        <div className="lg:col-span-3">
           {/* Recent activity */}
-          <Card className="flex-1">
+          <Card className="h-full">
             <CardHeader>
               <CardTitle className="text-base font-semibold">
                 Hoạt động gần đây

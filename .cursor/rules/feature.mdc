@@ -1,0 +1,51 @@
+---
+description: Checklist and pattern when creating or modifying a feature
+globs: src/features/**/*.{ts,tsx}
+---
+
+# Feature Development Rules
+
+## When Creating a New Feature
+
+1. Identify business logic → place in `domain/`
+2. Write API/repository calls → place in `data/`
+3. Write orchestration hook → place in `hooks/`
+4. Page only wires hook + components, no logic
+5. Extract repeated UI to `components/shared/` or `lib/`
+
+## Feature Structure (minimal valid)
+
+```
+features/<name>/
+  pages/     # always needed
+  hooks/     # needed if async/state involved
+  domain/    # needed if business rules exist
+  data/      # needed if API calls exist
+  components/ # needed if feature-specific UI exists
+  index.ts   # add when other features need to import from here
+```
+
+> Not every folder is required. Simple features may only need `pages/` + `components/`.
+
+## Domain Layer Rules
+
+✅ Status configs, filter predicates, stat calculators, format rules  
+❌ `useState`, `useEffect`, `navigate`, `toast`, fetch calls
+
+## Hook Layer Rules
+
+- Return stable API: `{ data, isLoading, error, actions }`
+- Do not depend on component internals
+- Keep one hook per logical concern (avoid monolithic hooks)
+
+## Data Layer Rules
+
+- Only source of API/network access
+- Export typed repository functions or query key factories
+- Never import from `components/`, `pages/`, or `hooks/`
+
+## Page Layer Rules
+
+- Accept route params, pass to hooks
+- Compose layout sections
+- No inline filter logic, no direct repo calls

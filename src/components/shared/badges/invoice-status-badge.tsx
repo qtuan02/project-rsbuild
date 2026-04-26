@@ -1,5 +1,5 @@
+import { invoiceStatusBadgeConfig } from "@/components/shared/badges/status-configs";
 import { Badge } from "@/components/ui/badge";
-import { invoiceStatusConfig } from "@/features/invoices/domain/invoice-display-config";
 import { cn } from "@/lib/cn";
 import type { InvoiceStatus } from "@/types/invoice";
 
@@ -16,7 +16,7 @@ export const InvoiceStatusBadge = ({
   className,
   ...props
 }: InvoiceStatusBadgeProps) => {
-  const config = invoiceStatusConfig[status];
+  const config = invoiceStatusBadgeConfig[status];
 
   return (
     <Badge

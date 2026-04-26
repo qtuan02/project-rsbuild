@@ -4,6 +4,7 @@ export type RoomType = "single" | "double" | "studio" | "suite";
 
 export interface Room {
   id: string;
+  buildingId?: string;
   name: string;
   floor: number;
   area: number;

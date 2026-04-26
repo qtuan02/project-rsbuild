@@ -4,6 +4,7 @@ export { DataTablePagination } from "./data-table-pagination";
 export { DataTableToolbar } from "./data-table-toolbar";
 export { DataTableFacetedFilter } from "./data-table-faceted-filter";
 export { useDataTable } from "./use-data-table";
+export { DataTableView } from "./data-table-view";
 export type { FacetedFilterColumn } from "./data-table-faceted-filter";
 export type {
   DataTableFilterableColumn,

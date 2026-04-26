@@ -9,6 +9,7 @@ export const CONTRACT_STATUSES = [
 
 export interface Contract {
   id: string;
+  buildingId?: string;
   contractNumber: string;
   tenant: string;
   room: string;

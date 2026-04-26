@@ -3,6 +3,7 @@ export type UtilityStatus = "draft" | "verified" | "anomaly";
 
 export interface Utility {
   id: string;
+  buildingId?: string;
   roomId: string;
   roomName: string;
   month: string; // YYYY-MM format

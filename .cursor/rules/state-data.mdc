@@ -1,0 +1,28 @@
+---
+description: State management and data-fetching conventions
+globs: src/**/*.{ts,tsx}
+---
+
+# State & Data-Fetching Conventions
+
+## State Ownership
+
+| State type | Tool |
+|---|---|
+| Server/async data | TanStack Query |
+| Form state | React Hook Form + zod schema |
+| Local UI state | `useState` / `useReducer` in feature hook |
+| Global app state | Avoid; prefer co-location |
+
+## TanStack Query Rules
+
+- Query keys defined in `data/` layer (co-locate with fetcher)
+- Mutations invalidate only the relevant query keys
+- Do not call `useQuery` / `useMutation` directly in `pages/` or `components/` — wrap in feature hooks
+
+## Anti-Patterns
+
+❌ Duplicate state from the same server source in multiple places  
+❌ Fetching data inside `components/` directly  
+❌ Managing server state with `useState` + `useEffect` manually  
+❌ Putting query keys as inline strings — define as constants

@@ -1,4 +1,5 @@
 import {
+  Building,
   Building2,
   CheckSquare,
   Droplet,
@@ -10,25 +11,32 @@ import {
   ScrollText,
   Settings,
   Users,
+  Wallet,
+  Banknote,
 } from "lucide-react";
 
+import { BuildingListPage } from "@/features/buildings/pages/building-list-page";
 import { CommunicationsPage } from "@/features/communications/pages/communications-page";
 import { ComplianceDashboardPage } from "@/features/compliance/pages/compliance-dashboard-page";
-import { ContractRoutes } from "@/features/contracts/pages/contract-routes";
+import { ContractListPage } from "@/features/contracts/pages/contract-list-page";
 import { DashboardPage } from "@/features/dashboard/pages/dashboard-page";
+import { ExpenseListPage } from "@/features/expenses/pages/expense-list-page";
 import { InvoiceListPage } from "@/features/invoices/pages/invoice-list-page";
 import { ReportsOverviewPage } from "@/features/reports/pages/reports-overview-page";
 import { RoomListPage } from "@/features/rooms/pages/room-list-page";
 import { SettingsPage } from "@/features/settings/pages/settings-page";
+import { ReconciliationPage } from "@/features/supplier-bills/pages/reconciliation-page";
+import { SupplierBillListPage } from "@/features/supplier-bills/pages/supplier-bill-list-page";
 import { TaskCenterPage } from "@/features/tasks/pages/task-center-page";
 import { TenantListPage } from "@/features/tenants/pages/tenant-list-page";
-import { UtilityRoutes } from "@/features/utilities/pages/utility-routes";
+import { UtilityListPage } from "@/features/utilities/pages/utility-list-page";
 
 import type { LucideIcon } from "lucide-react";
 import type { ComponentType } from "react";
 
 export const routes = {
   home: "/",
+  buildings: "/buildings",
   rooms: "/rooms",
   tenants: "/tenants",
   contracts: "/contracts",
@@ -39,9 +47,16 @@ export const routes = {
   compliance: "/compliance",
   communications: "/communications",
   settings: "/settings",
+  authLogin: "/auth/login",
+  authRegister: "/auth/register",
+  onboarding: "/onboarding",
+  supplierBills: "/supplier-bills",
+  expenses: "/expenses",
+  reconciliation: "/reconciliation",
 } as const;
 
 export const routePathBuilders = {
+  buildingDetail: (buildingId: string) => `${routes.buildings}/${buildingId}`,
   roomDetail: (roomId: string) => `${routes.rooms}/${roomId}`,
   tenantDetail: (tenantId: string) => `${routes.tenants}/${tenantId}`,
   contractDetail: (contractId: string) => `${routes.contracts}/${contractId}`,
@@ -51,6 +66,8 @@ export const routePathBuilders = {
     `${routes.contracts}/${contractId}/liquidation`,
   invoiceDetail: (invoiceId: string) => `${routes.invoices}/${invoiceId}`,
   utilityDetail: (utilityId: string) => `${routes.utilities}/${utilityId}`,
+  supplierBillDetail: (billId: string) => `${routes.supplierBills}/${billId}`,
+  expenseDetail: (expenseId: string) => `${routes.expenses}/${expenseId}`,
 } as const;
 
 export type AppRoutePath = (typeof routes)[keyof typeof routes];
@@ -86,6 +103,17 @@ export const appRouteManifest: AppRouteManifestItem[] = [
     component: DashboardPage,
   },
   {
+    key: "buildings",
+    path: routes.buildings,
+    routePath: "buildings/*",
+    title: "Tòa nhà",
+    description: "Quản lý danh sách tòa nhà.",
+    icon: Building,
+    group: "main",
+    implemented: true,
+    component: BuildingListPage,
+  },
+  {
     key: "rooms",
     path: routes.rooms,
     routePath: "rooms/*",
@@ -116,7 +144,7 @@ export const appRouteManifest: AppRouteManifestItem[] = [
     icon: ScrollText,
     group: "management",
     implemented: true,
-    component: ContractRoutes,
+    component: ContractListPage,
   },
   {
     key: "invoices",
@@ -138,7 +166,40 @@ export const appRouteManifest: AppRouteManifestItem[] = [
     icon: Droplet,
     group: "management",
     implemented: true,
-    component: UtilityRoutes,
+    component: UtilityListPage,
+  },
+  {
+    key: "supplierBills",
+    path: routes.supplierBills,
+    routePath: "supplier-bills/*",
+    title: "Hóa đơn nhà cung cấp",
+    description: "Quản lý hóa đơn từ nhà cung cấp dịch vụ.",
+    icon: ReceiptText,
+    group: "management",
+    implemented: true,
+    component: SupplierBillListPage,
+  },
+  {
+    key: "expenses",
+    path: routes.expenses,
+    routePath: "expenses/*",
+    title: "Chi phí vận hành",
+    description: "Quản lý các khoản chi phí hoạt động.",
+    icon: Wallet,
+    group: "management",
+    implemented: true,
+    component: ExpenseListPage,
+  },
+  {
+    key: "reconciliation",
+    path: routes.reconciliation,
+    routePath: "reconciliation",
+    title: "Đối soát chi phí",
+    description: "Đối soát thu chi theo tòa nhà.",
+    icon: Banknote,
+    group: "management",
+    implemented: true,
+    component: ReconciliationPage,
   },
   {
     key: "tasks",

@@ -1,6 +1,6 @@
-import { Settings2, X } from "lucide-react";
+import { Settings2 } from "lucide-react";
 
-import { SearchInputWithClear } from "@/components/shared/filters";
+import { FilterToolbar } from "@/components/shared/filters";
 import type {
   SharedFilterableColumn,
   SharedSearchableColumn,
@@ -14,8 +14,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-
-import { DataTableFacetedFilter } from "./data-table-faceted-filter";
 
 import type { Table } from "@tanstack/react-table";
 
@@ -43,51 +41,40 @@ export function DataTableToolbar<TData>({
   showViewOptions = true,
 }: DataTableToolbarProps<TData>) {
   const isFiltered = table.getState().columnFilters.length > 0;
+  const searchFields = searchableColumns
+    .filter((column) => table.getColumn(column.id))
+    .map((column) => ({
+      id: column.id,
+      placeholder: `Tìm ${column.title}...`,
+      value: (table.getColumn(column.id)?.getFilterValue() as string) ?? "",
+      onChange: (value: string) =>
+        table.getColumn(column.id)?.setFilterValue(value),
+      inputClassName: "w-36 lg:w-56",
+    }));
+
+  const facetedFilters = filterableColumns
+    .filter((column) => table.getColumn(column.id))
+    .map((column) => ({
+      ...column,
+      column: table.getColumn(column.id),
+      selectedValues: (
+        (table.getColumn(column.id)?.getFilterValue() as string[]) ?? []
+      ).map(String),
+      onChange: (values: string[]) =>
+        table
+          .getColumn(column.id)
+          ?.setFilterValue(values.length ? values : undefined),
+    }));
 
   return (
     <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-      <div className="flex flex-1 flex-wrap items-center gap-2 mb-2">
-        {/* Search inputs */}
-        {searchableColumns.map((column) =>
-          table.getColumn(column.id) ? (
-            <SearchInputWithClear
-              key={column.id}
-              placeholder={`Tìm ${column.title}...`}
-              value={
-                (table.getColumn(column.id)?.getFilterValue() as string) ?? ""
-              }
-              onChange={(value) =>
-                table.getColumn(column.id)?.setFilterValue(value)
-              }
-              inputClassName="w-36 lg:w-56"
-            />
-          ) : null,
-        )}
-
-        {/* Faceted filter buttons */}
-        {filterableColumns.map((column) =>
-          table.getColumn(column.id) ? (
-            <DataTableFacetedFilter
-              key={column.id}
-              column={table.getColumn(column.id)}
-              title={column.title}
-              options={column.options}
-            />
-          ) : null,
-        )}
-
-        {/* Reset filters */}
-        {isFiltered && (
-          <Button
-            variant="ghost"
-            onClick={() => table.resetColumnFilters()}
-            className="h-8 px-2 text-xs lg:px-3"
-          >
-            Xóa bộ lọc
-            <X className="ml-2 h-4 w-4" />
-          </Button>
-        )}
-      </div>
+      <FilterToolbar
+        searchFields={searchFields}
+        facetedFilters={facetedFilters}
+        hasActiveFilters={isFiltered}
+        onClearFilters={() => table.resetColumnFilters()}
+        clearLabel="Xóa bộ lọc"
+      />
 
       <div className="flex items-center gap-2">
         {children}
