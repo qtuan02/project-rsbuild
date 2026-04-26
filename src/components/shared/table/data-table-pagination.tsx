@@ -1,6 +1,6 @@
 import {
   DEFAULT_DATA_TABLE_PAGINATION_LABELS,
-  DEFAULT_DATA_TABLE_PAGE_SIZE_OPTIONS,
+  DEFAULT_PAGINATION_PAGE_SIZE_OPTIONS,
   type DataTablePaginationLabels,
   PaginationBar,
 } from "@/components/shared/pagination";
@@ -16,7 +16,7 @@ interface DataTablePaginationProps<TData> {
 
 export function DataTablePagination<TData>({
   table,
-  pageSizeOptions = DEFAULT_DATA_TABLE_PAGE_SIZE_OPTIONS,
+  pageSizeOptions = DEFAULT_PAGINATION_PAGE_SIZE_OPTIONS,
   labels = DEFAULT_DATA_TABLE_PAGINATION_LABELS,
 }: DataTablePaginationProps<TData>) {
   const totalPages = table.getPageCount();

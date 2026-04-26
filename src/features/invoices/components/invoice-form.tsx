@@ -21,7 +21,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
-import { getTenants } from "@/features/tenants";
+import { getTenants } from "@/features/tenants/data/tenant.repository";
 import type { Invoice, InvoiceStatus } from "@/types/invoice";
 
 interface InvoiceFormProps {

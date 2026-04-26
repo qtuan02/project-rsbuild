@@ -11,7 +11,7 @@ import {
 import { InvoiceStatusBadge } from "@/components/shared/badges/invoice-status-badge";
 import { InfoCard, InfoRow } from "@/components/shared/cards/info-card";
 import { ConfirmActionDialog } from "@/components/shared/dialogs/confirm-action-dialog";
-import { PageBackButton } from "@/components/shared/navigation";
+import { DetailPageShell } from "@/components/shared/layout/detail-page-shell";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
@@ -37,45 +37,42 @@ export const InvoiceDetailPage = ({
     handleDelete,
   } = useInvoiceDetail({ invoiceId, onBack });
 
+  const headerActions = (
+    <div className="flex items-center gap-2">
+      <Button variant="outline" size="sm" className="gap-2">
+        <Download className="h-4 w-4" />
+        Tải PDF
+      </Button>
+      <Button variant="outline" size="sm" className="gap-2">
+        <Edit className="h-4 w-4" />
+        Chỉnh sửa
+      </Button>
+      <Button
+        variant="outline"
+        size="sm"
+        className="gap-2 text-destructive hover:text-destructive"
+        onClick={() => setDeleteDialogOpen(true)}
+      >
+        <Trash2 className="h-4 w-4" />
+        Xóa
+      </Button>
+    </div>
+  );
+
   if (!invoice) {
     return (
-      <div className="space-y-6">
-        <PageBackButton onClick={onBack} />
-        <div className="rounded-lg border border-dashed bg-card/50 p-12 text-center">
-          <h3 className="text-base font-semibold">Không tìm thấy hóa đơn</h3>
-          <p className="mt-1 text-sm text-muted-foreground">
-            Hóa đơn bạn tìm kiếm không tồn tại.
-          </p>
-        </div>
-      </div>
+      <DetailPageShell onBack={onBack} headerActions={headerActions}>
+        <Card>
+          <CardContent className="pt-6 text-center text-muted-foreground">
+            Không tìm thấy hóa đơn.
+          </CardContent>
+        </Card>
+      </DetailPageShell>
     );
   }
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <PageBackButton onClick={onBack} />
-        <div className="flex items-center gap-2">
-          <Button variant="outline" size="sm" className="gap-2">
-            <Download className="h-4 w-4" />
-            Tải PDF
-          </Button>
-          <Button variant="outline" size="sm" className="gap-2">
-            <Edit className="h-4 w-4" />
-            Chỉnh sửa
-          </Button>
-          <Button
-            variant="outline"
-            size="sm"
-            className="gap-2 text-destructive hover:text-destructive"
-            onClick={() => setDeleteDialogOpen(true)}
-          >
-            <Trash2 className="h-4 w-4" />
-            Xóa
-          </Button>
-        </div>
-      </div>
-
+    <DetailPageShell onBack={onBack} headerActions={headerActions}>
       <div className="grid gap-6 lg:grid-cols-3">
         <div className="lg:col-span-2 space-y-6">
           <Card>
@@ -297,6 +294,6 @@ export const InvoiceDetailPage = ({
         onConfirm={handleDelete}
         onCancel={() => setDeleteDialogOpen(false)}
       />
-    </div>
+    </DetailPageShell>
   );
 };
