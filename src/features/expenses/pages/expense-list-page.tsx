@@ -25,7 +25,8 @@ export const ExpenseListPage = () => {
     initialPageSize: DEFAULT_PAGINATION_OPTIONS,
   });
 
-  const hasRows = table.getRowModel().rows.length > 0;
+  const rows = table.getRowModel().rows;
+  const hasRows = rows.length > 0;
 
   return (
     <div className="space-y-6">
