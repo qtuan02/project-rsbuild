@@ -1,7 +1,6 @@
 import { FileText } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 
-import { BuildingSelector } from "@/components/shared/layout/building-selector";
 import { NavUser } from "@/components/shared/layout/nav-user";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import {
@@ -23,6 +22,7 @@ import {
   routes,
   type AppRouteManifestItem,
 } from "@/config/routes";
+import { useAuthStore } from "@/stores/auth.store";
 
 const renderMenuItem = (item: AppRouteManifestItem, pathname: string) => {
   const isActive =
@@ -44,10 +44,11 @@ const renderMenuItem = (item: AppRouteManifestItem, pathname: string) => {
 
 export const AppSidebar = () => {
   const location = useLocation();
+  const user = useAuthStore((state) => state.user);
 
   return (
     <Sidebar collapsible="icon" className="border-r-0">
-      <SidebarHeader className="border-b px-4 py-3 lg:px-6 group-data-[collapsible=icon]:p-0 group-data-[collapsible=icon]:items-center group-data-[collapsible=icon]:justify-center">
+      <SidebarHeader className="h-15 border-b px-4 py-3 lg:px-6 group-data-[collapsible=icon]:p-0 group-data-[collapsible=icon]:items-center group-data-[collapsible=icon]:justify-center">
         <Link
           to={routes.home}
           className="flex flex-1 items-center gap-2.5 font-semibold group-data-[collapsible=icon]:justify-center"
@@ -64,9 +65,6 @@ export const AppSidebar = () => {
             </span>
           </div>
         </Link>
-        <div className="w-full group-data-[collapsible=icon]:hidden">
-          <BuildingSelector />
-        </div>
       </SidebarHeader>
 
       <SidebarContent className="overflow-hidden p-0">
@@ -96,7 +94,7 @@ export const AppSidebar = () => {
       </SidebarContent>
 
       <SidebarFooter>
-        <NavUser name="Nguyễn Văn A" email="admin@phongtro.vn" />
+        <NavUser name={user?.name ?? ""} email={user?.email ?? ""} />
       </SidebarFooter>
 
       <SidebarRail />

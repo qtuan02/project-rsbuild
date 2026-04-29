@@ -1,8 +1,7 @@
 import { useNavigate } from "react-router-dom";
 
-import { Button } from "@/components/ui/button";
+import { EntityListCard } from "@/components/shared/cards";
 import {
-  Card,
   CardContent,
   CardDescription,
   CardHeader,
@@ -52,64 +51,59 @@ export const TaskCard: React.FC<TaskCardProps> = ({ task }) => {
   );
 
   return (
-    <Card className="flex flex-col">
-      <CardHeader className="pb-3">
-        <div className="flex items-start justify-between gap-4">
-          <div className="flex-1">
-            <CardTitle className="line-clamp-2 text-base">
-              {task.title}
-            </CardTitle>
-            <CardDescription className="mt-1 line-clamp-2">
-              {task.description}
-            </CardDescription>
+    <EntityListCard
+      className="hover:cursor-pointer"
+      onClick={handleViewDetails}
+      header={
+        <CardHeader className="pb-0">
+          <div className="flex items-start justify-between gap-4">
+            <div className="flex-1">
+              <CardTitle className="line-clamp-2 text-base">
+                {task.title}
+              </CardTitle>
+              <CardDescription className="mt-1 line-clamp-2">
+                {task.description}
+              </CardDescription>
+            </div>
+            <div
+              className={`whitespace-nowrap rounded-full px-2.5 py-0.5 text-xs font-medium ${taskPriorityUiConfig[task.priority].badgeClassName}`}
+            >
+              {priorityConfig.label}
+            </div>
           </div>
-          <div
-            className={`whitespace-nowrap rounded-full px-2.5 py-0.5 text-xs font-medium ${taskPriorityUiConfig[task.priority].badgeClassName}`}
-          >
-            {priorityConfig.label}
+        </CardHeader>
+      }
+      content={
+        <CardContent className="flex-1 space-y-4">
+          <div className="flex flex-wrap gap-2">
+            <span className="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-800 dark:text-blue-200">
+              {typeConfig.label}
+            </span>
+            <span
+              className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${taskStatusUiConfig[task.status].badgeClassName}`}
+            >
+              {statusConfig.label}
+            </span>
           </div>
-        </div>
-      </CardHeader>
 
-      <CardContent className="flex-1 space-y-4">
-        {/* Task Type & Status */}
-        <div className="flex flex-wrap gap-2">
-          <span className="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-800 dark:text-blue-200">
-            {typeConfig.label}
-          </span>
-          <span
-            className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${taskStatusUiConfig[task.status].badgeClassName}`}
-          >
-            {statusConfig.label}
-          </span>
-        </div>
-
-        {/* Due Date */}
-        <div className="flex items-center justify-between text-sm">
-          <span className="text-muted-foreground">Hạn:</span>
-          <span
-            className={
-              daysUntilDue < 0 ? "text-red-600 font-medium" : "text-foreground"
-            }
-          >
-            {daysUntilDue < 0
-              ? `Quá hạn ${Math.abs(daysUntilDue)} ngày`
-              : daysUntilDue === 0
-                ? "Hôm nay"
-                : `Còn ${daysUntilDue} ngày`}
-          </span>
-        </div>
-
-        {/* Actions */}
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={handleViewDetails}
-          className="w-full"
-        >
-          Xem chi tiết
-        </Button>
-      </CardContent>
-    </Card>
+          <div className="flex items-center justify-between text-sm">
+            <span className="text-muted-foreground">Hạn:</span>
+            <span
+              className={
+                daysUntilDue < 0
+                  ? "text-red-600 font-medium"
+                  : "text-foreground"
+              }
+            >
+              {daysUntilDue < 0
+                ? `Quá hạn ${Math.abs(daysUntilDue)} ngày`
+                : daysUntilDue === 0
+                  ? "Hôm nay"
+                  : `Còn ${daysUntilDue} ngày`}
+            </span>
+          </div>
+        </CardContent>
+      }
+    />
   );
 };

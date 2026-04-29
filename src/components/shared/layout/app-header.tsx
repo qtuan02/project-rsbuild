@@ -8,6 +8,8 @@ import { useSidebar } from "@/components/ui/sidebar";
 import { resolveRouteMetadata } from "@/config/routes";
 import { cn } from "@/lib/cn";
 
+import { BuildingSelector } from "./building-selector";
+
 export const AppHeader = () => {
   const location = useLocation();
   const metadata = resolveRouteMetadata(location.pathname);
@@ -71,6 +73,10 @@ export const AppHeader = () => {
           <Search className="h-4 w-4" />
           <span className="sr-only">Tìm kiếm</span>
         </Button>
+
+        <div className="border rounded-lg">
+          <BuildingSelector />
+        </div>
 
         <Separator orientation="vertical" className="h-5 self-center!" />
 

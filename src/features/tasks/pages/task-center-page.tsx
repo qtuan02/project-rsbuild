@@ -24,7 +24,6 @@ export const TaskCenterPage = () => {
 
   return (
     <div className="space-y-6">
-      {/* Header */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h2 className="text-2xl font-bold tracking-tight">
@@ -36,7 +35,6 @@ export const TaskCenterPage = () => {
         </div>
       </div>
 
-      {/* Task Count Badges */}
       <div className="flex flex-wrap gap-3">
         <div className="inline-flex items-center gap-2 rounded-full border px-4 py-2 bg-red-50 dark:bg-red-950/20">
           <span className="text-sm font-medium">Hóa đơn quá hạn:</span>
@@ -58,7 +56,6 @@ export const TaskCenterPage = () => {
         </div>
       </div>
 
-      {/* Filters */}
       <div>
         <TaskFilters
           searchValue={searchValue}
@@ -70,7 +67,6 @@ export const TaskCenterPage = () => {
         />
       </div>
 
-      {/* Tasks Grid */}
       {filteredData.length > 0 ? (
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {filteredData.map((task) => (

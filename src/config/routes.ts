@@ -13,6 +13,7 @@ import {
   Users,
   Wallet,
   Banknote,
+  ReceiptPoundSterling,
 } from "lucide-react";
 
 import { BuildingListPage } from "@/features/buildings/pages/building-list-page";
@@ -22,10 +23,10 @@ import { ContractListPage } from "@/features/contracts/pages/contract-list-page"
 import { DashboardPage } from "@/features/dashboard/pages/dashboard-page";
 import { ExpenseListPage } from "@/features/expenses/pages/expense-list-page";
 import { InvoiceListPage } from "@/features/invoices/pages/invoice-list-page";
+import { ReconciliationPage } from "@/features/reconciliation/pages/reconciliation-page";
 import { ReportsOverviewPage } from "@/features/reports/pages/reports-overview-page";
 import { RoomListPage } from "@/features/rooms/pages/room-list-page";
 import { SettingsPage } from "@/features/settings/pages/settings-page";
-import { ReconciliationPage } from "@/features/supplier-bills/pages/reconciliation-page";
 import { SupplierBillListPage } from "@/features/supplier-bills/pages/supplier-bill-list-page";
 import { TaskCenterPage } from "@/features/tasks/pages/task-center-page";
 import { TenantListPage } from "@/features/tenants/pages/tenant-list-page";
@@ -174,7 +175,7 @@ export const appRouteManifest: AppRouteManifestItem[] = [
     routePath: "supplier-bills/*",
     title: "Hóa đơn nhà cung cấp",
     description: "Quản lý hóa đơn từ nhà cung cấp dịch vụ.",
-    icon: ReceiptText,
+    icon: ReceiptPoundSterling,
     group: "management",
     implemented: true,
     component: SupplierBillListPage,

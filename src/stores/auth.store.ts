@@ -1,5 +1,7 @@
 import { create } from "zustand";
-import { persist } from "zustand/middleware";
+import { persist, createJSONStorage } from "zustand/middleware";
+
+import { encryptData, decryptData, hashKey } from "@/utils/crypto";
 
 export type Role = "admin" | "manager" | "tenant";
 
@@ -27,6 +29,23 @@ export const useAuthStore = create<AuthState>()(
     }),
     {
       name: "auth-storage",
+      storage: createJSONStorage(() => ({
+        getItem: (name) => {
+          const hashedKey = hashKey(name);
+          const encryptedValue = localStorage.getItem(hashedKey);
+          if (!encryptedValue) return null;
+          return decryptData(encryptedValue);
+        },
+        setItem: (name, value) => {
+          const hashedKey = hashKey(name);
+          const encryptedValue = encryptData(value);
+          localStorage.setItem(hashedKey, encryptedValue);
+        },
+        removeItem: (name) => {
+          const hashedKey = hashKey(name);
+          localStorage.removeItem(hashedKey);
+        },
+      })),
     },
   ),
 );

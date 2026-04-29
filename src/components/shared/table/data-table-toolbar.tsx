@@ -103,8 +103,9 @@ export function DataTableToolbar<TData>({
                     key={column.id}
                     className="capitalize"
                     checked={column.getIsVisible()}
-                    onCheckedChange={(value) =>
-                      column.toggleVisibility(!!value)
+                    onSelect={(e) => e.preventDefault()}
+                    onCheckedChange={(checked) =>
+                      column.toggleVisibility(!!checked)
                     }
                   >
                     {column.id}

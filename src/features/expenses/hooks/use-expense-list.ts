@@ -1,6 +1,11 @@
 import { useMemo } from "react";
 
+import type {
+  DataTableFilterableColumn,
+  DataTableSearchableColumn,
+} from "@/components/shared/table";
 import { useBuildingStore } from "@/stores/building.store";
+import type { Expense } from "@/types/expense";
 
 import { mockExpenses } from "../data/expense.mock";
 
@@ -15,6 +20,21 @@ export const useExpenseList = () => {
       ),
     [selectedBuildingId],
   );
+
+  const searchableColumns: DataTableSearchableColumn<Expense>[] = [
+    { id: "category", title: "danh mục" },
+    { id: "description", title: "mô tả" },
+  ];
+
+  const filterableColumns: DataTableFilterableColumn<Expense>[] = [
+    {
+      id: "category",
+      title: "Danh mục",
+      options: Array.from(new Set(mockExpenses.map((e) => e.category))).map(
+        (cat) => ({ label: cat, value: cat }),
+      ),
+    },
+  ];
 
   const stats = useMemo(
     () => ({
@@ -34,5 +54,7 @@ export const useExpenseList = () => {
   return {
     expenses,
     stats,
+    searchableColumns,
+    filterableColumns,
   };
 };

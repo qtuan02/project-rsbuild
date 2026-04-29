@@ -2,14 +2,15 @@ import {
   ResponsiveContainer,
   PieChart,
   Pie,
-  Cell,
   Tooltip,
   Legend,
+  Sector,
+  type PieSectorShapeProps,
 } from "recharts";
 
 const data = [
-  { name: "Đã thuê", value: 42, color: "hsl(var(--primary))" },
-  { name: "Trống", value: 6, color: "hsl(var(--muted))" },
+  { name: "Đã thuê", value: 42, fill: "var(--chart-1)" },
+  { name: "Trống", value: 6, fill: "var(--chart-2)" },
 ];
 
 export const OccupancyDonutChart = () => {
@@ -25,19 +26,18 @@ export const OccupancyDonutChart = () => {
             outerRadius={80}
             paddingAngle={5}
             dataKey="value"
-          >
-            {data.map((entry, index) => (
-              <Cell key={`cell-${index}`} fill={entry.color} />
-            ))}
-          </Pie>
+            shape={(props: PieSectorShapeProps) => (
+              <Sector {...props} fill={props.fill} />
+            )}
+          />
+          <Legend verticalAlign="bottom" height={36} />
           <Tooltip
             contentStyle={{
-              backgroundColor: "hsl(var(--background))",
-              borderColor: "hsl(var(--border))",
+              backgroundColor: "var(--background)",
+              borderColor: "var(--border)",
               borderRadius: "8px",
             }}
           />
-          <Legend verticalAlign="bottom" height={36} />
         </PieChart>
       </ResponsiveContainer>
     </div>

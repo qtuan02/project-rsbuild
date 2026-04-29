@@ -6,7 +6,7 @@ import {
   UserCheck,
   Users,
 } from "lucide-react";
-import * as React from "react";
+import { useQueryState } from "nuqs";
 
 import { ListPageHeader, ListPageShell } from "@/components/shared/list";
 import { DEFAULT_PAGINATION_OPTIONS } from "@/components/shared/pagination/pagination-contracts";
@@ -31,36 +31,38 @@ const summaryStatConfigs = [
     key: "total",
     label: "Tổng khách",
     icon: Users,
-    color: "text-primary",
-    bg: "bg-primary/10",
+    color: cn("text-primary"),
+    bg: cn("bg-primary/10"),
   },
   {
     key: "active",
     label: "Đang thuê",
     icon: UserCheck,
-    color: "text-emerald-600 dark:text-emerald-400",
-    bg: "bg-emerald-100 dark:bg-emerald-900/30",
+    color: cn("text-emerald-600 dark:text-emerald-400"),
+    bg: cn("bg-emerald-100 dark:bg-emerald-900/30"),
   },
   {
     key: "pending",
     label: "Chờ vào",
     icon: Clock,
-    color: "text-blue-600 dark:text-blue-400",
-    bg: "bg-blue-100 dark:bg-blue-900/30",
+    color: cn("text-blue-600 dark:text-blue-400"),
+    bg: cn("bg-blue-100 dark:bg-blue-900/30"),
   },
   {
     key: "overdue",
     label: "Nợ cước",
     icon: CheckCircle2,
-    color: "text-red-600 dark:text-red-400",
-    bg: "bg-red-100 dark:bg-red-900/30",
+    color: cn("text-red-600 dark:text-red-400"),
+    bg: cn("bg-red-100 dark:bg-red-900/30"),
   },
 ] as const;
 
 export const TenantListPage = () => {
   const { data, summaryStats, searchableColumns, filterableColumns } =
     useTenantList();
-  const [activeTab, setActiveTab] = React.useState("grid");
+  const [activeTab, setActiveTab] = useQueryState("activeTab", {
+    defaultValue: "grid",
+  });
 
   const { table } = useDataTable({
     data,

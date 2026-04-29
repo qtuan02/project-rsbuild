@@ -2,8 +2,9 @@ import { MoreHorizontal, User, DoorOpen } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+import { EntityListCard } from "@/components/shared/cards";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
+import { CardContent, CardHeader } from "@/components/ui/card";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -51,8 +52,7 @@ export const RoomGrid = ({ data }: RoomGridProps) => {
               const typeCfg = roomTypeConfig[room.type];
 
               return (
-                <Card
-                  key={room.id}
+                <EntityListCard
                   className={cn(
                     "group relative overflow-hidden transition-all hover:shadow-md cursor-pointer",
                     statusCfg.className,
@@ -61,65 +61,69 @@ export const RoomGrid = ({ data }: RoomGridProps) => {
                     setSelectedRoom(room);
                     setIsSheetOpen(true);
                   }}
-                >
-                  <div className="p-4 flex flex-col h-full gap-3">
-                    <div className="flex items-start justify-between gap-2">
-                      <div>
-                        <h4 className="font-bold text-lg leading-none">
-                          {room.name}
-                        </h4>
-                        <p className="text-[10px] mt-1 font-medium uppercase tracking-wider opacity-70">
-                          {typeCfg.label} • {room.area}m²
-                        </p>
-                      </div>
-                      <DropdownMenu>
-                        <DropdownMenuTrigger
-                          asChild
-                          onClick={(e) => e.stopPropagation()}
-                        >
-                          <Button
-                            variant="ghost"
-                            size="icon-sm"
-                            className="h-6 w-6 opacity-100 transition-opacity sm:opacity-0 sm:group-hover:opacity-100 data-[state=open]:opacity-100"
+                  header={
+                    <CardHeader className="pb-0">
+                      <div className="flex items-start justify-between gap-2">
+                        <div>
+                          <h4 className="font-bold text-lg leading-none">
+                            {room.name}
+                          </h4>
+                          <p className="text-[10px] mt-1 font-medium uppercase tracking-wider opacity-70">
+                            {typeCfg.label} • {room.area}m²
+                          </p>
+                        </div>
+                        <DropdownMenu>
+                          <DropdownMenuTrigger
+                            asChild
+                            onClick={(e) => e.stopPropagation()}
                           >
-                            <MoreHorizontal className="h-4 w-4" />
-                          </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent
-                          align="end"
-                          onClick={(e) => e.stopPropagation()}
-                        >
-                          <DropdownMenuLabel>Thao tác</DropdownMenuLabel>
-                          <DropdownMenuSeparator />
-                          <DropdownMenuItem
-                            onClick={() =>
-                              navigate(routePathBuilders.roomDetail(room.id))
-                            }
+                            <Button
+                              variant="ghost"
+                              size="icon-sm"
+                              className="h-6 w-6 opacity-100 transition-opacity sm:opacity-0 sm:group-hover:opacity-100 data-[state=open]:opacity-100"
+                            >
+                              <MoreHorizontal className="h-4 w-4" />
+                            </Button>
+                          </DropdownMenuTrigger>
+                          <DropdownMenuContent
+                            align="end"
+                            onClick={(e) => e.stopPropagation()}
                           >
-                            Xem chi tiết phòng
-                          </DropdownMenuItem>
-                          <DropdownMenuItem>Lập hóa đơn</DropdownMenuItem>
-                          <DropdownMenuItem>Chốt điện nước</DropdownMenuItem>
-                        </DropdownMenuContent>
-                      </DropdownMenu>
-                    </div>
-
-                    <div className="mt-auto pt-2 flex flex-col gap-2">
-                      <div className="flex items-center gap-1.5 text-xs font-medium">
-                        <User className="h-3.5 w-3.5 opacity-70" />
-                        <span className="truncate opacity-90">
-                          {room.tenant || "Trống"}
-                        </span>
+                            <DropdownMenuLabel>Thao tác</DropdownMenuLabel>
+                            <DropdownMenuSeparator />
+                            <DropdownMenuItem
+                              onClick={() =>
+                                navigate(routePathBuilders.roomDetail(room.id))
+                              }
+                            >
+                              Xem chi tiết phòng
+                            </DropdownMenuItem>
+                            <DropdownMenuItem>Lập hóa đơn</DropdownMenuItem>
+                            <DropdownMenuItem>Chốt điện nước</DropdownMenuItem>
+                          </DropdownMenuContent>
+                        </DropdownMenu>
                       </div>
-                      <div className="flex items-center justify-between mt-1">
-                        <span className="text-sm font-bold opacity-90">
-                          {formatCurrency(room.price)}
-                        </span>
-                        <statusCfg.icon className="h-4 w-4 opacity-70" />
+                    </CardHeader>
+                  }
+                  content={
+                    <CardContent className="space-y-3 pt-3">
+                      <div className="mt-auto pt-2 flex flex-col gap-2">
+                        <div className="flex items-center gap-1.5 text-xs font-medium">
+                          <User className="h-3.5 w-3.5 opacity-70" />
+                          <span className="truncate opacity-90">
+                            {room.tenant || "Trống"}
+                          </span>
+                        </div>
+                        <div className="flex items-center justify-between mt-1">
+                          <span className="text-sm font-bold opacity-90">
+                            {formatCurrency(room.price)}
+                          </span>
+                          <statusCfg.icon className="h-4 w-4 opacity-70" />
+                        </div>
                       </div>
-                    </div>
-                  </div>
-                </Card>
+                    </CardContent>
+                  }
+                />
               );
             })}
           </div>
@@ -136,11 +140,12 @@ export const RoomGrid = ({ data }: RoomGridProps) => {
         </div>
       )}
 
-      <RoomQuickDetailSheet
-        room={selectedRoom}
-        open={isSheetOpen}
-        onOpenChange={setIsSheetOpen}
-      />
+      {isSheetOpen && (
+        <RoomQuickDetailSheet
+          room={selectedRoom}
+          onClose={() => setIsSheetOpen(false)}
+        />
+      )}
     </div>
   );
 };

@@ -1,12 +1,6 @@
 import { format } from "date-fns";
 import { vi } from "date-fns/locale";
-import {
-  Zap,
-  Droplets,
-  ArrowUpRight,
-  History,
-  MoreVertical,
-} from "lucide-react";
+import { Zap, Droplets, ArrowUpRight, History, Eye } from "lucide-react";
 import { Link } from "react-router-dom";
 
 import { Badge } from "@/components/ui/badge";
@@ -138,7 +132,7 @@ export const utilityColumns: ColumnDef<Utility>[] = [
     cell: ({ row }) => (
       <Button variant="ghost" size="icon-sm" asChild>
         <Link to={routePathBuilders.utilityDetail(row.original.id)}>
-          <MoreVertical className="h-4 w-4" />
+          <Eye className="h-4 w-4" />
         </Link>
       </Button>
     ),

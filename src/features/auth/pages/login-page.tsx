@@ -38,12 +38,15 @@ export const LoginPage = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const form = useForm<LoginFormValues>({
+    defaultValues: {
+      email: "admin@gmail.com",
+      password: "admin@123",
+    },
     resolver: zodResolver(loginSchema),
   });
 
   const onSubmit = async (data: LoginFormValues) => {
     setIsLoading(true);
-    // Giả lập API call
     setTimeout(() => {
       login({
         id: "1",
@@ -66,7 +69,7 @@ export const LoginPage = () => {
       </CardHeader>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
-          <CardContent className="space-y-4">
+          <CardContent className="space-y-4 pb-4">
             <FormField
               control={form.control}
               name="email"

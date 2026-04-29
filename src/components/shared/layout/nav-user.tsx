@@ -1,4 +1,5 @@
 import { ChevronsUpDown, LogOut, Settings, Sparkles } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import {
@@ -15,6 +16,8 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
+import { routes } from "@/config/routes";
+import { useAuthStore } from "@/stores/auth.store";
 
 interface NavUserProps {
   name: string;
@@ -22,7 +25,15 @@ interface NavUserProps {
 }
 
 export const NavUser = ({ name, email }: NavUserProps) => {
+  const navigate = useNavigate();
+
   const { isMobile } = useSidebar();
+  const { logout } = useAuthStore();
+
+  const handleLogout = () => {
+    logout();
+    navigate(routes.authLogin);
+  };
 
   const initials = name
     .split(" ")
@@ -73,7 +84,7 @@ export const NavUser = ({ name, email }: NavUserProps) => {
               Cài đặt
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem variant="destructive">
+            <DropdownMenuItem variant="destructive" onClick={handleLogout}>
               <LogOut />
               Đăng xuất
             </DropdownMenuItem>

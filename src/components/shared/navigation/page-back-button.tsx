@@ -1,6 +1,7 @@
 import { ArrowLeft } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/cn";
 
 interface PageBackButtonProps {
   onClick?: () => void;
@@ -14,7 +15,11 @@ export const PageBackButton = ({
   className,
 }: PageBackButtonProps) => {
   return (
-    <Button variant="ghost" onClick={onClick} className={className ?? "gap-2"}>
+    <Button
+      variant="ghost"
+      onClick={onClick}
+      className={cn("cursor-pointer gap-2", className)}
+    >
       <ArrowLeft className="h-4 w-4" />
       {label}
     </Button>

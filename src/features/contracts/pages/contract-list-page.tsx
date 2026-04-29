@@ -1,5 +1,5 @@
 import { Download, FileText, Plus } from "lucide-react";
-import * as React from "react";
+import { useQueryState } from "nuqs";
 
 import { ListPageHeader, ListPageShell } from "@/components/shared/list";
 import { DEFAULT_PAGINATION_OPTIONS } from "@/components/shared/pagination/pagination-contracts";
@@ -17,7 +17,9 @@ import { useContractList } from "../hooks/use-contract-list";
 
 export const ContractListPage = () => {
   const { data, searchableColumns, filterableColumns } = useContractList();
-  const [activeTab, setActiveTab] = React.useState("grid");
+  const [activeTab, setActiveTab] = useQueryState("activeTab", {
+    defaultValue: "grid",
+  });
 
   const { table } = useDataTable({
     data,

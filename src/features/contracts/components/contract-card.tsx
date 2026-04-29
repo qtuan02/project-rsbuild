@@ -3,15 +3,15 @@ import {
   FileText,
   User,
   Home,
-  ChevronRight,
   Landmark,
+  ChevronRight,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 import { EntityListCard } from "@/components/shared/cards";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { CardContent, CardHeader } from "@/components/ui/card";
+import { CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { routePathBuilders } from "@/config/routes";
 import { cn } from "@/lib/cn";
 import type { Contract } from "@/types/contract";
@@ -115,12 +115,15 @@ export const ContractCard = ({ contract }: ContractCardProps) => {
               </div>
             )}
           </div>
-
+        </CardContent>
+      }
+      footer={
+        <CardFooter className="px-4 py-2 flex justify-end">
           <Button
             type="button"
             variant="ghost"
             size="sm"
-            className="mt-3 w-full justify-end text-muted-foreground/70 hover:text-primary"
+            className="text-muted-foreground/70 hover:text-primary cursor-pointer"
             onClick={() =>
               navigate(routePathBuilders.contractDetail(contract.id))
             }
@@ -128,7 +131,7 @@ export const ContractCard = ({ contract }: ContractCardProps) => {
             Chi tiết hợp đồng
             <ChevronRight className="ml-1 h-3 w-3" />
           </Button>
-        </CardContent>
+        </CardFooter>
       }
     />
   );
