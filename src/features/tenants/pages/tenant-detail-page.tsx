@@ -222,18 +222,24 @@ export const TenantDetailPage = ({
               <CardTitle className="text-base">Liên hệ</CardTitle>
             </CardHeader>
             <CardContent className="space-y-2">
-              <a href={`tel:${tenant.phone}`}>
-                <Button variant="outline" size="sm" className="w-full gap-2">
+              <Button variant="outline" size="sm" className="w-full gap-2">
+                <a
+                  href={`tel:${tenant.phone}`}
+                  className="flex gap-2 items-center"
+                >
                   <Phone className="h-4 w-4" />
                   Gọi điện
-                </Button>
-              </a>
-              <a href={`mailto:${tenant.email}`}>
-                <Button variant="outline" size="sm" className="w-full gap-2">
+                </a>
+              </Button>
+              <Button variant="outline" size="sm" className="w-full gap-2">
+                <a
+                  href={`mailto:${tenant.email}`}
+                  className="flex gap-2 items-center"
+                >
                   <Mail className="h-4 w-4" />
                   Gửi email
-                </Button>
-              </a>
+                </a>
+              </Button>
             </CardContent>
           </Card>
         </div>

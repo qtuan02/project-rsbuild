@@ -1,4 +1,5 @@
 import { AlertCircle, Download } from "lucide-react";
+import { useQueryState } from "nuqs";
 import { toast } from "sonner";
 
 import {
@@ -36,6 +37,10 @@ export const ReportsOverviewPage = () => {
     isLoading,
     error,
   } = useReports();
+
+  const [activeTab, setActiveTab] = useQueryState("tab", {
+    defaultValue: "pnl",
+  });
 
   const handleExport = () => {
     toast.info("Chức năng xuất báo cáo", {
@@ -103,7 +108,14 @@ export const ReportsOverviewPage = () => {
       />
 
       {/* Report Tabs */}
-      <Tabs defaultValue="pnl" className="space-y-6">
+      <Tabs
+        defaultValue="pnl"
+        className="space-y-6"
+        value={activeTab}
+        onValueChange={(value) =>
+          setActiveTab(value as "pnl" | "utilities" | "overdue" | "performance")
+        }
+      >
         <TabsList className="bg-muted/50 p-1">
           <TabsTrigger value="pnl">Tổng hợp P&L</TabsTrigger>
           <TabsTrigger value="utilities">Lợi nhuận dịch vụ</TabsTrigger>

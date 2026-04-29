@@ -36,17 +36,17 @@ export const CashFlowChart = () => {
             dataKey="name"
             axisLine={false}
             tickLine={false}
-            tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 12 }}
+            tick={{ fill: "var(--chart-1)", fontSize: 12 }}
           />
           <YAxis
             axisLine={false}
             tickLine={false}
-            tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 12 }}
+            tick={{ fill: "var(--chart-1)", fontSize: 12 }}
           />
           <Tooltip
             contentStyle={{
-              backgroundColor: "hsl(var(--background))",
-              borderColor: "hsl(var(--border))",
+              backgroundColor: "var(--background)",
+              borderColor: "var(--border)",
               borderRadius: "8px",
             }}
           />
@@ -54,13 +54,13 @@ export const CashFlowChart = () => {
           <Bar
             dataKey="thu"
             name="Tổng thu"
-            fill="hsl(var(--primary))"
+            fill="var(--chart-1)"
             radius={[4, 4, 0, 0]}
           />
           <Bar
             dataKey="chi"
             name="Tổng chi"
-            fill="hsl(var(--destructive))"
+            fill="var(--chart-2)"
             radius={[4, 4, 0, 0]}
           />
         </BarChart>

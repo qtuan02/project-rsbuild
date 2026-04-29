@@ -20,14 +20,12 @@ import {
 
 interface RoomQuickDetailSheetProps {
   room: Room | null;
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
+  onClose: () => void;
 }
 
 export const RoomQuickDetailSheet = ({
   room,
-  open,
-  onOpenChange,
+  onClose,
 }: RoomQuickDetailSheetProps) => {
   const navigate = useNavigate();
 
@@ -37,8 +35,11 @@ export const RoomQuickDetailSheet = ({
   const typeCfg = roomTypeConfig[room.type];
 
   return (
-    <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent className="flex flex-col w-[400px] sm:w-[540px]">
+    <Sheet open onOpenChange={onClose}>
+      <SheetContent
+        className="flex flex-col w-[400px] sm:w-[540px]"
+        showCloseButton={false}
+      >
         <SheetHeader>
           <div className="flex items-center justify-between">
             <SheetTitle className="text-2xl font-bold">{room.name}</SheetTitle>
@@ -129,7 +130,7 @@ export const RoomQuickDetailSheet = ({
           <Button
             className="w-full"
             onClick={() => {
-              onOpenChange(false);
+              onClose();
               navigate(routePathBuilders.roomDetail(room.id));
             }}
           >

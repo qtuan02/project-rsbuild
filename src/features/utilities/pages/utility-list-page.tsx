@@ -1,5 +1,5 @@
 import { Activity, AlertCircle, Clock, Plus } from "lucide-react";
-import * as React from "react";
+import { useQueryState } from "nuqs";
 
 import { SummaryCard } from "@/components/shared/cards/summary-card";
 import { ListPageHeader, ListPageShell } from "@/components/shared/list";
@@ -20,7 +20,9 @@ import { useUtilityList } from "../hooks/use-utility-list";
 export const UtilityListPage = () => {
   const { data, stats, searchableColumns, filterableColumns } =
     useUtilityList();
-  const [activeTab, setActiveTab] = React.useState("grid");
+  const [activeTab, setActiveTab] = useQueryState("activeTab", {
+    defaultValue: "grid",
+  });
 
   const { table } = useDataTable({
     data,
@@ -57,7 +59,6 @@ export const UtilityListPage = () => {
         ]}
       />
 
-      {/* KPI Summary Cards */}
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
         <SummaryCard
           label="Tổng chỉ số"

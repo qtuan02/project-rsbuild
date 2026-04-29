@@ -11,7 +11,7 @@ import { useNavigate } from "react-router-dom";
 import { EntityListCard } from "@/components/shared/cards";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { CardContent, CardHeader } from "@/components/ui/card";
+import { CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { routePathBuilders } from "@/config/routes";
 import { cn } from "@/lib/cn";
 import type { Utility } from "@/types/utility";
@@ -123,12 +123,15 @@ export const UtilityCard = ({ utility }: UtilityCardProps) => {
               <ChevronRight className="h-4 w-4 text-muted-foreground/30 transition-transform group-hover:translate-x-0.5 group-hover:text-primary" />
             </div>
           </div>
-
+        </CardContent>
+      }
+      footer={
+        <CardFooter className="px-4 py-2 flex justify-end">
           <Button
             type="button"
             variant="ghost"
             size="sm"
-            className="mt-3 w-full justify-end text-muted-foreground/70 hover:text-primary"
+            className="text-muted-foreground/70 hover:text-primary cursor-pointer"
             onClick={() =>
               navigate(routePathBuilders.utilityDetail(utility.id))
             }
@@ -136,7 +139,7 @@ export const UtilityCard = ({ utility }: UtilityCardProps) => {
             Xem chi tiết
             <ChevronRight className="ml-1 h-3 w-3" />
           </Button>
-        </CardContent>
+        </CardFooter>
       }
     />
   );

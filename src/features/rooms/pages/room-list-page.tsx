@@ -1,5 +1,5 @@
 import { Download, FileText, Plus } from "lucide-react";
-import * as React from "react";
+import { useQueryState } from "nuqs";
 
 import { ListPageHeader, ListPageShell } from "@/components/shared/list";
 import { DEFAULT_PAGINATION_OPTIONS } from "@/components/shared/pagination/pagination-contracts";
@@ -18,7 +18,9 @@ import { useRoomList } from "../hooks/use-room-list";
 export const RoomListPage = () => {
   const { data, searchableColumns, filterableColumns, onRowReorder } =
     useRoomList();
-  const [activeTab, setActiveTab] = React.useState("grid");
+  const [activeTab, setActiveTab] = useQueryState("activeTab", {
+    defaultValue: "grid",
+  });
 
   const { table } = useDataTable({
     data,

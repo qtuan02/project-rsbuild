@@ -50,16 +50,13 @@ export const supplierBillColumns: ColumnDef<SupplierBill>[] = [
   },
   {
     id: "actions",
-    header: () => <div className="text-right">Hành động</div>,
+    header: "",
     cell: ({ row }) => (
-      <div className="text-right">
-        <Button variant="outline" size="sm" asChild>
-          <Link to={routePathBuilders.supplierBillDetail(row.original.id)}>
-            <Eye className="mr-2 h-4 w-4" />
-            Chi tiết
-          </Link>
-        </Button>
-      </div>
+      <Button variant="ghost" size="icon-sm" asChild>
+        <Link to={routePathBuilders.supplierBillDetail(row.original.id)}>
+          <Eye className="h-4 w-4" />
+        </Link>
+      </Button>
     ),
   },
 ];

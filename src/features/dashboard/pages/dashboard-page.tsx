@@ -148,7 +148,6 @@ const pendingTasks = [
 export const DashboardPage = () => {
   return (
     <div className="space-y-6">
-      {/* Page heading */}
       <div>
         <h2 className="text-2xl font-bold tracking-tight">Xin chào! 👋</h2>
         <p className="mt-1 text-muted-foreground">
@@ -156,16 +155,13 @@ export const DashboardPage = () => {
         </p>
       </div>
 
-      {/* Stats grid */}
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {stats.map((stat) => (
           <StatCard key={stat.title} {...stat} />
         ))}
       </div>
 
-      {/* Content grid */}
       <div className="grid gap-4 lg:grid-cols-7">
-        {/* Revenue chart */}
         <Card className="lg:col-span-4">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
             <div>
@@ -199,7 +195,6 @@ export const DashboardPage = () => {
           </CardContent>
         </Card>
 
-        {/* Occupancy Donut */}
         <Card className="lg:col-span-3">
           <CardHeader>
             <CardTitle className="text-base font-semibold">
@@ -211,22 +206,10 @@ export const DashboardPage = () => {
           </CardHeader>
           <CardContent>
             <OccupancyDonutChart />
-            <div className="mt-4 grid grid-cols-2 gap-4">
-              <div className="flex flex-col items-center justify-center p-3 rounded-lg bg-primary/5">
-                <span className="text-sm text-muted-foreground">Đang thuê</span>
-                <span className="text-xl font-bold text-primary">42</span>
-              </div>
-              <div className="flex flex-col items-center justify-center p-3 rounded-lg bg-muted/50">
-                <span className="text-sm text-muted-foreground">Còn trống</span>
-                <span className="text-xl font-bold">6</span>
-              </div>
-            </div>
           </CardContent>
         </Card>
 
-        {/* Task List & Activity (New Layout) */}
         <div className="lg:col-span-4 space-y-4">
-          {/* Task List */}
           <Card>
             <CardHeader>
               <CardTitle className="text-base font-semibold">
@@ -278,7 +261,6 @@ export const DashboardPage = () => {
         </div>
 
         <div className="lg:col-span-3">
-          {/* Recent activity */}
           <Card className="h-full">
             <CardHeader>
               <CardTitle className="text-base font-semibold">
