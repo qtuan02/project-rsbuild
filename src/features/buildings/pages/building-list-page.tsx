@@ -1,18 +1,20 @@
-import { Plus } from "lucide-react";
+import { ChevronRight, Plus } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { EntityListCard } from "@/components/shared/cards/entity-list-card";
 import { ListPageHeader } from "@/components/shared/list";
+import { Button } from "@/components/ui/button";
 import {
   CardContent,
   CardHeader,
   CardTitle,
   CardDescription,
+  CardFooter,
 } from "@/components/ui/card";
 import { STATUS_COLORS } from "@/config/colors";
 import { routePathBuilders } from "@/config/routes";
-import { cn } from "@/lib/cn";
+import { cn } from "@/libs/cn";
 
 import { BuildingFormDialog } from "../components/building-form-dialog";
 import { useBuildingList } from "../hooks/use-building-list";
@@ -68,7 +70,7 @@ export const BuildingListPage = () => {
                       <p
                         className={cn(
                           "mt-1.5 text-base font-semibold",
-                          STATUS_COLORS.success.light.text,
+                          STATUS_COLORS.success.text,
                         )}
                       >
                         {building.availableRooms}
@@ -94,16 +96,30 @@ export const BuildingListPage = () => {
                   </div>
                 </CardContent>
               }
-              className="cursor-pointer"
-              onClick={() => {
-                navigate(routePathBuilders.buildingDetail(building.id));
-              }}
+              footer={
+                <CardFooter className="px-4 py-2 flex justify-end">
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="sm"
+                    className="text-muted-foreground/70 hover:text-primary cursor-pointer"
+                    onClick={() =>
+                      navigate(routePathBuilders.buildingDetail(building.id))
+                    }
+                  >
+                    Xem chi tiết
+                    <ChevronRight className="ml-1 h-3 w-3" />
+                  </Button>
+                </CardFooter>
+              }
             />
           );
         })}
       </div>
 
-      <BuildingFormDialog open={isFormOpen} onOpenChange={setIsFormOpen} />
+      {isFormOpen && (
+        <BuildingFormDialog onClose={() => setIsFormOpen(false)} />
+      )}
     </div>
   );
 };

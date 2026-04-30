@@ -32,20 +32,6 @@ export const InvoiceCard = ({ invoice }: InvoiceCardProps) => {
                 {invoice.month}
               </p>
             </div>
-            <EntityActionMenu
-              items={[
-                {
-                  key: "detail",
-                  label: "Xem chi tiết",
-                  onClick: () =>
-                    navigate(routePathBuilders.invoiceDetail(invoice.id)),
-                },
-                {
-                  key: "pdf",
-                  label: "Tải về PDF",
-                },
-              ]}
-            />
           </div>
         </CardHeader>
       }
@@ -95,9 +81,26 @@ export const InvoiceCard = ({ invoice }: InvoiceCardProps) => {
         </CardContent>
       }
       footer={
-        <CardFooter className="text-xs text-muted-foreground">
-          <Calendar className="mr-1.5 h-3 w-3" />
-          <span>Cập nhật: {invoice.lastUpdated}</span>
+        <CardFooter className="text-xs text-muted-foreground justify-between">
+          <div className="flex items-center">
+            <Calendar className="mr-1.5 h-3 w-3" />
+            <span>Cập nhật: {invoice.lastUpdated}</span>
+          </div>
+          <EntityActionMenu
+            sideContent="top"
+            items={[
+              {
+                key: "detail",
+                label: "Xem chi tiết",
+                onClick: () =>
+                  navigate(routePathBuilders.invoiceDetail(invoice.id)),
+              },
+              {
+                key: "pdf",
+                label: "Tải về PDF",
+              },
+            ]}
+          />
         </CardFooter>
       }
     />

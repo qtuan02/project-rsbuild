@@ -1,4 +1,4 @@
-import { STATUS_COLORS, TYPE_COLORS } from "@/config/colors";
+import { getStatusClassName, TYPE_COLORS } from "@/config/colors";
 import type { UtilityStatus, UtilityType } from "@/types/utility";
 
 interface StatusConfig {
@@ -19,17 +19,17 @@ export const utilityStatusConfig: Record<UtilityStatus, StatusConfig> = {
   draft: {
     label: "Nháp",
     value: "draft",
-    className: `${STATUS_COLORS.neutral.light.border} ${STATUS_COLORS.neutral.light.bg} ${STATUS_COLORS.neutral.light.text} ${STATUS_COLORS.neutral.dark.bg} ${STATUS_COLORS.neutral.dark.text} ${STATUS_COLORS.neutral.dark.border}`,
+    className: getStatusClassName("neutral"),
   },
   verified: {
     label: "Đã xác minh",
     value: "verified",
-    className: `${STATUS_COLORS.success.light.border} ${STATUS_COLORS.success.light.bg} ${STATUS_COLORS.success.light.text} ${STATUS_COLORS.success.dark.bg} ${STATUS_COLORS.success.dark.text} ${STATUS_COLORS.success.dark.border}`,
+    className: getStatusClassName("success"),
   },
   anomaly: {
     label: "Bất thường",
     value: "anomaly",
-    className: `${STATUS_COLORS.error.light.border} ${STATUS_COLORS.error.light.bg} ${STATUS_COLORS.error.light.text} ${STATUS_COLORS.error.dark.bg} ${STATUS_COLORS.error.dark.text} ${STATUS_COLORS.error.dark.border}`,
+    className: getStatusClassName("error"),
   },
 };
 

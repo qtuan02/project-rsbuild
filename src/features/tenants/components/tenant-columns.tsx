@@ -1,6 +1,15 @@
-import { Calendar, Home, Phone, User } from "lucide-react";
+import {
+  Calendar,
+  CreditCard,
+  Home,
+  Phone,
+  User,
+  UserCircle,
+} from "lucide-react";
 
+import { EntityActionMenu } from "@/components/shared/actions";
 import { Badge } from "@/components/ui/badge";
+import { routePathBuilders } from "@/config/routes";
 import type { Tenant } from "@/types/tenant";
 
 import { tenantStatusConfig } from "../domain/tenant-status-config";
@@ -68,6 +77,30 @@ export const tenantColumns: ColumnDef<Tenant>[] = [
         <Badge variant="outline" className={config.className}>
           {config.label}
         </Badge>
+      );
+    },
+  },
+  {
+    accessorKey: "action",
+    header: "",
+    cell: ({ row }) => {
+      const tenant = row.original;
+      return (
+        <EntityActionMenu
+          items={[
+            {
+              key: "detail",
+              label: "Xem chi tiết",
+              icon: <UserCircle className="mr-2 h-3.5 w-3.5" />,
+              link: routePathBuilders.tenantDetail(tenant.id),
+            },
+            {
+              key: "invoice",
+              label: "Tạo hóa đơn",
+              icon: <CreditCard className="mr-2 h-3.5 w-3.5" />,
+            },
+          ]}
+        />
       );
     },
   },

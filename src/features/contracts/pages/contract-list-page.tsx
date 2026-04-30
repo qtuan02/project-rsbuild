@@ -16,7 +16,8 @@ import { columns } from "../components/contract-columns";
 import { useContractList } from "../hooks/use-contract-list";
 
 export const ContractListPage = () => {
-  const { data, searchableColumns, filterableColumns } = useContractList();
+  const { data, searchableColumns, filterableColumns, onRowReorder } =
+    useContractList();
   const [activeTab, setActiveTab] = useQueryState("activeTab", {
     defaultValue: "grid",
   });
@@ -92,6 +93,8 @@ export const ContractListPage = () => {
                 emptyTitle="Không tìm thấy hợp đồng"
                 emptyDescription="Thử thay đổi bộ lọc hoặc từ khóa tìm kiếm để xem kết quả."
                 resetFilters={() => table.resetColumnFilters()}
+                enableRowDrag
+                onRowReorder={onRowReorder}
               />
             </TabsContent>
           }

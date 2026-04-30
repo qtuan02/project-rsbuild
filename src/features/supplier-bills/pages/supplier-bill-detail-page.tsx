@@ -8,18 +8,16 @@ import { useSupplierBillDetail } from "../hooks/use-supplier-bill-detail";
 
 interface SupplierBillDetailPageProps {
   billId: string;
-  onBack?: () => void;
 }
 
 export const SupplierBillDetailPage = ({
   billId,
-  onBack,
 }: SupplierBillDetailPageProps) => {
   const { bill, buildingName } = useSupplierBillDetail(billId);
 
   if (!bill) {
     return (
-      <DetailPageShell onBack={onBack}>
+      <DetailPageShell>
         <Card>
           <CardContent className="pt-6 text-center text-muted-foreground">
             Không tìm thấy hóa đơn nhà cung cấp.
@@ -30,7 +28,7 @@ export const SupplierBillDetailPage = ({
   }
 
   return (
-    <DetailPageShell onBack={onBack}>
+    <DetailPageShell>
       <Card>
         <CardHeader className="flex flex-row items-center justify-between">
           <CardTitle>{bill.supplierName}</CardTitle>

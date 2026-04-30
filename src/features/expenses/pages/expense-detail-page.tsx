@@ -7,18 +7,14 @@ import { useExpenseDetail } from "../hooks/use-expense-detail";
 
 interface ExpenseDetailPageProps {
   expenseId: string;
-  onBack?: () => void;
 }
 
-export const ExpenseDetailPage = ({
-  expenseId,
-  onBack,
-}: ExpenseDetailPageProps) => {
+export const ExpenseDetailPage = ({ expenseId }: ExpenseDetailPageProps) => {
   const { expense, buildingName } = useExpenseDetail(expenseId);
 
   if (!expense) {
     return (
-      <DetailPageShell onBack={onBack}>
+      <DetailPageShell>
         <Card>
           <CardContent className="pt-6 text-center text-muted-foreground">
             Không tìm thấy khoản chi phí.
@@ -29,7 +25,7 @@ export const ExpenseDetailPage = ({
   }
 
   return (
-    <DetailPageShell onBack={onBack}>
+    <DetailPageShell>
       <Card>
         <CardHeader>
           <CardTitle>{expense.category}</CardTitle>

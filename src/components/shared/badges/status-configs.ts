@@ -8,7 +8,7 @@ import {
   XCircle,
 } from "lucide-react";
 
-import { STATUS_COLORS } from "@/config/colors";
+import { getStatusClassName } from "@/config/colors";
 import type { ContractStatus } from "@/types/contract";
 import type { InvoiceStatus } from "@/types/invoice";
 import type { RoomStatus } from "@/types/room";
@@ -27,7 +27,7 @@ export const roomStatusBadgeConfig: Record<
     label: "Trống",
     variant: "outline",
     icon: Circle,
-    className: `${STATUS_COLORS.success.light.border} ${STATUS_COLORS.success.light.bg} ${STATUS_COLORS.success.light.text} ${STATUS_COLORS.success.dark.bg} ${STATUS_COLORS.success.dark.text} ${STATUS_COLORS.success.dark.border}`,
+    className: getStatusClassName("success"),
   },
   occupied: {
     label: "Đã thuê",
@@ -39,13 +39,13 @@ export const roomStatusBadgeConfig: Record<
     label: "Bảo trì",
     variant: "secondary",
     icon: Wrench,
-    className: `${STATUS_COLORS.warning.light.border} ${STATUS_COLORS.warning.light.bg} ${STATUS_COLORS.warning.light.text} ${STATUS_COLORS.warning.dark.bg} ${STATUS_COLORS.warning.dark.text} ${STATUS_COLORS.warning.dark.border}`,
+    className: getStatusClassName("warning"),
   },
   reserved: {
     label: "Đã đặt",
     variant: "secondary",
     icon: Clock,
-    className: `${STATUS_COLORS.info.light.border} ${STATUS_COLORS.info.light.bg} ${STATUS_COLORS.info.light.text} ${STATUS_COLORS.info.dark.bg} ${STATUS_COLORS.info.dark.text} ${STATUS_COLORS.info.dark.border}`,
+    className: getStatusClassName("info"),
   },
 };
 
@@ -58,19 +58,19 @@ export const invoiceStatusBadgeConfig: Record<
 > = {
   paid: {
     label: "Đã thanh toán",
-    className: `${STATUS_COLORS.success.light.bg} ${STATUS_COLORS.success.dark.bg} ${STATUS_COLORS.success.light.text} ${STATUS_COLORS.success.dark.text} ${STATUS_COLORS.success.light.border} ${STATUS_COLORS.success.dark.border}`,
+    className: getStatusClassName("success"),
   },
   pending: {
     label: "Chờ thanh toán",
-    className: `${STATUS_COLORS.info.light.border} ${STATUS_COLORS.info.light.bg} ${STATUS_COLORS.info.light.text} ${STATUS_COLORS.info.dark.bg} ${STATUS_COLORS.info.dark.text} ${STATUS_COLORS.info.dark.border}`,
+    className: getStatusClassName("info"),
   },
   overdue: {
     label: "Quá hạn",
-    className: `${STATUS_COLORS.error.light.border} ${STATUS_COLORS.error.light.bg} ${STATUS_COLORS.error.light.text} ${STATUS_COLORS.error.dark.bg} ${STATUS_COLORS.error.dark.text} ${STATUS_COLORS.error.dark.border}`,
+    className: getStatusClassName("error"),
   },
   cancelled: {
     label: "Đã hủy",
-    className: `${STATUS_COLORS.neutral2.light.border} ${STATUS_COLORS.neutral2.light.bg} ${STATUS_COLORS.neutral2.light.text} ${STATUS_COLORS.neutral2.dark.bg} ${STATUS_COLORS.neutral2.dark.text} ${STATUS_COLORS.neutral2.dark.border}`,
+    className: getStatusClassName("neutral2"),
   },
 };
 
@@ -83,38 +83,38 @@ export const contractStatusBadgeConfig: Record<
 > = {
   active: {
     label: "Đang hoạt động",
-    className: `${STATUS_COLORS.success.light.bg} ${STATUS_COLORS.success.dark.bg} ${STATUS_COLORS.success.light.text} ${STATUS_COLORS.success.dark.text} ${STATUS_COLORS.success.light.border} ${STATUS_COLORS.success.dark.border}`,
+    className: getStatusClassName("success"),
   },
   ending: {
     label: "Sắp hết hạn",
-    className: `${STATUS_COLORS.warning.light.border} ${STATUS_COLORS.warning.light.bg} ${STATUS_COLORS.warning.light.text} ${STATUS_COLORS.warning.dark.bg} ${STATUS_COLORS.warning.dark.text} ${STATUS_COLORS.warning.dark.border}`,
+    className: getStatusClassName("warning"),
   },
   ended: {
     label: "Đã hết hạn",
-    className: `${STATUS_COLORS.neutral2.light.border} ${STATUS_COLORS.neutral2.light.bg} ${STATUS_COLORS.neutral2.light.text} ${STATUS_COLORS.neutral2.dark.bg} ${STATUS_COLORS.neutral2.dark.text} ${STATUS_COLORS.neutral2.dark.border}`,
+    className: getStatusClassName("neutral2"),
   },
   pending: {
     label: "Chờ xử lý",
-    className: `${STATUS_COLORS.info.light.border} ${STATUS_COLORS.info.light.bg} ${STATUS_COLORS.info.light.text} ${STATUS_COLORS.info.dark.bg} ${STATUS_COLORS.info.dark.text} ${STATUS_COLORS.info.dark.border}`,
+    className: getStatusClassName("info"),
   },
 };
 
 export const tenantStatusBadgeConfig: TenantStatusConfig = {
   active: {
     label: "Đang thuê",
-    className: `${STATUS_COLORS.success.light.border} ${STATUS_COLORS.success.light.bg} ${STATUS_COLORS.success.light.text} ${STATUS_COLORS.success.dark.bg} ${STATUS_COLORS.success.dark.text} ${STATUS_COLORS.success.dark.border}`,
+    className: getStatusClassName("success"),
   },
   pending: {
     label: "Chờ vào",
-    className: `${STATUS_COLORS.info.light.border} ${STATUS_COLORS.info.light.bg} ${STATUS_COLORS.info.light.text} ${STATUS_COLORS.info.dark.bg} ${STATUS_COLORS.info.dark.text} ${STATUS_COLORS.info.dark.border}`,
+    className: getStatusClassName("info"),
   },
   overdue: {
     label: "Nợ cước",
-    className: `${STATUS_COLORS.error.light.border} ${STATUS_COLORS.error.light.bg} ${STATUS_COLORS.error.light.text} ${STATUS_COLORS.error.dark.bg} ${STATUS_COLORS.error.dark.text} ${STATUS_COLORS.error.dark.border}`,
+    className: getStatusClassName("error"),
   },
   ended: {
     label: "Đã trả",
-    className: `${STATUS_COLORS.neutral.light.border} ${STATUS_COLORS.neutral.light.bg} ${STATUS_COLORS.neutral.light.text} ${STATUS_COLORS.neutral.dark.bg} ${STATUS_COLORS.neutral.dark.text} ${STATUS_COLORS.neutral.dark.border}`,
+    className: getStatusClassName("neutral"),
   },
 };
 

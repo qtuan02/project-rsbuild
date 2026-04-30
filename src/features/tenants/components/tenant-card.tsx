@@ -6,14 +6,13 @@ import {
   Phone,
   UserCircle,
 } from "lucide-react";
-import { useNavigate } from "react-router-dom";
 
 import { EntityActionMenu } from "@/components/shared/actions";
 import { EntityListCard } from "@/components/shared/cards";
 import { Badge } from "@/components/ui/badge";
 import { CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { routePathBuilders } from "@/config/routes";
-import { cn } from "@/lib/cn";
+import { cn } from "@/libs/cn";
 import type { Tenant } from "@/types/tenant";
 import { formatCurrency } from "@/utils/currency";
 import { getInitials } from "@/utils/string";
@@ -25,7 +24,6 @@ interface TenantCardProps {
 }
 
 export const TenantCard = ({ tenant }: TenantCardProps) => {
-  const navigate = useNavigate();
   const statusCfg = tenantStatusConfig[tenant.status];
 
   return (
@@ -54,22 +52,6 @@ export const TenantCard = ({ tenant }: TenantCardProps) => {
                 </div>
               </div>
             </div>
-            <EntityActionMenu
-              items={[
-                {
-                  key: "detail",
-                  label: "Xem chi tiết",
-                  icon: <UserCircle className="mr-2 h-3.5 w-3.5" />,
-                  onClick: () =>
-                    navigate(routePathBuilders.tenantDetail(tenant.id)),
-                },
-                {
-                  key: "invoice",
-                  label: "Tạo hóa đơn",
-                  icon: <CreditCard className="mr-2 h-3.5 w-3.5" />,
-                },
-              ]}
-            />
           </div>
         </CardHeader>
       }
@@ -111,15 +93,34 @@ export const TenantCard = ({ tenant }: TenantCardProps) => {
         </CardContent>
       }
       footer={
-        <CardFooter className="flex-wrap gap-2 text-xs sm:gap-4">
-          <div className="flex items-center gap-1.5 text-muted-foreground">
-            <Calendar className="h-3 w-3" />
-            <span>Vào: {tenant.moveInDate}</span>
+        <CardFooter className="flex-wrap gap-2 text-xs sm:gap-4 justify-between">
+          <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1.5 text-muted-foreground">
+              <Calendar className="h-3 w-3" />
+              <span>Vào: {tenant.moveInDate}</span>
+            </div>
+            <div className="flex items-center gap-1.5 text-muted-foreground">
+              <Calendar className="h-3 w-3" />
+              <span>HĐ: {tenant.contractEnd}</span>
+            </div>
           </div>
-          <div className="flex items-center gap-1.5 text-muted-foreground">
-            <Calendar className="h-3 w-3" />
-            <span>HĐ: {tenant.contractEnd}</span>
-          </div>
+
+          <EntityActionMenu
+            sideContent="top"
+            items={[
+              {
+                key: "detail",
+                label: "Xem chi tiết",
+                icon: <UserCircle className="mr-2 h-3.5 w-3.5" />,
+                link: routePathBuilders.tenantDetail(tenant.id),
+              },
+              {
+                key: "invoice",
+                label: "Tạo hóa đơn",
+                icon: <CreditCard className="mr-2 h-3.5 w-3.5" />,
+              },
+            ]}
+          />
         </CardFooter>
       }
     />

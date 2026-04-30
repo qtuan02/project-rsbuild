@@ -3,24 +3,20 @@ import { DetailPageShell } from "@/components/shared/layout/detail-page-shell";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { STATUS_COLORS } from "@/config/colors";
-import { cn } from "@/lib/cn";
+import { cn } from "@/libs/cn";
 
 import { useBuildingDetail } from "../hooks/use-building-detail";
 
 interface BuildingDetailPageProps {
   buildingId: string;
-  onBack?: () => void;
 }
 
-export const BuildingDetailPage = ({
-  buildingId,
-  onBack,
-}: BuildingDetailPageProps) => {
+export const BuildingDetailPage = ({ buildingId }: BuildingDetailPageProps) => {
   const { building } = useBuildingDetail(buildingId);
 
   if (!building) {
     return (
-      <DetailPageShell onBack={onBack}>
+      <DetailPageShell>
         <Card>
           <CardContent className="pt-6 text-center text-muted-foreground">
             Không tìm thấy tòa nhà.
@@ -33,7 +29,7 @@ export const BuildingDetailPage = ({
   const occupancyRate = building.occupancyRate ?? 0;
 
   return (
-    <DetailPageShell onBack={onBack}>
+    <DetailPageShell>
       <div className="grid gap-6 lg:grid-cols-3">
         <div className="lg:col-span-2 space-y-6">
           <Card>
@@ -60,7 +56,7 @@ export const BuildingDetailPage = ({
                 <p
                   className={cn(
                     "mt-1.5 text-base font-semibold",
-                    STATUS_COLORS.success.light.text,
+                    STATUS_COLORS.success.text,
                   )}
                 >
                   {building.availableRooms ?? 0}

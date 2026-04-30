@@ -110,7 +110,7 @@ src/
     components/   # feature presentational components
   components/ui/      # base primitives
   components/shared/  # reusable app widgets
-  lib/                # framework-agnostic utilities
+  libs/               # framework-agnostic utilities
   types/              # shared contracts
 ```
 
@@ -119,7 +119,7 @@ src/
 - Dependency direction ưu tiên: `pages -> hooks -> domain/data`.
 - `domain` không phụ thuộc UI/network.
 - `components` không gọi API trực tiếp.
-- Reuse trước khi tạo abstraction mới; code dùng chung đưa về `components/shared`, `lib`, `types`.
+- Reuse trước khi tạo abstraction mới; code dùng chung đưa về `components/shared`, `libs`, `types`.
 
 ## Deployment (Vercel)
 

@@ -61,7 +61,7 @@ export const InvoiceDetailPage = ({
 
   if (!invoice) {
     return (
-      <DetailPageShell onBack={onBack} headerActions={headerActions}>
+      <DetailPageShell headerActions={headerActions}>
         <Card>
           <CardContent className="pt-6 text-center text-muted-foreground">
             Không tìm thấy hóa đơn.
@@ -72,7 +72,7 @@ export const InvoiceDetailPage = ({
   }
 
   return (
-    <DetailPageShell onBack={onBack} headerActions={headerActions}>
+    <DetailPageShell headerActions={headerActions}>
       <div className="grid gap-6 lg:grid-cols-3">
         <div className="lg:col-span-2 space-y-6">
           <Card>

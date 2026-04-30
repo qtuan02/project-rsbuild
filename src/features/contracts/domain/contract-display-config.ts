@@ -1,6 +1,6 @@
 import { CheckCircle2, Clock, AlertCircle, XCircle } from "lucide-react";
 
-import { STATUS_COLORS } from "@/config/colors";
+import { getStatusClassName } from "@/config/colors";
 import type { ContractStatus } from "@/types/contract";
 
 import type { LucideIcon } from "lucide-react";
@@ -18,25 +18,25 @@ export const contractStatusConfig: Record<
     label: "Đang hoạt động",
     variant: "default",
     icon: CheckCircle2,
-    className: `${STATUS_COLORS.success.light.bg} ${STATUS_COLORS.success.dark.bg} ${STATUS_COLORS.success.light.text} ${STATUS_COLORS.success.dark.text} ${STATUS_COLORS.success.light.border} ${STATUS_COLORS.success.dark.border}`,
+    className: getStatusClassName("success"),
   },
   ending: {
     label: "Sắp hết hạn",
     variant: "secondary",
     icon: AlertCircle,
-    className: `${STATUS_COLORS.warning.light.border} ${STATUS_COLORS.warning.light.bg} ${STATUS_COLORS.warning.light.text} ${STATUS_COLORS.warning.dark.bg} ${STATUS_COLORS.warning.dark.text} ${STATUS_COLORS.warning.dark.border}`,
+    className: getStatusClassName("warning"),
   },
   ended: {
     label: "Đã hết hạn",
     variant: "outline",
     icon: XCircle,
-    className: `${STATUS_COLORS.neutral2.light.border} ${STATUS_COLORS.neutral2.light.bg} ${STATUS_COLORS.neutral2.light.text} ${STATUS_COLORS.neutral2.dark.bg} ${STATUS_COLORS.neutral2.dark.text} ${STATUS_COLORS.neutral2.dark.border}`,
+    className: getStatusClassName("neutral2"),
   },
   pending: {
     label: "Chờ xử lý",
     variant: "secondary",
     icon: Clock,
-    className: `${STATUS_COLORS.info.light.border} ${STATUS_COLORS.info.light.bg} ${STATUS_COLORS.info.light.text} ${STATUS_COLORS.info.dark.bg} ${STATUS_COLORS.info.dark.text} ${STATUS_COLORS.info.dark.border}`,
+    className: getStatusClassName("info"),
   },
 };
 

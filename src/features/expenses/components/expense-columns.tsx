@@ -36,16 +36,13 @@ export const expenseColumns: ColumnDef<Expense>[] = [
   },
   {
     id: "actions",
-    header: () => <div className="text-right">Hành động</div>,
+    header: "",
     cell: ({ row }) => (
-      <div className="text-right">
-        <Button variant="outline" size="sm" asChild>
-          <Link to={routePathBuilders.expenseDetail(row.original.id)}>
-            <Eye className="mr-2 h-4 w-4" />
-            Chi tiết
-          </Link>
-        </Button>
-      </div>
+      <Button variant="outline" size="icon-sm" asChild>
+        <Link to={routePathBuilders.expenseDetail(row.original.id)}>
+          <Eye className="h-4 w-4" />
+        </Link>
+      </Button>
     ),
   },
 ];

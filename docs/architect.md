@@ -5,7 +5,7 @@ Tài liệu này mô tả kiến trúc code frontend ở mức thực thi (imple
 ## Mục tiêu kiến trúc
 
 - Tách rõ trách nhiệm theo layer để dễ bảo trì.
-- Tăng khả năng tái sử dụng qua `components/shared`, `lib`, `types`.
+- Tăng khả năng tái sử dụng qua `components/shared`, `libs`, `types`.
 - Hạn chế coupling giữa các feature.
 - Giữ code nhất quán theo convention dự án.
 
@@ -46,7 +46,7 @@ src/
     stories/                  # Storybook stories (docs/testing UI)
 
   hooks/                      # global hooks dùng đa feature (không thuộc 1 nghiệp vụ)
-  lib/                        # framework-agnostic helpers/utilities
+  libs/                       # framework-agnostic helpers/utilities
   types/                      # shared domain contracts/types toàn app
   utils/                      # runtime helpers (format, parse, app-specific helpers)
 ```
@@ -66,11 +66,11 @@ src/
 | `src/features/<feature>/components` | Feature UI | Presentational component đặc thù feature |
 | `src/components/ui` | UI primitives | Button/Input/Card... base components |
 | `src/components/shared` | Reusable app patterns | Dùng lại từ 2+ feature (table/filter/panel/dialog/nav) |
-| `src/lib` | Framework-agnostic helpers | Utility thuần, không dính business cụ thể |
+| `src/libs` | Framework-agnostic helpers | Utility thuần, không dính business cụ thể |
 | `src/types` | Shared contracts | Type/interface dùng đa feature |
 | `src/utils` | Runtime helpers | Format/parse/helper gắn với app runtime |
 
-> Quy tắc nhanh: code dùng 1 feature thì để trong feature; dùng nhiều feature mới promote lên `shared/lib/types`.
+> Quy tắc nhanh: code dùng 1 feature thì để trong feature; dùng nhiều feature mới promote lên `shared/libs/types`.
 
 ### Notes cho structure
 
@@ -111,7 +111,7 @@ src/
   - Không hardcode path string trong feature (`"/tenants/123"`).
   - Luôn dùng `routePathBuilders.*` để an toàn khi đổi route.
 
-- `hooks/`, `lib/`, `utils/`, `types/` ở root chỉ chứa thứ dùng đa feature.
+- `hooks/`, `libs/`, `utils/`, `types/` ở root chỉ chứa thứ dùng đa feature.
   - Nếu logic chỉ phục vụ 1 feature, ưu tiên để trong feature đó.
   - Mục tiêu: tránh root-level thành “misc dump”.
 
@@ -147,7 +147,7 @@ shared component -> không phụ thuộc feature-specific code
 - Ưu tiên reuse trước khi tạo mới.
 - Nếu logic/UI dùng từ 2 feature trở lên:
   - UI widget: đưa vào `components/shared`.
-  - Utility thuần: đưa vào `lib`.
+  - Utility thuần: đưa vào `libs`.
   - Contract/type chung: đưa vào `types`.
 - Không import trực tiếp nội bộ `data` của feature khác nếu chưa có public entry phù hợp.
 
@@ -193,7 +193,7 @@ shared component -> không phụ thuộc feature-specific code
 2. Viết repository/API ở `data`.
 3. Viết hook orchestration trong `hooks`.
 4. Page chỉ wiring + compose UI.
-5. Trích phần dùng chung ra `components/shared` hoặc `lib` nếu lặp.
+5. Trích phần dùng chung ra `components/shared` hoặc `libs` nếu lặp.
 6. Chạy `lint` + `typecheck` trước khi tạo PR.
 
 ## Liên kết tài liệu liên quan

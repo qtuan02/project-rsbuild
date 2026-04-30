@@ -1,6 +1,6 @@
 import { Label as LabelPrimitive } from "radix-ui";
 
-import { cn } from "@/lib/cn";
+import { cn } from "@/libs/cn";
 
 import type * as React from "react";
 

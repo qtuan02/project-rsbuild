@@ -4,7 +4,7 @@ import { useState } from "react";
 import { InfoCard } from "@/components/shared/cards/info-card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/cn";
+import { cn } from "@/libs/cn";
 
 interface AssetItem {
   id: string;

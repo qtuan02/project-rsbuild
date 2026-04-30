@@ -50,7 +50,7 @@ export const RoomDetailPage = ({ roomId, onBack }: RoomDetailPageProps) => {
 
   if (!room) {
     return (
-      <DetailPageShell onBack={onBack} headerActions={headerActions}>
+      <DetailPageShell headerActions={headerActions}>
         <Card>
           <CardContent className="pt-6 text-center text-muted-foreground">
             Không tìm thấy phòng.
@@ -61,7 +61,7 @@ export const RoomDetailPage = ({ roomId, onBack }: RoomDetailPageProps) => {
   }
 
   return (
-    <DetailPageShell onBack={onBack} headerActions={headerActions}>
+    <DetailPageShell headerActions={headerActions}>
       <div className="grid gap-6 lg:grid-cols-3">
         <div className="lg:col-span-2 space-y-6">
           <Card>

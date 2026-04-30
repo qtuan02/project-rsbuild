@@ -33,14 +33,10 @@ const buildingSchema = z.object({
 type BuildingFormValues = z.infer<typeof buildingSchema>;
 
 interface BuildingFormDialogProps {
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
+  onClose: () => void;
 }
 
-export const BuildingFormDialog = ({
-  open,
-  onOpenChange,
-}: BuildingFormDialogProps) => {
+export const BuildingFormDialog = ({ onClose }: BuildingFormDialogProps) => {
   const form = useForm<BuildingFormValues>({
     resolver: zodResolver(buildingSchema),
     defaultValues: {
@@ -56,11 +52,11 @@ export const BuildingFormDialog = ({
       utilityCycleDay: Number.parseInt(data.utilityCycleDay, 10),
     };
     console.log(payload);
-    onOpenChange(false);
+    onClose();
   };
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
+    <Dialog open onOpenChange={onClose}>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>Thêm tòa nhà mới</DialogTitle>
@@ -140,11 +136,7 @@ export const BuildingFormDialog = ({
               />
             </div>
             <DialogFooter>
-              <Button
-                type="button"
-                variant="outline"
-                onClick={() => onOpenChange(false)}
-              >
+              <Button type="button" variant="outline" onClick={onClose}>
                 Hủy
               </Button>
               <Button type="submit">Lưu lại</Button>
