@@ -1,7 +1,6 @@
-import { Bell, PanelLeft, Search } from "lucide-react";
+import { PanelLeft } from "lucide-react";
 import { useLocation } from "react-router-dom";
 
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { useSidebar } from "@/components/ui/sidebar";
@@ -9,6 +8,8 @@ import { resolveRouteMetadata } from "@/config/routes";
 import { cn } from "@/libs/cn";
 
 import { BuildingSelector } from "./building-selector";
+import { NotificationPanel } from "./notification-panel";
+import { SearchDialog } from "./search-dialog";
 
 export const AppHeader = () => {
   const location = useLocation();
@@ -49,54 +50,21 @@ export const AppHeader = () => {
         </div>
       </div>
 
-      {/* Spacer */}
       <div className="flex-1" />
 
-      {/* Right: Search + Actions */}
       <div className="flex items-center gap-2">
-        <Button
-          variant="outline"
-          className="relative hidden h-8 w-56 justify-start rounded-md border-border bg-background text-sm text-muted-foreground shadow-none hover:bg-muted hover:text-foreground lg:flex lg:w-64"
-        >
-          <Search className="mr-2 h-3.5 w-3.5" />
-          <span>Tìm kiếm...</span>
-          <kbd className="pointer-events-none absolute top-1.5 right-1.5 hidden h-5 select-none items-center gap-1 rounded border border-border bg-muted px-1.5 font-mono text-[10px] font-medium opacity-100 sm:flex">
-            <span className="text-xs">⌘</span>K
-          </kbd>
-        </Button>
+        {/* Search */}
+        <SearchDialog />
 
-        <Button
-          variant="ghost"
-          size="icon-sm"
-          className="text-muted-foreground hover:text-foreground lg:hidden"
-        >
-          <Search className="h-4 w-4" />
-          <span className="sr-only">Tìm kiếm</span>
-        </Button>
-
+        {/* Building selector */}
         <div className="border rounded-lg">
           <BuildingSelector />
         </div>
 
         <Separator orientation="vertical" className="h-5 self-center!" />
 
-        <Button
-          size="icon-sm"
-          variant="ghost"
-          aria-label="Thông báo"
-          className="relative text-muted-foreground hover:text-foreground"
-        >
-          <Bell className="h-4 w-4" />
-          <span className="absolute -top-0.5 -right-0.5 flex h-3.5 w-3.5 items-center justify-center rounded-full bg-primary text-[9px] font-bold text-primary-foreground">
-            3
-          </span>
-        </Button>
-
-        <Avatar className="h-8 w-8 cursor-pointer rounded-lg border border-border shadow-sm transition-shadow hover:shadow-md">
-          <AvatarFallback className="rounded-lg bg-primary/10 text-xs font-semibold text-primary">
-            NA
-          </AvatarFallback>
-        </Avatar>
+        {/* Notifications */}
+        <NotificationPanel />
       </div>
     </header>
   );

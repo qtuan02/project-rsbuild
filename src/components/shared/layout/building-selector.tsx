@@ -32,7 +32,7 @@ export const BuildingSelector = () => {
             }
           </SelectValue>
         </SelectTrigger>
-        <SelectContent position="popper" align="start" className="p-1">
+        <SelectContent position="popper" align="end" className="p-1">
           {mockBuildings.map((building) => (
             <SelectItem key={building.id} value={building.id}>
               {building.name}
