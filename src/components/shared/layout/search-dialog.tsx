@@ -1,18 +1,8 @@
-import {
-  Building2,
-  FileText,
-  ReceiptText,
-  Search,
-  Users,
-} from "lucide-react";
+import { Building2, FileText, ReceiptText, Search, Users } from "lucide-react";
 import { useState } from "react";
 
 import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/libs/cn";
@@ -93,7 +83,9 @@ const filterResults = (query: string): SearchResult[] => {
   );
 };
 
-const groupByCategory = (results: SearchResult[]): Record<string, SearchResult[]> =>
+const groupByCategory = (
+  results: SearchResult[],
+): Record<string, SearchResult[]> =>
   results.reduce<Record<string, SearchResult[]>>((acc, result) => {
     if (!acc[result.category]) acc[result.category] = [];
     acc[result.category].push(result);

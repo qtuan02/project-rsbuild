@@ -136,7 +136,10 @@ const MOCK_NOTIFICATIONS: Notification[] = [
 ];
 
 // --- Sub-components ---
-const NotificationItem = ({ notification, onMarkRead }: NotificationItemProps) => {
+const NotificationItem = ({
+  notification,
+  onMarkRead,
+}: NotificationItemProps) => {
   const config = TYPE_CONFIG[notification.type];
   const Icon = config.icon;
 
@@ -234,7 +237,11 @@ export const NotificationPanel = () => {
         </Button>
       </PopoverTrigger>
 
-      <PopoverContent align="end" sideOffset={8} className="w-[380px] p-0 gap-0">
+      <PopoverContent
+        align="end"
+        sideOffset={8}
+        className="w-[380px] p-0 gap-0"
+      >
         {/* Header */}
         <div className="flex items-center justify-between px-4 py-3 border-b">
           <div className="flex items-center gap-2">
@@ -283,7 +290,11 @@ export const NotificationPanel = () => {
             <ScrollArea className={NOTIFICATION_LIST_HEIGHT}>
               <div className="divide-y">
                 {notifications.map((n) => (
-                  <NotificationItem key={n.id} notification={n} onMarkRead={markRead} />
+                  <NotificationItem
+                    key={n.id}
+                    notification={n}
+                    onMarkRead={markRead}
+                  />
                 ))}
               </div>
             </ScrollArea>
@@ -296,7 +307,11 @@ export const NotificationPanel = () => {
               ) : (
                 <div className="divide-y">
                   {unreadList.map((n) => (
-                    <NotificationItem key={n.id} notification={n} onMarkRead={markRead} />
+                    <NotificationItem
+                      key={n.id}
+                      notification={n}
+                      onMarkRead={markRead}
+                    />
                   ))}
                 </div>
               )}
