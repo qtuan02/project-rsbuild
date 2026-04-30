@@ -7,13 +7,9 @@ import { useExpenseDetail } from "../hooks/use-expense-detail";
 
 interface ExpenseDetailPageProps {
   expenseId: string;
-  onBack?: () => void;
 }
 
-export const ExpenseDetailPage = ({
-  expenseId,
-  onBack,
-}: ExpenseDetailPageProps) => {
+export const ExpenseDetailPage = ({ expenseId }: ExpenseDetailPageProps) => {
   const { expense, buildingName } = useExpenseDetail(expenseId);
 
   if (!expense) {

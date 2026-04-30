@@ -9,13 +9,9 @@ import { useBuildingDetail } from "../hooks/use-building-detail";
 
 interface BuildingDetailPageProps {
   buildingId: string;
-  onBack?: () => void;
 }
 
-export const BuildingDetailPage = ({
-  buildingId,
-  onBack,
-}: BuildingDetailPageProps) => {
+export const BuildingDetailPage = ({ buildingId }: BuildingDetailPageProps) => {
   const { building } = useBuildingDetail(buildingId);
 
   if (!building) {

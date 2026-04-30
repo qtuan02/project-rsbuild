@@ -34,15 +34,9 @@ const RoomDetailRoute = () => {
 
 const BuildingDetailRoute = () => {
   const { buildingId } = useParams<{ buildingId: string }>();
-  const navigate = useNavigate();
   if (!buildingId) return null;
 
-  return (
-    <BuildingDetailPage
-      buildingId={buildingId}
-      onBack={() => navigate(routes.buildings)}
-    />
-  );
+  return <BuildingDetailPage buildingId={buildingId} />;
 };
 
 const TenantDetailRoute = () => {
@@ -112,28 +106,16 @@ const InvoiceDetailRoute = () => {
 
 const SupplierBillDetailRoute = () => {
   const { billId } = useParams<{ billId: string }>();
-  const navigate = useNavigate();
   if (!billId) return null;
 
-  return (
-    <SupplierBillDetailPage
-      billId={billId}
-      onBack={() => navigate(routes.supplierBills)}
-    />
-  );
+  return <SupplierBillDetailPage billId={billId} />;
 };
 
 const ExpenseDetailRoute = () => {
   const { expenseId } = useParams<{ expenseId: string }>();
-  const navigate = useNavigate();
   if (!expenseId) return null;
 
-  return (
-    <ExpenseDetailPage
-      expenseId={expenseId}
-      onBack={() => navigate(routes.expenses)}
-    />
-  );
+  return <ExpenseDetailPage expenseId={expenseId} />;
 };
 
 const ComingSoonPlaceholder = ({ title }: { title: string }) => {

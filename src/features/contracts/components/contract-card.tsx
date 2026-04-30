@@ -1,5 +1,4 @@
 import { Calendar, FileText, User, Home, Landmark } from "lucide-react";
-import { useNavigate } from "react-router-dom";
 
 import { EntityListCard } from "@/components/shared/cards";
 import { Badge } from "@/components/ui/badge";
@@ -16,7 +15,6 @@ interface ContractCardProps {
 }
 
 export const ContractCard = ({ contract }: ContractCardProps) => {
-  const navigate = useNavigate();
   const statusConfig = contractStatusConfig[contract.status];
 
   return (

@@ -1,5 +1,4 @@
 import { User, DoorOpen } from "lucide-react";
-import { useNavigate } from "react-router-dom";
 
 import { EntityListCard } from "@/components/shared/cards";
 import { CardContent, CardFooter, CardHeader } from "@/components/ui/card";
@@ -19,7 +18,6 @@ interface RoomGridProps {
 }
 
 export const RoomGrid = ({ data }: RoomGridProps) => {
-  const navigate = useNavigate();
   const { groupedByFloor, sortedFloors } = useGroupedRooms(data);
 
   return (

@@ -8,12 +8,10 @@ import { useSupplierBillDetail } from "../hooks/use-supplier-bill-detail";
 
 interface SupplierBillDetailPageProps {
   billId: string;
-  onBack?: () => void;
 }
 
 export const SupplierBillDetailPage = ({
   billId,
-  onBack,
 }: SupplierBillDetailPageProps) => {
   const { bill, buildingName } = useSupplierBillDetail(billId);
 

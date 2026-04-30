@@ -6,7 +6,6 @@ import {
   Phone,
   UserCircle,
 } from "lucide-react";
-import { useNavigate } from "react-router-dom";
 
 import { EntityActionMenu } from "@/components/shared/actions";
 import { EntityListCard } from "@/components/shared/cards";
@@ -25,7 +24,6 @@ interface TenantCardProps {
 }
 
 export const TenantCard = ({ tenant }: TenantCardProps) => {
-  const navigate = useNavigate();
   const statusCfg = tenantStatusConfig[tenant.status];
 
   return (
