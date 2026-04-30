@@ -65,7 +65,7 @@ export const ContractDetailPage = ({
 
   if (!contract) {
     return (
-      <DetailPageShell onBack={onBack} headerActions={headerActions}>
+      <DetailPageShell headerActions={headerActions}>
         <Card>
           <CardContent className="pt-6 text-center text-muted-foreground">
             Không tìm thấy hợp đồng.
@@ -80,7 +80,7 @@ export const ContractDetailPage = ({
   }
 
   return (
-    <DetailPageShell onBack={onBack} headerActions={headerActions}>
+    <DetailPageShell headerActions={headerActions}>
       {expiryMeta?.isExpiringSoon && (
         <Alert variant="destructive">
           <AlertCircle className="h-4 w-4" />

@@ -1,7 +1,7 @@
 import { ChevronDown } from "lucide-react";
 import * as React from "react";
 
-import { cn } from "@/lib/cn";
+import { cn } from "@/libs/cn";
 import type { Setting, SettingCategory } from "@/types/setting";
 
 import { SettingItem } from "./setting-item";

@@ -1,9 +1,12 @@
+import { ChevronRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 import { EntityListCard } from "@/components/shared/cards";
+import { Button } from "@/components/ui/button";
 import {
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -53,7 +56,6 @@ export const TaskCard: React.FC<TaskCardProps> = ({ task }) => {
   return (
     <EntityListCard
       className="hover:cursor-pointer"
-      onClick={handleViewDetails}
       header={
         <CardHeader className="pb-0">
           <div className="flex items-start justify-between gap-4">
@@ -103,6 +105,20 @@ export const TaskCard: React.FC<TaskCardProps> = ({ task }) => {
             </span>
           </div>
         </CardContent>
+      }
+      footer={
+        <CardFooter className="px-4 py-2 flex justify-end">
+          <Button
+            type="button"
+            variant="ghost"
+            size="sm"
+            className="text-muted-foreground/70 hover:text-primary cursor-pointer"
+            onClick={handleViewDetails}
+          >
+            Xem chi tiết
+            <ChevronRight className="ml-1 h-3 w-3" />
+          </Button>
+        </CardFooter>
       }
     />
   );

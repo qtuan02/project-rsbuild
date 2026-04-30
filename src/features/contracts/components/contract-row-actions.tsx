@@ -1,56 +1,35 @@
-import { Copy, Eye, MoreHorizontal } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { Copy, Eye } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+import { EntityActionMenu } from "@/components/shared/actions";
 import { routePathBuilders } from "@/config/routes";
 import type { Contract } from "@/types/contract";
 
 interface ContractRowActionsProps {
   contract: Contract;
+  side?: "top" | "bottom" | "left" | "right";
 }
 
-export const ContractRowActions = ({ contract }: ContractRowActionsProps) => {
-  const navigate = useNavigate();
-
+export const ContractRowActions = ({
+  contract,
+  side = "bottom",
+}: ContractRowActionsProps) => {
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="icon-sm">
-          <span className="sr-only">Mở menu</span>
-          <MoreHorizontal className="h-4 w-4" />
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-44">
-        <DropdownMenuGroup>
-          <DropdownMenuLabel>Thao tác</DropdownMenuLabel>
-          <DropdownMenuItem
-            onClick={() => navigator.clipboard.writeText(contract.id)}
-          >
-            <Copy className="mr-2 h-3.5 w-3.5" />
-            Sao chép ID
-          </DropdownMenuItem>
-        </DropdownMenuGroup>
-        <DropdownMenuSeparator />
-        <DropdownMenuGroup>
-          <DropdownMenuItem
-            onClick={() =>
-              navigate(routePathBuilders.contractDetail(contract.id))
-            }
-          >
-            <Eye className="mr-2 h-3.5 w-3.5" />
-            Xem chi tiết
-          </DropdownMenuItem>
-        </DropdownMenuGroup>
-      </DropdownMenuContent>
-    </DropdownMenu>
+    <EntityActionMenu
+      sideContent={side}
+      items={[
+        {
+          key: "copy",
+          label: "Sao chép ID",
+          icon: <Copy className="mr-2 h-3.5 w-3.5" />,
+          onClick: () => navigator.clipboard.writeText(contract.id),
+        },
+        {
+          key: "detail",
+          label: "Xem chi tiết",
+          icon: <Eye className="mr-2 h-3.5 w-3.5" />,
+          link: routePathBuilders.contractDetail(contract.id),
+        },
+      ]}
+    />
   );
 };

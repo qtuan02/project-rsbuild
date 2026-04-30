@@ -1,6 +1,8 @@
 import { Calendar, Home, ReceiptText, User } from "lucide-react";
 
+import { EntityActionMenu } from "@/components/shared/actions";
 import { Badge } from "@/components/ui/badge";
+import { routePathBuilders } from "@/config/routes";
 import type { Invoice } from "@/types/invoice";
 import { formatCurrency } from "@/utils/currency";
 
@@ -76,6 +78,28 @@ export const invoiceColumns: ColumnDef<Invoice>[] = [
         <Badge variant="outline" className={config.className}>
           {config.label}
         </Badge>
+      );
+    },
+  },
+  {
+    id: "actions",
+    header: "",
+    cell: ({ row }) => {
+      const invoice = row.original;
+      return (
+        <EntityActionMenu
+          items={[
+            {
+              key: "detail",
+              label: "Xem chi tiết",
+              link: routePathBuilders.invoiceDetail(invoice.id),
+            },
+            {
+              key: "pdf",
+              label: "Tải về PDF",
+            },
+          ]}
+        />
       );
     },
   },

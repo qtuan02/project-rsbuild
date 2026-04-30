@@ -52,7 +52,7 @@ export const supplierBillColumns: ColumnDef<SupplierBill>[] = [
     id: "actions",
     header: "",
     cell: ({ row }) => (
-      <Button variant="ghost" size="icon-sm" asChild>
+      <Button variant="outline" size="icon-sm" asChild>
         <Link to={routePathBuilders.supplierBillDetail(row.original.id)}>
           <Eye className="h-4 w-4" />
         </Link>

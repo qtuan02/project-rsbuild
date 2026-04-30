@@ -10,7 +10,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { cn } from "@/lib/cn";
+import { cn } from "@/libs/cn";
 
 type SidebarState = "expanded" | "collapsed";
 

@@ -1,9 +1,36 @@
+import { AlertCircle, Clock, Wrench } from "lucide-react";
+
 import { EmptyPanel, LoadingPanel } from "@/components/shared/panels";
+import { Card, CardContent } from "@/components/ui/card";
+import { cn } from "@/libs/cn";
 
 import { TaskCard } from "../components/task-card";
 import { TaskFilters } from "../components/task-filters";
 import { useTaskList } from "../hooks/use-task-list";
 
+const taskSummaryConfigs = [
+  {
+    key: "invoice_overdue" as const,
+    label: "Hóa đơn quá hạn",
+    icon: AlertCircle,
+    color: cn("text-red-600 dark:text-red-400"),
+    bg: cn("bg-red-100 dark:bg-red-900/30"),
+  },
+  {
+    key: "contract_expiring" as const,
+    label: "Hợp đồng sắp hết hạn",
+    icon: Clock,
+    color: cn("text-amber-600 dark:text-amber-400"),
+    bg: cn("bg-amber-100 dark:bg-amber-900/30"),
+  },
+  {
+    key: "maintenance" as const,
+    label: "Bảo trì",
+    icon: Wrench,
+    color: cn("text-blue-600 dark:text-blue-400"),
+    bg: cn("bg-blue-100 dark:bg-blue-900/30"),
+  },
+];
 export const TaskCenterPage = () => {
   const {
     filteredData,
@@ -35,25 +62,27 @@ export const TaskCenterPage = () => {
         </div>
       </div>
 
-      <div className="flex flex-wrap gap-3">
-        <div className="inline-flex items-center gap-2 rounded-full border px-4 py-2 bg-red-50 dark:bg-red-950/20">
-          <span className="text-sm font-medium">Hóa đơn quá hạn:</span>
-          <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-red-200 dark:bg-red-800 text-xs font-bold text-red-800 dark:text-red-200">
-            {taskCountByType.invoice_overdue}
-          </span>
-        </div>
-        <div className="inline-flex items-center gap-2 rounded-full border px-4 py-2 bg-orange-50 dark:bg-orange-950/20">
-          <span className="text-sm font-medium">Hợp đồng sắp hết hạn:</span>
-          <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-orange-200 dark:bg-orange-800 text-xs font-bold text-orange-800 dark:text-orange-200">
-            {taskCountByType.contract_expiring}
-          </span>
-        </div>
-        <div className="inline-flex items-center gap-2 rounded-full border px-4 py-2 bg-blue-50 dark:bg-blue-950/20">
-          <span className="text-sm font-medium">Bảo trì:</span>
-          <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-blue-200 dark:bg-blue-800 text-xs font-bold text-blue-800 dark:text-blue-200">
-            {taskCountByType.maintenance}
-          </span>
-        </div>
+      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        {taskSummaryConfigs.map((config) => (
+          <Card key={config.label} size="sm">
+            <CardContent className="flex items-center gap-3">
+              <div
+                className={cn(
+                  "flex h-9 w-9 shrink-0 items-center justify-center rounded-lg",
+                  config.bg,
+                )}
+              >
+                <config.icon className={cn("h-4 w-4", config.color)} />
+              </div>
+              <div>
+                <p className="text-xs text-muted-foreground">{config.label}</p>
+                <p className="text-xl font-bold tabular-nums">
+                  {taskCountByType[config.key]}
+                </p>
+              </div>
+            </CardContent>
+          </Card>
+        ))}
       </div>
 
       <div>

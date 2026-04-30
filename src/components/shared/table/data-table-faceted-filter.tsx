@@ -8,7 +8,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Separator } from "@/components/ui/separator";
-import { cn } from "@/lib/cn";
+import { cn } from "@/libs/cn";
 
 export interface FacetedFilterColumn {
   getFacetedUniqueValues: () => Map<string, number>;

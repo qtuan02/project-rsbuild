@@ -6,7 +6,7 @@ import {
   FileText,
   Plus,
 } from "lucide-react";
-import * as React from "react";
+import { useQueryState } from "nuqs";
 
 import { ListPageHeader, ListPageShell } from "@/components/shared/list";
 import { DEFAULT_PAGINATION_OPTIONS } from "@/components/shared/pagination/pagination-contracts";
@@ -19,7 +19,7 @@ import {
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent } from "@/components/ui/tabs";
 import { STATUS_COLORS } from "@/config/colors";
-import { cn } from "@/lib/cn";
+import { cn } from "@/libs/cn";
 import { formatCurrency } from "@/utils/currency";
 
 import { InvoiceCard } from "../components/invoice-card";
@@ -38,29 +38,31 @@ const summaryStatConfigs = [
     key: "paidAmount",
     label: "Đã thanh toán",
     icon: CheckCircle2,
-    color: STATUS_COLORS.success.light.text,
-    bg: STATUS_COLORS.success.light.bg,
+    color: STATUS_COLORS.success.text,
+    bg: STATUS_COLORS.success.bg,
   },
   {
     key: "pendingAmount",
     label: "Chờ thanh toán",
     icon: Clock,
-    color: STATUS_COLORS.info.light.text,
-    bg: STATUS_COLORS.info.light.bg,
+    color: STATUS_COLORS.info.text,
+    bg: STATUS_COLORS.info.bg,
   },
   {
     key: "overdueAmount",
     label: "Quá hạn",
     icon: AlertCircle,
-    color: STATUS_COLORS.error.light.text,
-    bg: STATUS_COLORS.error.light.bg,
+    color: STATUS_COLORS.error.text,
+    bg: STATUS_COLORS.error.bg,
   },
 ] as const;
 
 export const InvoiceListPage = () => {
   const { data, summaryStats, searchableColumns, filterableColumns } =
     useInvoiceList();
-  const [activeTab, setActiveTab] = React.useState("grid");
+  const [activeTab, setActiveTab] = useQueryState("activeTab", {
+    defaultValue: "grid",
+  });
 
   const { table } = useDataTable({
     data,

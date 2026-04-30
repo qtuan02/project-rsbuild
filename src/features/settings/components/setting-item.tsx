@@ -1,5 +1,5 @@
 import { Badge } from "@/components/ui/badge";
-import { cn } from "@/lib/cn";
+import { cn } from "@/libs/cn";
 import type { Setting } from "@/types/setting";
 import { formatCurrency } from "@/utils/currency";
 

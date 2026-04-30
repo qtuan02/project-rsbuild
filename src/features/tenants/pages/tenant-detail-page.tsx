@@ -17,7 +17,7 @@ import { PageBackButton } from "@/components/shared/navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { cn } from "@/lib/cn";
+import { cn } from "@/libs/cn";
 import { formatCurrency } from "@/utils/currency";
 import { getInitials } from "@/utils/string";
 
@@ -57,7 +57,7 @@ export const TenantDetailPage = ({
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <PageBackButton onClick={onBack} />
+        <PageBackButton />
         <div className="flex items-center gap-2">
           <Button variant="outline" size="sm" className="gap-2">
             <Download className="h-4 w-4" />

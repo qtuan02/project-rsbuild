@@ -18,7 +18,7 @@ export const ExpenseDetailPage = ({
 
   if (!expense) {
     return (
-      <DetailPageShell onBack={onBack}>
+      <DetailPageShell>
         <Card>
           <CardContent className="pt-6 text-center text-muted-foreground">
             Không tìm thấy khoản chi phí.
@@ -29,7 +29,7 @@ export const ExpenseDetailPage = ({
   }
 
   return (
-    <DetailPageShell onBack={onBack}>
+    <DetailPageShell>
       <Card>
         <CardHeader>
           <CardTitle>{expense.category}</CardTitle>

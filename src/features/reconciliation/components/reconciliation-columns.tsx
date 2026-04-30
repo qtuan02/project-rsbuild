@@ -1,7 +1,7 @@
 import { ArrowDown, ArrowUp } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
-import { cn } from "@/lib/cn";
+import { cn } from "@/libs/cn";
 import type { ReconciliationItem } from "@/types/reconciliation";
 import { formatCurrency } from "@/utils/currency";
 

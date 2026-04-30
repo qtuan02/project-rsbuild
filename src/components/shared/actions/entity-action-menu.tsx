@@ -1,4 +1,6 @@
 import { MoreHorizontal } from "lucide-react";
+import * as React from "react";
+import { useNavigate } from "react-router-dom";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -11,46 +13,67 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-import type { ReactNode } from "react";
-
 interface EntityActionMenuItem {
   key: string;
   label: string;
-  icon?: ReactNode;
+  icon?: React.ReactNode;
+  link?: string;
   onClick?: () => void;
   destructive?: boolean;
 }
 
 interface EntityActionMenuProps {
   items: EntityActionMenuItem[];
-  label?: string;
+  hasLabel?: boolean;
+  labelText?: string;
+  sideContent?: "top" | "bottom" | "left" | "right";
   contentClassName?: string;
 }
 
-export const EntityActionMenu = ({
-  items,
-  label = "Thao tác",
-  contentClassName = "w-44",
-}: EntityActionMenuProps) => {
+export const EntityActionMenu: React.FC<EntityActionMenuProps> = (props) => {
+  const {
+    items,
+    hasLabel = true,
+    labelText = "Thao tác",
+    sideContent = "bottom",
+    contentClassName = "w-44",
+  } = props;
+
+  const navigate = useNavigate();
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button
-          variant="ghost"
-          size="icon-sm"
-          className="opacity-100 transition-opacity sm:opacity-0 sm:group-hover:opacity-100 data-[state=open]:opacity-100"
-        >
+        <Button variant="outline" size="icon-sm" className="cursor-pointer">
           <MoreHorizontal className="h-4 w-4" />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className={contentClassName}>
-        <DropdownMenuLabel>{label}</DropdownMenuLabel>
-        <DropdownMenuSeparator />
+      <DropdownMenuContent
+        align="end"
+        side={sideContent}
+        className={contentClassName}
+      >
+        {hasLabel && (
+          <>
+            <DropdownMenuLabel>{labelText}</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+          </>
+        )}
         <DropdownMenuGroup>
           {items.map((item) => (
             <DropdownMenuItem
               key={item.key}
-              onClick={item.onClick}
+              onClick={() => {
+                if (item.link) {
+                  navigate(item.link);
+                  return;
+                }
+                if (item.onClick) {
+                  item.onClick();
+                  return;
+                }
+                console.log("No action");
+              }}
               className={item.destructive ? "text-destructive" : undefined}
             >
               {item.icon}

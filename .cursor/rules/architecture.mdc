@@ -21,7 +21,7 @@ src/
     shared/      # reusable app-level widgets (2+ features)
   config/
     routes.ts    # route path source-of-truth
-  lib/           # framework-agnostic utilities
+  libs/           # framework-agnostic utilities
   types/         # shared domain contracts
   utils/         # app-specific runtime helpers
 ```

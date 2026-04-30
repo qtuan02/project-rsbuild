@@ -1,7 +1,7 @@
 import { Search, X } from "lucide-react";
 
 import { Input } from "@/components/ui/input";
-import { cn } from "@/lib/cn";
+import { cn } from "@/libs/cn";
 
 interface SearchInputWithClearProps {
   value: string;

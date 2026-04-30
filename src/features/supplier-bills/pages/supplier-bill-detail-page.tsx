@@ -19,7 +19,7 @@ export const SupplierBillDetailPage = ({
 
   if (!bill) {
     return (
-      <DetailPageShell onBack={onBack}>
+      <DetailPageShell>
         <Card>
           <CardContent className="pt-6 text-center text-muted-foreground">
             Không tìm thấy hóa đơn nhà cung cấp.
@@ -30,7 +30,7 @@ export const SupplierBillDetailPage = ({
   }
 
   return (
-    <DetailPageShell onBack={onBack}>
+    <DetailPageShell>
       <Card>
         <CardHeader className="flex flex-row items-center justify-between">
           <CardTitle>{bill.supplierName}</CardTitle>

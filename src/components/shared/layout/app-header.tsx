@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { useSidebar } from "@/components/ui/sidebar";
 import { resolveRouteMetadata } from "@/config/routes";
-import { cn } from "@/lib/cn";
+import { cn } from "@/libs/cn";
 
 import { BuildingSelector } from "./building-selector";
 

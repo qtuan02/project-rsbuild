@@ -7,8 +7,8 @@ import { BrowserRouter } from "react-router-dom";
 import { AppRoutes } from "@/app-routes";
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { createQueryClient } from "@/lib/query-client";
-import { QueryDevtools } from "@/lib/query-devtools";
+import { createQueryClient } from "@/libs/query-client";
+import { QueryDevtools } from "@/libs/query-devtools";
 
 export const App = () => {
   const [queryClient] = useState(createQueryClient);

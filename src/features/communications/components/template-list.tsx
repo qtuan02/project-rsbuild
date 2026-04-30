@@ -9,7 +9,7 @@ import {
   CardTitle,
   CardFooter,
 } from "@/components/ui/card";
-import { cn } from "@/lib/cn";
+import { cn } from "@/libs/cn";
 
 import type { NotificationTemplate } from "../data/communications.mock";
 
@@ -107,7 +107,7 @@ export const TemplateList = ({ templates, onSend }: TemplateListProps) => {
               </div>
             </CardContent>
 
-            <CardFooter className="p-4 pt-0">
+            <CardFooter className="p-4">
               <Button
                 size="sm"
                 variant={isSent ? "secondary" : "default"}

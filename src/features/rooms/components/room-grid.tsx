@@ -1,24 +1,13 @@
-import { MoreHorizontal, User, DoorOpen } from "lucide-react";
-import { useState } from "react";
+import { User, DoorOpen } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 import { EntityListCard } from "@/components/shared/cards";
-import { Button } from "@/components/ui/button";
-import { CardContent, CardHeader } from "@/components/ui/card";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { routePathBuilders } from "@/config/routes";
-import { cn } from "@/lib/cn";
+import { CardContent, CardFooter, CardHeader } from "@/components/ui/card";
+import { cn } from "@/libs/cn";
 import type { Room } from "@/types/room";
 import { formatCurrency } from "@/utils/currency";
 
-import { RoomQuickDetailSheet } from "./room-quick-detail-sheet";
+import { RoomRowActions } from "./room-row-actions";
 import {
   roomStatusConfig,
   roomTypeConfig,
@@ -31,8 +20,6 @@ interface RoomGridProps {
 
 export const RoomGrid = ({ data }: RoomGridProps) => {
   const navigate = useNavigate();
-  const [selectedRoom, setSelectedRoom] = useState<Room | null>(null);
-  const [isSheetOpen, setIsSheetOpen] = useState(false);
   const { groupedByFloor, sortedFloors } = useGroupedRooms(data);
 
   return (
@@ -53,16 +40,9 @@ export const RoomGrid = ({ data }: RoomGridProps) => {
 
               return (
                 <EntityListCard
-                  className={cn(
-                    "group relative overflow-hidden transition-all hover:shadow-md cursor-pointer",
-                    statusCfg.className,
-                  )}
-                  onClick={() => {
-                    setSelectedRoom(room);
-                    setIsSheetOpen(true);
-                  }}
+                  className="group relative overflow-hidden transition-all hover:shadow-md pt-0"
                   header={
-                    <CardHeader className="pb-0">
+                    <CardHeader className={cn("py-4", statusCfg.className)}>
                       <div className="flex items-start justify-between gap-2">
                         <div>
                           <h4 className="font-bold text-lg leading-none">
@@ -72,42 +52,12 @@ export const RoomGrid = ({ data }: RoomGridProps) => {
                             {typeCfg.label} • {room.area}m²
                           </p>
                         </div>
-                        <DropdownMenu>
-                          <DropdownMenuTrigger
-                            asChild
-                            onClick={(e) => e.stopPropagation()}
-                          >
-                            <Button
-                              variant="ghost"
-                              size="icon-sm"
-                              className="h-6 w-6 opacity-100 transition-opacity sm:opacity-0 sm:group-hover:opacity-100 data-[state=open]:opacity-100"
-                            >
-                              <MoreHorizontal className="h-4 w-4" />
-                            </Button>
-                          </DropdownMenuTrigger>
-                          <DropdownMenuContent
-                            align="end"
-                            onClick={(e) => e.stopPropagation()}
-                          >
-                            <DropdownMenuLabel>Thao tác</DropdownMenuLabel>
-                            <DropdownMenuSeparator />
-                            <DropdownMenuItem
-                              onClick={() =>
-                                navigate(routePathBuilders.roomDetail(room.id))
-                              }
-                            >
-                              Xem chi tiết phòng
-                            </DropdownMenuItem>
-                            <DropdownMenuItem>Lập hóa đơn</DropdownMenuItem>
-                            <DropdownMenuItem>Chốt điện nước</DropdownMenuItem>
-                          </DropdownMenuContent>
-                        </DropdownMenu>
                       </div>
                     </CardHeader>
                   }
                   content={
-                    <CardContent className="space-y-3 pt-3">
-                      <div className="mt-auto pt-2 flex flex-col gap-2">
+                    <CardContent className="space-y-3">
+                      <div className="mt-auto flex flex-col gap-2">
                         <div className="flex items-center gap-1.5 text-xs font-medium">
                           <User className="h-3.5 w-3.5 opacity-70" />
                           <span className="truncate opacity-90">
@@ -122,6 +72,11 @@ export const RoomGrid = ({ data }: RoomGridProps) => {
                         </div>
                       </div>
                     </CardContent>
+                  }
+                  footer={
+                    <CardFooter className="px-4 py-2 flex justify-end">
+                      <RoomRowActions room={room} side="top" />
+                    </CardFooter>
                   }
                 />
               );
@@ -138,13 +93,6 @@ export const RoomGrid = ({ data }: RoomGridProps) => {
             Thử thay đổi bộ lọc hoặc thêm phòng mới.
           </p>
         </div>
-      )}
-
-      {isSheetOpen && (
-        <RoomQuickDetailSheet
-          room={selectedRoom}
-          onClose={() => setIsSheetOpen(false)}
-        />
       )}
     </div>
   );

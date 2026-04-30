@@ -1,22 +1,14 @@
-import {
-  Calendar,
-  FileText,
-  User,
-  Home,
-  Landmark,
-  ChevronRight,
-} from "lucide-react";
+import { Calendar, FileText, User, Home, Landmark } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 import { EntityListCard } from "@/components/shared/cards";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { CardContent, CardFooter, CardHeader } from "@/components/ui/card";
-import { routePathBuilders } from "@/config/routes";
-import { cn } from "@/lib/cn";
+import { cn } from "@/libs/cn";
 import type { Contract } from "@/types/contract";
 import { formatCurrency } from "@/utils/currency";
 
+import { ContractRowActions } from "./contract-row-actions";
 import { contractStatusConfig } from "../domain/contract-display-config";
 
 interface ContractCardProps {
@@ -119,18 +111,7 @@ export const ContractCard = ({ contract }: ContractCardProps) => {
       }
       footer={
         <CardFooter className="px-4 py-2 flex justify-end">
-          <Button
-            type="button"
-            variant="ghost"
-            size="sm"
-            className="text-muted-foreground/70 hover:text-primary cursor-pointer"
-            onClick={() =>
-              navigate(routePathBuilders.contractDetail(contract.id))
-            }
-          >
-            Chi tiết hợp đồng
-            <ChevronRight className="ml-1 h-3 w-3" />
-          </Button>
+          <ContractRowActions contract={contract} side="top" />
         </CardFooter>
       }
     />

@@ -3,7 +3,7 @@ import { GripVertical } from "lucide-react";
 import { DataTableColumnHeader } from "@/components/shared/table";
 import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
-import { cn } from "@/lib/cn";
+import { cn } from "@/libs/cn";
 import type { Contract } from "@/types/contract";
 import { formatCurrency } from "@/utils/currency";
 

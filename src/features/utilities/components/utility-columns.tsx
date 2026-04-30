@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { routePathBuilders } from "@/config/routes";
-import { cn } from "@/lib/cn";
+import { cn } from "@/libs/cn";
 import type { Utility } from "@/types/utility";
 
 import {
@@ -130,7 +130,7 @@ export const utilityColumns: ColumnDef<Utility>[] = [
     id: "actions",
     header: "",
     cell: ({ row }) => (
-      <Button variant="ghost" size="icon-sm" asChild>
+      <Button variant="outline" size="icon-sm" asChild>
         <Link to={routePathBuilders.utilityDetail(row.original.id)}>
           <Eye className="h-4 w-4" />
         </Link>

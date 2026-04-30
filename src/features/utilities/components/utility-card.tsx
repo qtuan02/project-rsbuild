@@ -13,7 +13,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { routePathBuilders } from "@/config/routes";
-import { cn } from "@/lib/cn";
+import { cn } from "@/libs/cn";
 import type { Utility } from "@/types/utility";
 
 import {

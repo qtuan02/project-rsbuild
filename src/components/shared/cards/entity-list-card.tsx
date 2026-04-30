@@ -1,5 +1,5 @@
 import { Card } from "@/components/ui/card";
-import { cn } from "@/lib/cn";
+import { cn } from "@/libs/cn";
 
 import type { ReactNode } from "react";
 

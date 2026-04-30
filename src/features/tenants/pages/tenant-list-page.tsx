@@ -19,7 +19,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent } from "@/components/ui/tabs";
-import { cn } from "@/lib/cn";
+import { cn } from "@/libs/cn";
 
 import { AddTenantDialog } from "../components/add-tenant-dialog";
 import { TenantCard } from "../components/tenant-card";

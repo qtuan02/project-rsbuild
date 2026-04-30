@@ -10,7 +10,7 @@ import {
 } from "react-hook-form";
 
 import { Label } from "@/components/ui/label";
-import { cn } from "@/lib/cn";
+import { cn } from "@/libs/cn";
 
 import type * as LabelPrimitive from "@radix-ui/react-label";
 

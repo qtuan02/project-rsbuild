@@ -1,6 +1,6 @@
 import { tenantStatusBadgeConfig } from "@/components/shared/badges/status-configs";
 import { Badge } from "@/components/ui/badge";
-import { cn } from "@/lib/cn";
+import { cn } from "@/libs/cn";
 import type { TenantStatus } from "@/types/tenant";
 
 type BadgeComponentProps = Parameters<typeof Badge>[0];
