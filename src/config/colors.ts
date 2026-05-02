@@ -56,10 +56,3 @@ export function getStatusClassName(status: keyof typeof STATUS_COLORS): string {
   const colors = STATUS_COLORS[status];
   return `${colors.bg} ${colors.text} ${colors.border}`;
 }
-
-export function getStatusColor(
-  status: keyof typeof STATUS_COLORS,
-  part: "bg" | "text" | "border" | "accent",
-): string {
-  return STATUS_COLORS[status][part];
-}
