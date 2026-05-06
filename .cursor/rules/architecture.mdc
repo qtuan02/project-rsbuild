@@ -46,7 +46,7 @@ shared → no feature-specific imports
 
 ## Cross-Feature Rule
 
-- Import across features only via `features/<name>/index.ts`
+- Import across features only via `features/<name>`
 - Never import `@/features/x/data/*` or `@/features/x/domain/*` directly
 - Shared logic used in 2+ features → move to `lib`, `types`, or `components/shared`
 

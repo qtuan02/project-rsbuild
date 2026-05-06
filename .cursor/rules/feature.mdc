@@ -22,7 +22,6 @@ features/<name>/
   domain/    # needed if business rules exist
   data/      # needed if API calls exist
   components/ # needed if feature-specific UI exists
-  index.ts   # add when other features need to import from here
 ```
 
 > Not every folder is required. Simple features may only need `pages/` + `components/`.

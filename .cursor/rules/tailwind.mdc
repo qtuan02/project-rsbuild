@@ -6,7 +6,7 @@ globs: src/**/*.css, src/**/*.tsx, src/**/*.jsx, postcss.config.mjs
 # Tailwind CSS Rules
 
 ## Tailwind v4 Setup
-- Use Tailwind v4 CSS-first conventions already defined in `src/styles/globals.css`.
+- Use Tailwind v4 CSS-first conventions already defined in `src/globals.css`.
 - Keep design tokens and theme variables centralized in `globals.css`.
 - Keep PostCSS integration consistent with `@tailwindcss/postcss`.
 

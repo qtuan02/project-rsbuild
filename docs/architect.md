@@ -103,10 +103,6 @@ src/
   - Chỉ đưa vào shared khi pattern dùng lại từ 2 feature trở lên.
   - Ví dụ: table toolkit, filter toolbar, panels, dialog chuẩn, back-button chuẩn.
 
-- `features/<name>/index.ts` là public entry cho cross-feature usage.
-  - Feature khác chỉ import qua entry này.
-  - Không import thẳng nội bộ như `@/features/x/data/*` hoặc `@/features/x/domain/*` nếu không thật sự bắt buộc.
-
 - `config/routes.ts` là source-of-truth cho route paths/builders.
   - Không hardcode path string trong feature (`"/tenants/123"`).
   - Luôn dùng `routePathBuilders.*` để an toàn khi đổi route.
