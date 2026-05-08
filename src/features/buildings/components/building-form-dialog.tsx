@@ -45,7 +45,7 @@ export const BuildingFormDialog = ({ onClose }: BuildingFormDialogProps) => {
     },
   });
 
-  const onSubmit = (data: BuildingFormValues) => {
+  const handleSubmit = (data: BuildingFormValues) => {
     const payload = {
       ...data,
       totalFloors: Number.parseInt(data.totalFloors, 10),
@@ -65,7 +65,7 @@ export const BuildingFormDialog = ({ onClose }: BuildingFormDialogProps) => {
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)}>
+          <form onSubmit={form.handleSubmit(handleSubmit)}>
             <div className="grid gap-4 py-4">
               <FormField
                 control={form.control}

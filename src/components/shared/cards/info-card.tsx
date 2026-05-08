@@ -31,15 +31,19 @@ export const InfoCard = ({
 interface InfoRowProps {
   label: string;
   value: string | number | ReactNode;
-  highlight?: boolean;
+  isHighlighted?: boolean;
 }
 
-export const InfoRow = ({ label, value, highlight = false }: InfoRowProps) => {
+export const InfoRow = ({
+  label,
+  value,
+  isHighlighted = false,
+}: InfoRowProps) => {
   return (
     <div className="flex items-center justify-between">
       <span className="text-sm text-muted-foreground">{label}</span>
       <span
-        className={`text-sm font-medium ${highlight ? "text-foreground font-semibold" : "text-foreground"}`}
+        className={`text-sm font-medium ${isHighlighted ? "text-foreground font-semibold" : "text-foreground"}`}
       >
         {value}
       </span>

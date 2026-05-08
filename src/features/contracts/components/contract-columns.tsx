@@ -12,7 +12,7 @@ import { contractStatusConfig } from "../domain/contract-display-config";
 
 import type { ColumnDef } from "@tanstack/react-table";
 
-export const columns: ColumnDef<Contract>[] = [
+export const contractColumns: ColumnDef<Contract>[] = [
   {
     id: "drag-handle",
     header: "",

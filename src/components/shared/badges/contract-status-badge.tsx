@@ -7,12 +7,12 @@ type BadgeComponentProps = Parameters<typeof Badge>[0];
 
 interface ContractStatusBadgeProps extends BadgeComponentProps {
   status: ContractStatus;
-  compact?: boolean;
+  isCompact?: boolean;
 }
 
 export const ContractStatusBadge = ({
   status,
-  compact = false,
+  isCompact = false,
   className,
   ...props
 }: ContractStatusBadgeProps) => {
@@ -21,7 +21,7 @@ export const ContractStatusBadge = ({
   return (
     <Badge
       variant="outline"
-      className={cn(config.className, compact && "text-xs", className)}
+      className={cn(config.className, isCompact && "text-xs", className)}
       {...props}
     >
       {config.label}

@@ -5,22 +5,32 @@ import type {
   UseQueryOptions,
 } from "@tanstack/react-query";
 
-export interface TQueryKey<TKey, TListQuery = any, TDetailQuery = string> {
+export interface QueryKeyDefinition<
+  TKey,
+  TListQuery = unknown,
+  TDetailQuery = string,
+> {
   all: readonly [TKey];
-  lists: () => readonly [...TQueryKey<TKey>["all"], "list"];
+  lists: () => readonly [...QueryKeyDefinition<TKey>["all"], "list"];
   list: (
     query?: TListQuery,
   ) =>
-    | readonly [...ReturnType<TQueryKey<TKey>["lists"]>]
-    | readonly [...ReturnType<TQueryKey<TKey>["lists"]>, { query: TListQuery }];
-  details: () => readonly [...TQueryKey<TKey>["all"], "detail"];
+    | readonly [...ReturnType<QueryKeyDefinition<TKey>["lists"]>]
+    | readonly [
+        ...ReturnType<QueryKeyDefinition<TKey>["lists"]>,
+        { query: TListQuery },
+      ];
+  details: () => readonly [...QueryKeyDefinition<TKey>["all"], "detail"];
   detail: (
     id: TDetailQuery,
     query?: TListQuery,
   ) =>
-    | readonly [...ReturnType<TQueryKey<TKey>["details"]>, TDetailQuery]
     | readonly [
-        ...ReturnType<TQueryKey<TKey>["details"]>,
+        ...ReturnType<QueryKeyDefinition<TKey>["details"]>,
+        TDetailQuery,
+      ]
+    | readonly [
+        ...ReturnType<QueryKeyDefinition<TKey>["details"]>,
         TDetailQuery,
         { query: TListQuery },
       ];
@@ -60,12 +70,16 @@ export type UseMutationOptionsWrapper<
 
 export const queryKeysFactory = <
   T,
-  TListQueryType = any,
+  TListQueryType = unknown,
   TDetailQueryType = string,
 >(
   globalKey: T,
 ) => {
-  const queryKeyFactory: TQueryKey<T, TListQueryType, TDetailQueryType> = {
+  const queryKeyFactory: QueryKeyDefinition<
+    T,
+    TListQueryType,
+    TDetailQueryType
+  > = {
     all: [globalKey],
     lists: () => [...queryKeyFactory.all, "list"],
     list: (query?: TListQueryType) =>

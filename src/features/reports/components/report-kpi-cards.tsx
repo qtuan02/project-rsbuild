@@ -2,19 +2,19 @@ import { TrendingDown, TrendingUp, Users, Zap } from "lucide-react";
 
 import { SummaryCard } from "@/components/shared/cards/summary-card";
 
-interface ReportKPICardsProps {
+interface ReportKpiCardsProps {
   totalRevenue: number;
   totalExpenses: number;
   profit: number;
   avgOccupancy: number;
 }
 
-export const ReportKPICards = ({
+export const ReportKpiCards = ({
   totalRevenue,
   totalExpenses,
   profit,
   avgOccupancy,
-}: ReportKPICardsProps) => {
+}: ReportKpiCardsProps) => {
   const formatCurrency = (value: number) => {
     return new Intl.NumberFormat("vi-VN", {
       style: "currency",

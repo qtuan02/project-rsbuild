@@ -6,12 +6,17 @@ import { Separator } from "@/components/ui/separator";
 import { useSidebar } from "@/components/ui/sidebar";
 import { resolveRouteMetadata } from "@/config/routes";
 import { cn } from "@/libs/cn";
+import type { BuildingOption } from "@/types/building";
 
 import { BuildingSelector } from "./building-selector";
 import { NotificationPanel } from "./notification-panel";
 import { SearchDialog } from "./search-dialog";
 
-export const AppHeader = () => {
+interface AppHeaderProps {
+  buildingOptions: BuildingOption[];
+}
+
+export const AppHeader = ({ buildingOptions }: AppHeaderProps) => {
   const location = useLocation();
   const metadata = resolveRouteMetadata(location.pathname);
   const { state, toggleSidebar } = useSidebar();
@@ -58,7 +63,7 @@ export const AppHeader = () => {
 
         {/* Building selector */}
         <div className="border rounded-lg">
-          <BuildingSelector />
+          <BuildingSelector options={buildingOptions} />
         </div>
 
         <Separator orientation="vertical" className="h-5 self-center!" />

@@ -1,12 +1,10 @@
-import { mockBuildings } from "@/features/buildings/data/buildings";
+import { getBuildingById } from "@/features/buildings/data/building.repository";
 
-import { mockExpenses } from "../data/expense.mock";
+import { getExpenseById } from "../data/expense.repository";
 
 export const useExpenseDetail = (expenseId: string) => {
-  const expense = mockExpenses.find((item) => item.id === expenseId);
-  const building = mockBuildings.find(
-    (item) => item.id === expense?.buildingId,
-  );
+  const expense = getExpenseById(expenseId);
+  const building = expense ? getBuildingById(expense.buildingId) : undefined;
 
   return {
     expense,

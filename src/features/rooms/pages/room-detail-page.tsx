@@ -114,7 +114,7 @@ export const RoomDetailPage = ({ roomId, onBack }: RoomDetailPageProps) => {
             <InfoRow
               label="Giá thuê/tháng"
               value={formatCurrency(room.price)}
-              highlight
+              isHighlighted
             />
             <InfoRow label="Cập nhật lần cuối" value={room.lastUpdated} />
           </InfoCard>
@@ -122,7 +122,7 @@ export const RoomDetailPage = ({ roomId, onBack }: RoomDetailPageProps) => {
           <InfoCard title="Thông tin khách thuê">
             {room.tenant ? (
               <>
-                <InfoRow label="Tên khách" value={room.tenant} highlight />
+                <InfoRow label="Tên khách" value={room.tenant} isHighlighted />
                 <Button variant="outline" size="sm" className="w-full mt-3">
                   Xem hồ sơ khách thuê
                 </Button>

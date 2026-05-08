@@ -21,11 +21,12 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
-import { getTenants } from "@/features/tenants/data/tenant.repository";
 import type { Invoice, InvoiceStatus } from "@/types/invoice";
+import type { Tenant } from "@/types/tenant";
 
 interface InvoiceFormProps {
   invoice?: Invoice;
+  tenantOptions?: Tenant[];
   onSubmit: (data: Partial<Invoice>) => void;
   onCancel?: () => void;
   isLoading?: boolean;
@@ -57,11 +58,11 @@ type InvoiceFormValues = z.infer<typeof invoiceFormSchema>;
 
 export const InvoiceForm = ({
   invoice,
+  tenantOptions = [],
   onSubmit,
   onCancel,
   isLoading = false,
 }: InvoiceFormProps) => {
-  const tenants = getTenants();
   const form = useForm<InvoiceFormValues>({
     resolver: zodResolver(invoiceFormSchema),
     defaultValues: {
@@ -87,10 +88,12 @@ export const InvoiceForm = ({
     name: "tenant",
   });
   const selectedStatus = useWatch({ control: form.control, name: "status" });
-  const selectedTenant = tenants.find((t) => t.name === selectedTenantName);
+  const selectedTenant = tenantOptions.find(
+    (t) => t.name === selectedTenantName,
+  );
 
   const handleTenantChange = (tenantName: string) => {
-    const tenant = tenants.find((t) => t.name === tenantName);
+    const tenant = tenantOptions.find((t) => t.name === tenantName);
     form.setValue("tenant", tenantName);
     form.setValue("room", tenant?.room ?? "");
     form.setValue("floor", String(tenant?.floor ?? 0));
@@ -159,7 +162,7 @@ export const InvoiceForm = ({
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        {tenants.map((tenant) => (
+                        {tenantOptions.map((tenant) => (
                           <SelectItem key={tenant.id} value={tenant.name}>
                             {tenant.name} - {tenant.room}
                           </SelectItem>

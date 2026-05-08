@@ -12,3 +12,8 @@ export interface Building {
   occupancyRate?: number;
   description?: string;
 }
+
+export interface BuildingOption {
+  id: string;
+  name: string;
+}

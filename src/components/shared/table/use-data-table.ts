@@ -14,7 +14,7 @@ import {
 } from "@tanstack/react-table";
 import * as React from "react";
 
-import { DEFAULT_PAGINATION_OPTIONS } from "../pagination/pagination-contracts";
+import { defaultPaginationPageSize } from "../pagination/pagination-contracts";
 
 interface UseDataTableOptions<TData, TValue> {
   data: TData[];
@@ -27,7 +27,7 @@ export const useDataTable = <TData, TValue>({
   data,
   columns,
   getRowId,
-  initialPageSize = DEFAULT_PAGINATION_OPTIONS,
+  initialPageSize = defaultPaginationPageSize,
 }: UseDataTableOptions<TData, TValue>) => {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(

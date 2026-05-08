@@ -24,7 +24,7 @@ export const useContractList = (): UseContractListResult => {
 
   const filterableColumns = React.useMemo(() => contractFilterColumns, []);
 
-  const onRowReorder = React.useCallback(
+  const handleRowReorder = React.useCallback(
     (oldIndex: number, newIndex: number) => {
       setData((prev) => {
         const result = Array.from(prev);
@@ -40,6 +40,6 @@ export const useContractList = (): UseContractListResult => {
     data,
     searchableColumns,
     filterableColumns,
-    onRowReorder,
+    onRowReorder: handleRowReorder,
   };
 };

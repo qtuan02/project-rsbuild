@@ -1,7 +1,7 @@
-import { mockBuildings } from "../data/buildings.mock";
+import { getBuildingById } from "../data/building.repository";
 
 export const useBuildingDetail = (buildingId: string) => {
-  const building = mockBuildings.find((item) => item.id === buildingId);
+  const building = getBuildingById(buildingId);
 
   return {
     building,

@@ -52,7 +52,7 @@ export const SupplierBillDetailPage = ({
         <InfoRow
           label="Số tiền"
           value={formatCurrency(bill.totalAmount)}
-          highlight
+          isHighlighted
         />
         <InfoRow label="Ngày thanh toán" value={bill.paymentDate || "---"} />
       </InfoCard>

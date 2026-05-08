@@ -45,7 +45,7 @@ export const LoginPage = () => {
     resolver: zodResolver(loginSchema),
   });
 
-  const onSubmit = async (data: LoginFormValues) => {
+  const handleSubmit = async (data: LoginFormValues) => {
     setIsLoading(true);
     setTimeout(() => {
       login({
@@ -68,7 +68,7 @@ export const LoginPage = () => {
         </CardDescription>
       </CardHeader>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)}>
+        <form onSubmit={form.handleSubmit(handleSubmit)}>
           <CardContent className="space-y-4 pb-4">
             <FormField
               control={form.control}

@@ -45,7 +45,7 @@ export const ExpenseDetailPage = ({ expenseId }: ExpenseDetailPageProps) => {
         <InfoRow
           label="Số tiền"
           value={formatCurrency(expense.amount)}
-          highlight
+          isHighlighted
         />
         <InfoRow label="Mô tả" value={expense.description || "---"} />
       </InfoCard>

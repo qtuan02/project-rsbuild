@@ -1,14 +1,15 @@
-import type { ReportFilterParams } from "./reports-filter-params";
-import type { ReportData } from "../data/reports.mock";
+import type { ReportData } from "@/types/reports";
 
-export const STATUS_OPTIONS = [
+import type { ReportFilterParams } from "./reports-filter-params";
+
+export const reportStatusOptions = [
   { value: "all", label: "Tất cả trạng thái" },
   { value: "good", label: "Tốt" },
   { value: "warning", label: "Cảnh báo" },
   { value: "critical", label: "Nguy hiểm" },
 ];
 
-const FLOOR_SLUG_TO_LABEL: Record<string, string> = {
+const floorSlugToLabel: Record<string, string> = {
   "floor-1": "Tầng 1",
   "floor-2": "Tầng 2",
   "floor-3": "Tầng 3",
@@ -43,7 +44,7 @@ export const filterReports = (
     if (
       filters.floor &&
       filters.floor !== "all" &&
-      report.floor !== FLOOR_SLUG_TO_LABEL[filters.floor]
+      report.floor !== floorSlugToLabel[filters.floor]
     ) {
       return false;
     }

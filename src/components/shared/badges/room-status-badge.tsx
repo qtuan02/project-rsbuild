@@ -7,12 +7,12 @@ type BadgeComponentProps = Parameters<typeof Badge>[0];
 
 interface RoomStatusBadgeProps extends BadgeComponentProps {
   status: RoomStatus;
-  compact?: boolean;
+  isCompact?: boolean;
 }
 
 export const RoomStatusBadge = ({
   status,
-  compact = false,
+  isCompact = false,
   className,
   ...props
 }: RoomStatusBadgeProps) => {
@@ -22,10 +22,10 @@ export const RoomStatusBadge = ({
   return (
     <Badge
       variant={config.variant}
-      className={cn(config.className, compact && "gap-1", className)}
+      className={cn(config.className, isCompact && "gap-1", className)}
       {...props}
     >
-      {!compact && <Icon className="h-3 w-3" />}
+      {!isCompact && <Icon className="h-3 w-3" />}
       {config.label}
     </Badge>
   );

@@ -6,7 +6,7 @@ export interface ChecklistItem {
   id: string;
   title: string;
   description?: string;
-  completed: boolean;
+  isCompleted: boolean;
 }
 
 interface LiquidationChecklistProps {
@@ -20,7 +20,7 @@ export const LiquidationChecklist = ({
   onItemToggle,
   title = "Danh sách kiểm tra",
 }: LiquidationChecklistProps) => {
-  const completedCount = items.filter((item) => item.completed).length;
+  const completedCount = items.filter((item) => item.isCompleted).length;
   const progress = (completedCount / items.length) * 100;
 
   return (
@@ -48,14 +48,14 @@ export const LiquidationChecklist = ({
             <div
               key={item.id}
               className={`flex items-start gap-3 rounded-lg border p-3 transition-colors ${
-                item.completed ? "bg-green-50" : "hover:bg-muted/50"
+                item.isCompleted ? "bg-green-50" : "hover:bg-muted/50"
               }`}
             >
               <button
                 onClick={() => onItemToggle(item.id)}
                 className="mt-0.5 flex-shrink-0"
               >
-                {item.completed ? (
+                {item.isCompleted ? (
                   <CheckCircle2 className="h-5 w-5 text-green-600" />
                 ) : (
                   <Circle className="h-5 w-5 text-muted-foreground" />
@@ -64,7 +64,7 @@ export const LiquidationChecklist = ({
               <div className="flex-1 min-w-0">
                 <p
                   className={`font-medium text-sm ${
-                    item.completed ? "line-through text-muted-foreground" : ""
+                    item.isCompleted ? "line-through text-muted-foreground" : ""
                   }`}
                 >
                   {item.title}

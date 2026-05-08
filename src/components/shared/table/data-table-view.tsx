@@ -42,7 +42,7 @@ interface DataTableViewProps<TData, TValue> {
   emptyDescription: string;
   emptyIcon?: LucideIcon;
   resetFilters?: () => void;
-  enableRowDrag?: boolean;
+  isRowDragEnabled?: boolean;
   onRowReorder?: (oldIndex: number, newIndex: number) => void;
 }
 
@@ -107,7 +107,7 @@ export const DataTableView = <TData, TValue>({
   emptyDescription,
   emptyIcon,
   resetFilters,
-  enableRowDrag = false,
+  isRowDragEnabled = false,
   onRowReorder,
 }: DataTableViewProps<TData, TValue>) => {
   const rows = table.getRowModel().rows;
@@ -119,7 +119,7 @@ export const DataTableView = <TData, TValue>({
 
   const handleDragEnd = React.useCallback(
     (event: DragEndEvent) => {
-      if (!enableRowDrag || !onRowReorder) {
+      if (!isRowDragEnabled || !onRowReorder) {
         return;
       }
 
@@ -136,7 +136,7 @@ export const DataTableView = <TData, TValue>({
         onRowReorder(oldIndex, newIndex);
       }
     },
-    [enableRowDrag, onRowReorder, table],
+    [isRowDragEnabled, onRowReorder, table],
   );
 
   if (!rows.length) {
@@ -182,7 +182,7 @@ export const DataTableView = <TData, TValue>({
           ))}
         </TableHeader>
         <TableBody>
-          {enableRowDrag ? (
+          {isRowDragEnabled ? (
             <SortableContext
               items={rows.map((row) => row.id)}
               strategy={verticalListSortingStrategy}
@@ -217,7 +217,7 @@ export const DataTableView = <TData, TValue>({
     </div>
   );
 
-  if (!enableRowDrag) {
+  if (!isRowDragEnabled) {
     return tableContent;
   }
 

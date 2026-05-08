@@ -9,25 +9,25 @@ const initialChecklistItems: ChecklistItem[] = [
     id: "asset-check",
     title: "Kiểm tra tài sản",
     description: "Kiểm tra điều kiện phòng, nội thất và trang thiết bị",
-    completed: false,
+    isCompleted: false,
   },
   {
     id: "settle-utilities",
     title: "Thanh toán tiện ích",
     description: "Thanh toán hóa đơn điện nước còn nợ",
-    completed: false,
+    isCompleted: false,
   },
   {
     id: "collect-keys",
     title: "Tập hợp chìa khóa",
     description: "Thu hồi chìa khóa phòng từ khách",
-    completed: false,
+    isCompleted: false,
   },
   {
     id: "final-inspection",
     title: "Kiểm tra cuối cùng",
     description: "Xác nhận trạng thái phòng với khách",
-    completed: false,
+    isCompleted: false,
   },
 ];
 
@@ -40,7 +40,7 @@ export const useContractLiquidation = (contractId: string) => {
 
   const checklistCompletion = useMemo(
     () =>
-      (checklistItems.filter((item) => item.completed).length /
+      (checklistItems.filter((item) => item.isCompleted).length /
         checklistItems.length) *
       100,
     [checklistItems],
@@ -60,29 +60,29 @@ export const useContractLiquidation = (contractId: string) => {
       id: "check-assets",
       title: "Kiểm tra tài sản",
       description: "Kiểm tra toàn bộ tài sản và điều kiện phòng",
-      completed: currentStep > 1,
-      active: currentStep === 1,
+      isCompleted: currentStep > 1,
+      isActive: currentStep === 1,
     },
     {
       id: "settle-fees",
       title: "Thanh toán phí",
       description: "Tính toán và thanh toán các khoản phí",
-      completed: currentStep > 2,
-      active: currentStep === 2,
+      isCompleted: currentStep > 2,
+      isActive: currentStep === 2,
     },
     {
       id: "finalize",
       title: "Hoàn tất",
       description: "Xác nhận thanh lý và hoàn trả tiền đặt cọc",
-      completed: currentStep > 3,
-      active: currentStep === 3,
+      isCompleted: currentStep > 3,
+      isActive: currentStep === 3,
     },
   ];
 
   const toggleChecklistItem = (itemId: string) => {
     setChecklistItems((prev) =>
       prev.map((item) =>
-        item.id === itemId ? { ...item, completed: !item.completed } : item,
+        item.id === itemId ? { ...item, isCompleted: !item.isCompleted } : item,
       ),
     );
   };

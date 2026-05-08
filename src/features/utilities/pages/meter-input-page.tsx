@@ -23,13 +23,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-const mockRooms = [
-  { id: "1", name: "101", lastElectricity: 1250, lastWater: 450 },
-  { id: "2", name: "102", lastElectricity: 3400, lastWater: 890 },
-  { id: "3", name: "103", lastElectricity: 2100, lastWater: 560 },
-  { id: "4", name: "201", lastElectricity: 1560, lastWater: 320 },
-  { id: "5", name: "202", lastElectricity: 4200, lastWater: 1100 },
-];
+import { mockMeterInputRooms } from "../data/meter-input.mock";
 
 const meterRowSchema = z.object({
   id: z.string(),
@@ -50,7 +44,7 @@ export const MeterInputPage = () => {
   const form = useForm<MeterInputValues>({
     resolver: zodResolver(meterInputSchema),
     defaultValues: {
-      rows: mockRooms.map((room) => ({
+      rows: mockMeterInputRooms.map((room) => ({
         ...room,
         newElectricity: "",
         newWater: "",
@@ -77,7 +71,7 @@ export const MeterInputPage = () => {
             <p className="text-muted-foreground">Kỳ hóa đơn: Tháng 10/2023</p>
           </div>
           <div className="flex gap-2">
-            <Button variant="outline" type="submit">
+            <Button type="submit" variant="outline">
               <Calculator className="mr-2 h-4 w-4" />
               Tính toán hóa đơn
             </Button>

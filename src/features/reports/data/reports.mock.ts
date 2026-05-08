@@ -1,16 +1,8 @@
-export interface ReportData {
-  month: string;
-  building: string;
-  floor: string;
-  revenue: number;
-  expenses: number;
-  profit: number;
-  occupancyRate: number;
-  waterUsage: number;
-  electricityUsage: number;
-  overdueTenants: number;
-  totalTenants: number;
-}
+import type {
+  OverdueDebt,
+  ProfitLossSummary,
+  ReportData,
+} from "@/types/reports";
 
 export const mockReportData: ReportData[] = [
   // Tòa b1 - Trọ Sinh Viên Xanh
@@ -96,15 +88,6 @@ export const mockReportData: ReportData[] = [
   })),
 ];
 
-export interface OverdueDebt {
-  id: string;
-  tenant: string;
-  room: string;
-  amount: number;
-  daysOverdue: number;
-  reason: string;
-}
-
 export const mockOverdueDebts: OverdueDebt[] = Array.from({ length: 10 }).map(
   (_, i) => ({
     id: `OD-${i + 1}`,
@@ -116,7 +99,7 @@ export const mockOverdueDebts: OverdueDebt[] = Array.from({ length: 10 }).map(
   }),
 );
 
-export const getPLSummary = () => ({
+export const getProfitLossSummarySnapshot = (): ProfitLossSummary => ({
   totalRevenue: 545000000,
   totalExpenses: 123000000,
   totalProfit: 422000000,

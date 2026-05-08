@@ -4,12 +4,12 @@ import { toast } from "sonner";
 
 import { InfoRow } from "@/components/shared/cards/info-card";
 import { PageBackButton } from "@/components/shared/navigation";
+import { ContractLifecycleStepper } from "@/components/shared/stepper/contract-lifecycle-stepper";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { formatCurrency } from "@/utils/currency";
 
-import { ContractLifecycleStepper } from "../components/contract-lifecycle-stepper";
 import { LiquidationChecklist } from "../components/liquidation-checklist";
 import { LiquidationSummaryCard } from "../components/liquidation-summary-card";
 import { useContractLiquidation } from "../hooks/use-contract-liquidation";

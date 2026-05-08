@@ -16,7 +16,7 @@ import {
 import type { ColumnDef } from "@tanstack/react-table";
 
 // ─── Columns ─────────────────────────────────────────────────────────
-export const columns: ColumnDef<Room>[] = [
+export const roomColumns: ColumnDef<Room>[] = [
   {
     id: "drag-handle",
     header: "",

@@ -10,8 +10,7 @@ import {
   CardFooter,
 } from "@/components/ui/card";
 import { cn } from "@/libs/cn";
-
-import type { NotificationTemplate } from "../data/communications.mock";
+import type { NotificationTemplate } from "@/types/communications";
 
 interface TemplateListProps {
   templates: NotificationTemplate[];

@@ -28,13 +28,13 @@ export const RevenueChart = () => {
       <BarChart data={data}>
         <XAxis
           dataKey="name"
-          stroke="#888888"
+          stroke="hsl(var(--muted-foreground))"
           fontSize={12}
           tickLine={false}
           axisLine={false}
         />
         <YAxis
-          stroke="#888888"
+          stroke="hsl(var(--muted-foreground))"
           fontSize={12}
           tickLine={false}
           axisLine={false}
@@ -44,7 +44,7 @@ export const RevenueChart = () => {
           cursor={{ fill: "rgba(0, 0, 0, 0.05)" }}
           contentStyle={{
             borderRadius: "8px",
-            border: "1px solid #e2e8f0",
+            border: "1px solid hsl(var(--border))",
             boxShadow: "0 4px 6px -1px rgb(0 0 0 / 0.1)",
           }}
         />

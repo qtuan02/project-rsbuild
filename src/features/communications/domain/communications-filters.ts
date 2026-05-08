@@ -1,4 +1,4 @@
-import type { SendLog } from "../data/communications.mock";
+import type { SendLog } from "@/types/communications";
 
 export interface CommunicationsLogFilterState {
   searchTenant: string;

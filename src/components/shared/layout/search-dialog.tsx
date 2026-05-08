@@ -27,7 +27,7 @@ interface QuickLink {
 }
 
 // --- Mock data ---
-const MOCK_RESULTS: readonly SearchResult[] = [
+const mockResults: readonly SearchResult[] = [
   {
     id: "1",
     title: "Phòng 101 – Tòa A",
@@ -65,7 +65,7 @@ const MOCK_RESULTS: readonly SearchResult[] = [
   },
 ] as const;
 
-const QUICK_LINKS: readonly QuickLink[] = [
+const quickLinks: readonly QuickLink[] = [
   { label: "Phòng trọ", icon: Building2 },
   { label: "Khách thuê", icon: Users },
   { label: "Hợp đồng", icon: FileText },
@@ -75,7 +75,7 @@ const QUICK_LINKS: readonly QuickLink[] = [
 // --- Helpers ---
 const filterResults = (query: string): SearchResult[] => {
   const lowerQuery = query.toLowerCase();
-  return MOCK_RESULTS.filter(
+  return mockResults.filter(
     (r) =>
       r.title.toLowerCase().includes(lowerQuery) ||
       r.subtitle.toLowerCase().includes(lowerQuery) ||
@@ -170,7 +170,7 @@ export const SearchDialog = () => {
                 Truy cập nhanh
               </p>
               <div className="grid grid-cols-2 gap-1">
-                {QUICK_LINKS.map((link) => (
+                {quickLinks.map((link) => (
                   <button
                     key={link.label}
                     type="button"

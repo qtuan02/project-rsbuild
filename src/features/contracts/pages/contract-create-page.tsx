@@ -5,6 +5,7 @@ import { useForm, useWatch } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import * as z from "zod";
 
+import { ContractLifecycleStepper } from "@/components/shared/stepper/contract-lifecycle-stepper";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -30,8 +31,6 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { routes } from "@/config/routes";
-
-import { ContractLifecycleStepper } from "../components/contract-lifecycle-stepper";
 
 const contractCreateSchema = z.object({
   buildingId: z.string().min(1, "Vui lòng chọn tòa nhà"),
@@ -82,32 +81,32 @@ export const ContractCreatePage = () => {
     {
       id: "room",
       title: "Chọn phòng",
-      completed: step > 0,
-      active: step === 0,
+      isCompleted: step > 0,
+      isActive: step === 0,
     },
     {
       id: "tenant",
       title: "Khách thuê",
-      completed: step > 1,
-      active: step === 1,
+      isCompleted: step > 1,
+      isActive: step === 1,
     },
     {
       id: "terms",
       title: "Điều khoản",
-      completed: step > 2,
-      active: step === 2,
+      isCompleted: step > 2,
+      isActive: step === 2,
     },
     {
       id: "preview",
       title: "Xác nhận",
-      completed: step > 3,
-      active: step === 3,
+      isCompleted: step > 3,
+      isActive: step === 3,
     },
   ];
 
   const nextStep = () => setStep((s) => Math.min(s + 1, 3));
   const prevStep = () => setStep((s) => Math.max(s - 1, 0));
-  const onSubmit = () => navigate(routes.contracts);
+  const handleSubmit = () => navigate(routes.contracts);
 
   return (
     <div className="space-y-6">
@@ -126,7 +125,10 @@ export const ContractCreatePage = () => {
         </Card>
 
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+          <form
+            onSubmit={form.handleSubmit(handleSubmit)}
+            className="space-y-4"
+          >
             {step === 0 && (
               <Card>
                 <CardHeader>
@@ -342,6 +344,7 @@ export const ContractCreatePage = () => {
 
             <div className="flex justify-between mt-6">
               <Button
+                type="button"
                 variant="outline"
                 onClick={prevStep}
                 disabled={step === 0}

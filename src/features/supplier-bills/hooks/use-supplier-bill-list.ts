@@ -2,17 +2,18 @@ import { useMemo } from "react";
 
 import { useBuildingStore } from "@/stores/building.store";
 
-import { mockSupplierBills } from "../data/supplier-bills.mock";
+import { getSupplierBills } from "../data/supplier-bill.repository";
 
 export const useSupplierBillList = () => {
   const { selectedBuildingId } = useBuildingStore();
+  const billsSource = useMemo(() => getSupplierBills(), []);
 
   const bills = useMemo(
     () =>
-      mockSupplierBills.filter(
+      billsSource.filter(
         (bill) => !selectedBuildingId || bill.buildingId === selectedBuildingId,
       ),
-    [selectedBuildingId],
+    [billsSource, selectedBuildingId],
   );
 
   const totals = useMemo(

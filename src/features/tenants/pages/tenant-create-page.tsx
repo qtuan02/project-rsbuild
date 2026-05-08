@@ -79,7 +79,7 @@ export const TenantCreatePage = () => {
     }, 2000);
   };
 
-  const onSubmit = () => {
+  const handleSubmit = () => {
     navigate(routes.tenants);
   };
 
@@ -100,7 +100,7 @@ export const TenantCreatePage = () => {
       </div>
 
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-6">
+        <form onSubmit={form.handleSubmit(handleSubmit)} className="grid gap-6">
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">

@@ -1,4 +1,4 @@
-import { getStatusClassName, TYPE_COLORS } from "@/config/colors";
+import { getStatusClassName, utilityTypeColors } from "@/config/colors";
 import type { UtilityStatus, UtilityType } from "@/types/utility";
 
 interface StatusConfig {
@@ -37,16 +37,16 @@ export const utilityTypeConfig: Record<UtilityType, TypeConfig> = {
   electricity: {
     label: "Điện",
     value: "electricity",
-    color: TYPE_COLORS.electricity.text,
-    bgColor: TYPE_COLORS.electricity.bg,
-    accentColor: TYPE_COLORS.electricity.accent,
+    color: utilityTypeColors.electricity.text,
+    bgColor: utilityTypeColors.electricity.bg,
+    accentColor: utilityTypeColors.electricity.accent,
   },
   water: {
     label: "Nước",
     value: "water",
-    color: TYPE_COLORS.water.text,
-    bgColor: TYPE_COLORS.water.bg,
-    accentColor: TYPE_COLORS.water.accent,
+    color: utilityTypeColors.water.text,
+    bgColor: utilityTypeColors.water.bg,
+    accentColor: utilityTypeColors.water.accent,
   },
 };
 

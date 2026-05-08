@@ -12,7 +12,7 @@ interface AssetItem {
   quantity: string;
   status: string;
   category: "furniture" | "appliance" | "other";
-  checked: boolean;
+  isChecked: boolean;
 }
 
 const initialAssets: AssetItem[] = [
@@ -22,7 +22,7 @@ const initialAssets: AssetItem[] = [
     quantity: "2 chiếc",
     status: "Mới",
     category: "other",
-    checked: true,
+    isChecked: true,
   },
   {
     id: "2",
@@ -30,7 +30,7 @@ const initialAssets: AssetItem[] = [
     quantity: "1 cái",
     status: "Hoạt động tốt",
     category: "appliance",
-    checked: true,
+    isChecked: true,
   },
   {
     id: "3",
@@ -38,7 +38,7 @@ const initialAssets: AssetItem[] = [
     quantity: "1 bộ",
     status: "Mới 90%",
     category: "furniture",
-    checked: true,
+    isChecked: true,
   },
   {
     id: "4",
@@ -46,7 +46,7 @@ const initialAssets: AssetItem[] = [
     quantity: "1 cái",
     status: "Mới",
     category: "furniture",
-    checked: true,
+    isChecked: true,
   },
 ];
 
@@ -56,7 +56,7 @@ export const AssetChecklist = () => {
   const toggleCheck = (id: string) => {
     setAssets((prev) =>
       prev.map((asset) =>
-        asset.id === id ? { ...asset, checked: !asset.checked } : asset,
+        asset.id === id ? { ...asset, isChecked: !asset.isChecked } : asset,
       ),
     );
   };
@@ -70,7 +70,7 @@ export const AssetChecklist = () => {
               key={asset.id}
               className={cn(
                 "flex items-center justify-between rounded-lg border p-3 transition-colors",
-                asset.checked ? "bg-muted/30" : "bg-background",
+                asset.isChecked ? "bg-muted/30" : "bg-background",
               )}
             >
               <div className="flex items-center gap-3">
@@ -78,7 +78,7 @@ export const AssetChecklist = () => {
                   onClick={() => toggleCheck(asset.id)}
                   className="text-primary hover:opacity-80"
                 >
-                  {asset.checked ? (
+                  {asset.isChecked ? (
                     <CheckCircle2 className="h-5 w-5" />
                   ) : (
                     <Circle className="h-5 w-5" />

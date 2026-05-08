@@ -4,6 +4,10 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import * as z from "zod";
 
+import {
+  ContractLifecycleStepper,
+  type Step,
+} from "@/components/shared/stepper/contract-lifecycle-stepper";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -22,10 +26,6 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { routes } from "@/config/routes";
-import {
-  ContractLifecycleStepper,
-  type Step,
-} from "@/features/contracts/components/contract-lifecycle-stepper";
 
 const onboardingSchema = z.object({
   buildingName: z.string().min(2, "Tên khu trọ tối thiểu 2 ký tự"),
@@ -60,22 +60,22 @@ export const OnboardingWizardPage = () => {
       id: "building",
       title: "Tạo tòa nhà đầu tiên",
       description: "Nhập thông tin cơ bản về khu trọ của bạn.",
-      completed: currentStep > 0,
-      active: currentStep === 0,
+      isCompleted: currentStep > 0,
+      isActive: currentStep === 0,
     },
     {
       id: "room",
       title: "Thêm phòng",
       description: "Tạo danh sách các phòng trong khu trọ.",
-      completed: currentStep > 1,
-      active: currentStep === 1,
+      isCompleted: currentStep > 1,
+      isActive: currentStep === 1,
     },
     {
       id: "manager",
       title: "Mời quản lý",
       description: "Ủy quyền quản lý cho người khác (tùy chọn).",
-      completed: currentStep > 2,
-      active: currentStep === 2,
+      isCompleted: currentStep > 2,
+      isActive: currentStep === 2,
     },
   ];
 
@@ -277,18 +277,19 @@ export const OnboardingWizardPage = () => {
             )}
 
             <div className="mt-6 flex justify-between">
-              <Button variant="ghost" onClick={handleFinish}>
+              <Button type="button" variant="ghost" onClick={handleFinish}>
                 Bỏ qua
               </Button>
               <div className="flex gap-2">
                 <Button
+                  type="button"
                   variant="outline"
                   onClick={() => setCurrentStep((p) => Math.max(0, p - 1))}
                   disabled={currentStep === 0}
                 >
                   Quay lại
                 </Button>
-                <Button onClick={handleNext}>
+                <Button type="button" onClick={handleNext}>
                   {currentStep === 2 ? "Hoàn thành" : "Tiếp tục"}
                 </Button>
               </div>

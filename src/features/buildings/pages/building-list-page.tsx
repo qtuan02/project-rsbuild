@@ -12,7 +12,7 @@ import {
   CardDescription,
   CardFooter,
 } from "@/components/ui/card";
-import { STATUS_COLORS } from "@/config/colors";
+import { statusColors } from "@/config/colors";
 import { routePathBuilders } from "@/config/routes";
 import { cn } from "@/libs/cn";
 
@@ -70,7 +70,7 @@ export const BuildingListPage = () => {
                       <p
                         className={cn(
                           "mt-1.5 text-base font-semibold",
-                          STATUS_COLORS.success.text,
+                          statusColors.success.text,
                         )}
                       >
                         {building.availableRooms}

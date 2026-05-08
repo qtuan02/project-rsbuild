@@ -13,17 +13,17 @@ import {
 } from "@/components/ui/dialog";
 import { formatCurrency } from "@/utils/currency";
 
-interface VietQRDialogProps {
+interface VietQrDialogProps {
   children: React.ReactNode;
   amount: number;
   invoiceNumber: string;
 }
 
-export const VietQRDialog = ({
+export const VietQrDialog = ({
   children,
   amount,
   invoiceNumber,
-}: VietQRDialogProps) => {
+}: VietQrDialogProps) => {
   const [open, setOpen] = useState(false);
 
   return (

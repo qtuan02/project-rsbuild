@@ -26,7 +26,7 @@ interface StatCardProps {
   value: string;
   description: string;
   icon: typeof Building2;
-  trend?: { value: string; positive: boolean };
+  trend?: { value: string; isPositive: boolean };
 }
 
 const StatCard = ({
@@ -52,10 +52,10 @@ const StatCard = ({
           <>
             <span
               className={`inline-flex items-center gap-0.5 text-xs font-semibold ${
-                trend.positive ? "text-emerald-600" : "text-red-500"
+                trend.isPositive ? "text-emerald-600" : "text-red-500"
               }`}
             >
-              {trend.positive ? (
+              {trend.isPositive ? (
                 <ArrowUpRight className="h-3 w-3" />
               ) : (
                 <ArrowDownRight className="h-3 w-3" />
@@ -78,28 +78,28 @@ const stats: StatCardProps[] = [
     value: "145",
     description: "trên toàn bộ tòa nhà",
     icon: Building2,
-    trend: { value: "+12", positive: true },
+    trend: { value: "+12", isPositive: true },
   },
   {
     title: "Tỷ lệ lấp đầy",
     value: "94.2%",
     description: "hiệu suất tối ưu",
     icon: UserCheck,
-    trend: { value: "+2.5%", positive: true },
+    trend: { value: "+2.5%", isPositive: true },
   },
   {
     title: "Doanh thu tháng",
     value: "545.2tr",
     description: "kỳ báo cáo tháng 4",
     icon: DollarSign,
-    trend: { value: "+15.3%", positive: true },
+    trend: { value: "+15.3%", isPositive: true },
   },
   {
     title: "Chi phí vận hành",
     value: "123.5tr",
     description: "tiền điện, nước, dịch vụ",
     icon: TrendingUp,
-    trend: { value: "-4.2%", positive: false },
+    trend: { value: "-4.2%", isPositive: false },
   },
 ];
 

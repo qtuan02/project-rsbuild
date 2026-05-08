@@ -2,8 +2,7 @@ import { AlertCircle, CheckCircle2, Clock } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-
-import type { ComplianceItem } from "../data/compliance.mock";
+import type { ComplianceItem } from "@/types/compliance";
 
 interface ResidenceChecklistCardProps {
   items: ComplianceItem[];

@@ -49,7 +49,7 @@ export const RegisterPage = () => {
 
   const roleValue = useWatch({ control: form.control, name: "role" });
 
-  const onSubmit = async (data: RegisterFormValues) => {
+  const handleSubmit = async (data: RegisterFormValues) => {
     setIsLoading(true);
     // Giả lập API call
     setTimeout(() => {
@@ -76,7 +76,7 @@ export const RegisterPage = () => {
         <CardDescription>Tạo tài khoản mới để sử dụng hệ thống</CardDescription>
       </CardHeader>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)}>
+        <form onSubmit={form.handleSubmit(handleSubmit)}>
           <CardContent className="space-y-4">
             <FormField
               control={form.control}

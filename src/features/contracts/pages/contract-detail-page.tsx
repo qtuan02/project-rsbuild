@@ -133,7 +133,7 @@ export const ContractDetailPage = ({
           </Card>
 
           <InfoCard title="Thông tin khách thuê">
-            <InfoRow label="Tên khách" value={contract.tenant} highlight />
+            <InfoRow label="Tên khách" value={contract.tenant} isHighlighted />
             <InfoRow label="Phòng" value={contract.room} />
             <InfoRow label="Tầng" value={`Tầng ${contract.floor}`} />
             <Button variant="outline" size="sm" className="w-full mt-3">
@@ -180,7 +180,11 @@ export const ContractDetailPage = ({
 
           <InfoCard title="Thời gian hợp đồng">
             <InfoRow label="Ngày bắt đầu" value={contract.startDate} />
-            <InfoRow label="Ngày kết thúc" value={contract.endDate} highlight />
+            <InfoRow
+              label="Ngày kết thúc"
+              value={contract.endDate}
+              isHighlighted
+            />
             <InfoRow label="Thời hạn" value="12 tháng" />
             {expiryMeta?.isExpiringSoon && (
               <InfoRow

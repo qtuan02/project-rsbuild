@@ -1,51 +1,32 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { useCallback, useMemo, useState } from "react";
 import { toast } from "sonner";
 
-import {
-  getCommunicationSendLogs,
-  getCommunicationTemplates,
-} from "../data/communications.repository";
+import type { NotificationTemplate } from "@/types/communications";
+
+import { getCommunicationsDashboardData } from "../data/communications.repository";
 import {
   filterSendLogs,
   type CommunicationsLogFilterState,
 } from "../domain/communications-filters";
-
-import type { NotificationTemplate } from "../data/communications.mock";
-
 export const useCommunications = () => {
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
   const [searchTenant, setSearchTenant] = useState("");
   const [filterChannel, setFilterChannel] = useState("all");
   const [filterStatus, setFilterStatus] = useState("all");
 
-  useEffect(() => {
-    let cancelled = false;
+  const dashboardQuery = useQuery({
+    queryKey: ["communications", "dashboard"],
+    queryFn: getCommunicationsDashboardData,
+  });
 
-    const load = async () => {
-      setIsLoading(true);
-      setError(null);
-      try {
-        await new Promise((resolve) => setTimeout(resolve, 300));
-      } catch {
-        if (!cancelled) {
-          setError("Không thể tải dữ liệu liên lạc.");
-        }
-      } finally {
-        if (!cancelled) {
-          setIsLoading(false);
-        }
-      }
-    };
-
-    void load();
-    return () => {
-      cancelled = true;
-    };
-  }, []);
-
-  const templates = useMemo(() => getCommunicationTemplates(), []);
-  const sendLogs = useMemo(() => getCommunicationSendLogs(), []);
+  const templates = useMemo(
+    () => dashboardQuery.data?.templates ?? [],
+    [dashboardQuery.data?.templates],
+  );
+  const sendLogs = useMemo(
+    () => dashboardQuery.data?.sendLogs ?? [],
+    [dashboardQuery.data?.sendLogs],
+  );
 
   const filterState = useMemo<CommunicationsLogFilterState>(
     () => ({
@@ -74,8 +55,8 @@ export const useCommunications = () => {
   }, []);
 
   return {
-    isLoading,
-    error,
+    isLoading: dashboardQuery.isLoading,
+    error: dashboardQuery.error ? "Không thể tải dữ liệu liên lạc." : null,
     templates,
     sendLogs,
     filteredLogs,
