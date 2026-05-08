@@ -135,7 +135,7 @@ export const TenantDetailPage = ({
           </InfoCard>
 
           <InfoCard title="Thông tin phòng và hợp đồng">
-            <InfoRow label="Phòng" value={tenant.room} highlight />
+            <InfoRow label="Phòng" value={tenant.room} isHighlighted />
             <InfoRow label="Tầng" value={`Tầng ${tenant.floor}`} />
             <InfoRow label="Ngày vào" value={tenant.moveInDate} />
             <InfoRow label="Ngày kết thúc HĐ" value={tenant.contractEnd} />

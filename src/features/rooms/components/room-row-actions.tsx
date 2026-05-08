@@ -38,7 +38,7 @@ export const RoomRowActions = ({
           key: "delete",
           label: "Xóa phòng",
           icon: <Trash2 className="mr-2 h-3.5 w-3.5" />,
-          destructive: true,
+          isDestructive: true,
         },
       ]}
     />

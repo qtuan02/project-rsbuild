@@ -40,7 +40,7 @@ interface Notification {
   readonly title: string;
   readonly description: string;
   readonly time: string;
-  read: boolean;
+  isRead: boolean;
 }
 
 interface NotificationTypeConfig {
@@ -55,43 +55,44 @@ interface NotificationItemProps {
 }
 
 // --- Config ---
-const TYPE_CONFIG: Record<NotificationType, NotificationTypeConfig> = {
-  invoice: {
-    icon: ReceiptText,
-    colorClass: "text-amber-600",
-    bgClass: "bg-amber-100 dark:bg-amber-900/30",
-  },
-  contract: {
-    icon: FileText,
-    colorClass: "text-blue-600",
-    bgClass: "bg-blue-100 dark:bg-blue-900/30",
-  },
-  maintenance: {
-    icon: Wrench,
-    colorClass: "text-red-600",
-    bgClass: "bg-red-100 dark:bg-red-900/30",
-  },
-  tenant: {
-    icon: Users,
-    colorClass: "text-emerald-600",
-    bgClass: "bg-emerald-100 dark:bg-emerald-900/30",
-  },
-  system: {
-    icon: Settings,
-    colorClass: "text-muted-foreground",
-    bgClass: "bg-muted",
-  },
-} as const;
+const notificationTypeConfig: Record<NotificationType, NotificationTypeConfig> =
+  {
+    invoice: {
+      icon: ReceiptText,
+      colorClass: "text-amber-600",
+      bgClass: "bg-amber-100 dark:bg-amber-900/30",
+    },
+    contract: {
+      icon: FileText,
+      colorClass: "text-blue-600",
+      bgClass: "bg-blue-100 dark:bg-blue-900/30",
+    },
+    maintenance: {
+      icon: Wrench,
+      colorClass: "text-red-600",
+      bgClass: "bg-red-100 dark:bg-red-900/30",
+    },
+    tenant: {
+      icon: Users,
+      colorClass: "text-emerald-600",
+      bgClass: "bg-emerald-100 dark:bg-emerald-900/30",
+    },
+    system: {
+      icon: Settings,
+      colorClass: "text-muted-foreground",
+      bgClass: "bg-muted",
+    },
+  } as const;
 
 // --- Mock data ---
-const MOCK_NOTIFICATIONS: Notification[] = [
+const mockNotifications: Notification[] = [
   {
     id: "1",
     type: "invoice",
     title: "Hóa đơn quá hạn",
     description: "Phòng 204 chưa thanh toán hóa đơn tháng 4, quá hạn 2 ngày.",
     time: "5 phút trước",
-    read: false,
+    isRead: false,
   },
   {
     id: "2",
@@ -99,7 +100,7 @@ const MOCK_NOTIFICATIONS: Notification[] = [
     title: "Yêu cầu bảo trì",
     description: "Phòng 108 báo cáo vòi nước bị rò rỉ, cần xử lý gấp.",
     time: "1 giờ trước",
-    read: false,
+    isRead: false,
   },
   {
     id: "3",
@@ -107,7 +108,7 @@ const MOCK_NOTIFICATIONS: Notification[] = [
     title: "Hợp đồng sắp hết hạn",
     description: "Hợp đồng phòng 302 (Lê Thị C) sẽ hết hạn trong 3 ngày nữa.",
     time: "2 giờ trước",
-    read: false,
+    isRead: false,
   },
   {
     id: "4",
@@ -115,7 +116,7 @@ const MOCK_NOTIFICATIONS: Notification[] = [
     title: "Khách thuê mới",
     description: "Trần Văn B đã ký hợp đồng và nhận phòng 201 thành công.",
     time: "3 giờ trước",
-    read: true,
+    isRead: true,
   },
   {
     id: "5",
@@ -123,7 +124,7 @@ const MOCK_NOTIFICATIONS: Notification[] = [
     title: "Thanh toán thành công",
     description: "Phòng 105 đã thanh toán đủ hóa đơn tháng 4 – 3,000,000 đ.",
     time: "5 giờ trước",
-    read: true,
+    isRead: true,
   },
   {
     id: "6",
@@ -131,7 +132,7 @@ const MOCK_NOTIFICATIONS: Notification[] = [
     title: "Cập nhật hệ thống",
     description: "Hệ thống đã được cập nhật lên phiên bản 2.1.0 thành công.",
     time: "1 ngày trước",
-    read: true,
+    isRead: true,
   },
 ];
 
@@ -140,7 +141,7 @@ const NotificationItem = ({
   notification,
   onMarkRead,
 }: NotificationItemProps) => {
-  const config = TYPE_CONFIG[notification.type];
+  const config = notificationTypeConfig[notification.type];
   const Icon = config.icon;
 
   return (
@@ -149,7 +150,7 @@ const NotificationItem = ({
       onClick={() => onMarkRead(notification.id)}
       className={cn(
         "group flex w-full gap-3 px-4 py-3.5 text-left transition-colors hover:bg-muted/60",
-        !notification.read && "bg-primary/5 hover:bg-primary/10",
+        !notification.isRead && "bg-primary/5 hover:bg-primary/10",
       )}
     >
       <div
@@ -166,14 +167,14 @@ const NotificationItem = ({
           <p
             className={cn(
               "text-sm leading-tight",
-              notification.read
+              notification.isRead
                 ? "font-normal text-foreground"
                 : "font-semibold text-foreground",
             )}
           >
             {notification.title}
           </p>
-          {!notification.read && (
+          {!notification.isRead && (
             <span className="mt-1 h-2 w-2 shrink-0 rounded-full bg-primary" />
           )}
         </div>
@@ -201,20 +202,20 @@ const EmptyUnread = () => (
 
 // --- Main component ---
 export const NotificationPanel = () => {
-  const [notifications, setNotifications] = useState(MOCK_NOTIFICATIONS);
+  const [notifications, setNotifications] = useState(mockNotifications);
   const [open, setOpen] = useState(false);
 
-  const unreadCount = notifications.filter((n) => !n.read).length;
-  const unreadList = notifications.filter((n) => !n.read);
+  const unreadCount = notifications.filter((n) => !n.isRead).length;
+  const unreadList = notifications.filter((n) => !n.isRead);
 
   const markRead = (id: string) => {
     setNotifications((prev) =>
-      prev.map((n) => (n.id === id ? { ...n, read: true } : n)),
+      prev.map((n) => (n.id === id ? { ...n, isRead: true } : n)),
     );
   };
 
   const markAllRead = () => {
-    setNotifications((prev) => prev.map((n) => ({ ...n, read: true })));
+    setNotifications((prev) => prev.map((n) => ({ ...n, isRead: true })));
   };
 
   return (

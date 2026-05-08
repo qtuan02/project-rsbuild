@@ -1,17 +1,17 @@
 export interface ReconciliationItem {
   id: string;
   buildingId: string;
-  item: string;
-  income: number;
-  expense: number;
-  diff: number;
+  lineItemName: string;
+  incomeAmount: number;
+  expenseAmount: number;
+  netAmount: number;
   status: "gain" | "loss";
-  trend?: number;
+  trendRate?: number;
 }
 
 export interface ReconciliationStats {
-  totalIncome: number;
-  totalExpense: number;
-  netProfit: number;
+  totalIncomeAmount: number;
+  totalExpenseAmount: number;
+  netProfitAmount: number;
   profitMargin: number;
 }

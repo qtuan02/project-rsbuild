@@ -1,7 +1,6 @@
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-
-import type { ReportData } from "../data/reports.mock";
+import type { ReportData } from "@/types/reports";
 
 interface ReportTableProps {
   data: ReportData[];

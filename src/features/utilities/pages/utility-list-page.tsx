@@ -3,7 +3,7 @@ import { useQueryState } from "nuqs";
 
 import { SummaryCard } from "@/components/shared/cards/summary-card";
 import { ListPageHeader, ListPageShell } from "@/components/shared/list";
-import { DEFAULT_PAGINATION_OPTIONS } from "@/components/shared/pagination/pagination-contracts";
+import { defaultPaginationPageSize } from "@/components/shared/pagination/pagination-contracts";
 import { LoadingPanel } from "@/components/shared/panels";
 import {
   DataTableView,
@@ -28,7 +28,7 @@ export const UtilityListPage = () => {
     data,
     columns: utilityColumns,
     getRowId: (row) => row.id,
-    initialPageSize: DEFAULT_PAGINATION_OPTIONS,
+    initialPageSize: defaultPaginationPageSize,
   });
 
   const isLoading = false;
@@ -93,7 +93,7 @@ export const UtilityListPage = () => {
               table={table}
               searchableColumns={searchableColumns}
               filterableColumns={filterableColumns}
-              showViewOptions={activeTab === "table"}
+              isViewOptionsVisible={activeTab === "table"}
             />
           }
           gridContent={

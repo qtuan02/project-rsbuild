@@ -10,15 +10,15 @@ import { settingCategoryConfig } from "../domain/setting-categories";
 interface SettingGroupProps {
   category: SettingCategory;
   settings: Setting[];
-  defaultOpen?: boolean;
+  isDefaultOpen?: boolean;
 }
 
 export const SettingGroup = ({
   category,
   settings,
-  defaultOpen = true,
+  isDefaultOpen = true,
 }: SettingGroupProps) => {
-  const [isOpen, setIsOpen] = React.useState(defaultOpen);
+  const [isOpen, setIsOpen] = React.useState(isDefaultOpen);
   const config = settingCategoryConfig[category];
   const Icon = config.icon;
 

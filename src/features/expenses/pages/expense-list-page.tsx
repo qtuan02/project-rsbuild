@@ -2,7 +2,7 @@ import { Activity, FileText, Plus, Receipt } from "lucide-react";
 
 import { SummaryCard } from "@/components/shared/cards";
 import { ListPageHeader } from "@/components/shared/list";
-import { DEFAULT_PAGINATION_OPTIONS } from "@/components/shared/pagination/pagination-contracts";
+import { defaultPaginationPageSize } from "@/components/shared/pagination/pagination-contracts";
 import {
   DataTablePagination,
   DataTableToolbar,
@@ -22,7 +22,7 @@ export const ExpenseListPage = () => {
     data: expenses,
     columns: expenseColumns,
     getRowId: (row) => row.id,
-    initialPageSize: DEFAULT_PAGINATION_OPTIONS,
+    initialPageSize: defaultPaginationPageSize,
   });
 
   const rows = table.getRowModel().rows;
@@ -69,7 +69,7 @@ export const ExpenseListPage = () => {
           table={table}
           searchableColumns={searchableColumns}
           filterableColumns={filterableColumns}
-          showViewOptions={false}
+          isViewOptionsVisible={false}
         />
         <DataTableView
           table={table}

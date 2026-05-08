@@ -1,7 +1,7 @@
 import { PaginationBar } from "./pagination-bar";
 import {
-  DEFAULT_PAGINATION_LABELS,
-  DEFAULT_PAGINATION_PAGE_SIZE_OPTIONS,
+  defaultPaginationLabels,
+  defaultPaginationPageSizeOptions,
   type PaginationLabels,
 } from "./pagination-contracts";
 import { clampPage, getPageItems } from "./pagination-utils";
@@ -24,8 +24,8 @@ export const Pagination = ({
   totalItems,
   onPageChange,
   onPageSizeChange,
-  pageSizeOptions = DEFAULT_PAGINATION_PAGE_SIZE_OPTIONS,
-  labels = DEFAULT_PAGINATION_LABELS,
+  pageSizeOptions = defaultPaginationPageSizeOptions,
+  labels = defaultPaginationLabels,
 }: PaginationProps) => {
   const safeCurrentPage = clampPage(currentPage, totalPages);
   const startItem = totalItems === 0 ? 0 : (safeCurrentPage - 1) * pageSize + 1;

@@ -8,12 +8,10 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import type { ComplianceItem } from "@/types/compliance";
 
 import { ResidenceChecklistCard } from "../components/residence-checklist-card";
 import { useComplianceDashboard } from "../hooks/use-compliance-dashboard";
-
-import type { ComplianceItem } from "../data/compliance.mock";
-
 const filterByType = (items: ComplianceItem[], type: ComplianceItem["type"]) =>
   items.filter((i) => i.type === type);
 

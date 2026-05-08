@@ -24,7 +24,7 @@ export const useRoomList = (): UseRoomListResult => {
 
   const filterableColumns = React.useMemo(() => roomFilterColumns, []);
 
-  const onRowReorder = React.useCallback(
+  const handleRowReorder = React.useCallback(
     (oldIndex: number, newIndex: number) => {
       setData((prev) => {
         const result = Array.from(prev);
@@ -40,6 +40,6 @@ export const useRoomList = (): UseRoomListResult => {
     data,
     searchableColumns,
     filterableColumns,
-    onRowReorder,
+    onRowReorder: handleRowReorder,
   };
 };

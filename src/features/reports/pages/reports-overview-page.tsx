@@ -19,7 +19,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { formatCurrency } from "@/utils/currency";
 
 import { ReportFilters } from "../components/report-filters";
-import { ReportKPICards } from "../components/report-kpi-cards";
+import { ReportKpiCards } from "../components/report-kpi-cards";
 import { ReportTable } from "../components/report-table";
 import {
   defaultReportFilters,
@@ -29,6 +29,7 @@ import { useReports } from "../hooks/use-reports";
 
 export const ReportsOverviewPage = () => {
   const {
+    buildingOptions,
     reports,
     filters,
     setFilters,
@@ -92,6 +93,7 @@ export const ReportsOverviewPage = () => {
 
       {/* Filters */}
       <ReportFilters
+        buildingOptions={buildingOptions}
         filters={filters}
         onFiltersChange={(newFilters: ReportFilterParams) =>
           setFilters(newFilters)
@@ -100,7 +102,7 @@ export const ReportsOverviewPage = () => {
       />
 
       {/* KPI Cards */}
-      <ReportKPICards
+      <ReportKpiCards
         totalRevenue={plSummary.totalRevenue}
         totalExpenses={plSummary.totalExpenses}
         profit={plSummary.totalProfit}

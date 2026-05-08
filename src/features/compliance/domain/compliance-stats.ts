@@ -1,4 +1,4 @@
-import type { ComplianceItem } from "../data/compliance.mock";
+import type { ComplianceItem } from "@/types/compliance";
 
 export interface ComplianceStatusStats {
   completed: number;

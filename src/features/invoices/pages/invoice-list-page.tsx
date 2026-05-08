@@ -9,7 +9,7 @@ import {
 import { useQueryState } from "nuqs";
 
 import { ListPageHeader, ListPageShell } from "@/components/shared/list";
-import { DEFAULT_PAGINATION_OPTIONS } from "@/components/shared/pagination/pagination-contracts";
+import { defaultPaginationPageSize } from "@/components/shared/pagination/pagination-contracts";
 import {
   DataTableView,
   DataTablePagination,
@@ -18,7 +18,7 @@ import {
 } from "@/components/shared/table";
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent } from "@/components/ui/tabs";
-import { STATUS_COLORS } from "@/config/colors";
+import { statusColors } from "@/config/colors";
 import { cn } from "@/libs/cn";
 import { formatCurrency } from "@/utils/currency";
 
@@ -38,22 +38,22 @@ const summaryStatConfigs = [
     key: "paidAmount",
     label: "Đã thanh toán",
     icon: CheckCircle2,
-    color: STATUS_COLORS.success.text,
-    bg: STATUS_COLORS.success.bg,
+    color: statusColors.success.text,
+    bg: statusColors.success.bg,
   },
   {
     key: "pendingAmount",
     label: "Chờ thanh toán",
     icon: Clock,
-    color: STATUS_COLORS.info.text,
-    bg: STATUS_COLORS.info.bg,
+    color: statusColors.info.text,
+    bg: statusColors.info.bg,
   },
   {
     key: "overdueAmount",
     label: "Quá hạn",
     icon: AlertCircle,
-    color: STATUS_COLORS.error.text,
-    bg: STATUS_COLORS.error.bg,
+    color: statusColors.error.text,
+    bg: statusColors.error.bg,
   },
 ] as const;
 
@@ -68,7 +68,7 @@ export const InvoiceListPage = () => {
     data,
     columns: invoiceColumns,
     getRowId: (row) => row.id,
-    initialPageSize: DEFAULT_PAGINATION_OPTIONS,
+    initialPageSize: defaultPaginationPageSize,
   });
 
   const rows = table.getRowModel().rows;
@@ -128,7 +128,7 @@ export const InvoiceListPage = () => {
               table={table}
               searchableColumns={searchableColumns}
               filterableColumns={filterableColumns}
-              showViewOptions={activeTab === "table"}
+              isViewOptionsVisible={activeTab === "table"}
             />
           }
           gridContent={

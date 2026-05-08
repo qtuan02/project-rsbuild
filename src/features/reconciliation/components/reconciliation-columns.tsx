@@ -9,10 +9,10 @@ import type { ColumnDef } from "@tanstack/react-table";
 
 export const reconciliationColumns: ColumnDef<ReconciliationItem>[] = [
   {
-    accessorKey: "item",
+    accessorKey: "lineItemName",
     header: "Hạng mục",
     cell: ({ row }) => (
-      <div className="font-semibold">{row.getValue("item")}</div>
+      <div className="font-semibold">{row.getValue("lineItemName")}</div>
     ),
   },
   {
@@ -38,30 +38,30 @@ export const reconciliationColumns: ColumnDef<ReconciliationItem>[] = [
     },
   },
   {
-    accessorKey: "income",
+    accessorKey: "incomeAmount",
     header: "Thu từ khách thuê",
     cell: ({ row }) => (
       <div className="text-emerald-600 font-medium">
-        {formatCurrency(row.getValue("income"))}
+        {formatCurrency(row.getValue("incomeAmount"))}
       </div>
     ),
   },
   {
-    accessorKey: "expense",
+    accessorKey: "expenseAmount",
     header: "Chi cho NCC",
     cell: ({ row }) => (
       <div className="text-red-600 font-medium">
-        {formatCurrency(row.getValue("expense"))}
+        {formatCurrency(row.getValue("expenseAmount"))}
       </div>
     ),
   },
   {
-    accessorKey: "diff",
+    accessorKey: "netAmount",
     header: () => <div className="text-right">Chênh lệch</div>,
     cell: ({ row }) => {
-      const diff = row.getValue("diff") as number;
+      const netAmount = row.getValue("netAmount") as number;
       const status = row.original.status;
-      const trend = row.original.trend;
+      const trendRate = row.original.trendRate;
 
       return (
         <div className="flex flex-col items-end">
@@ -76,17 +76,17 @@ export const reconciliationColumns: ColumnDef<ReconciliationItem>[] = [
             ) : (
               <ArrowDown className="h-3 w-3" />
             )}
-            {formatCurrency(Math.abs(diff))}
+            {formatCurrency(Math.abs(netAmount))}
           </div>
-          {trend && (
+          {trendRate && (
             <div
               className={cn(
                 "text-[10px] font-medium opacity-70",
-                trend > 0 ? "text-emerald-600" : "text-red-600",
+                trendRate > 0 ? "text-emerald-600" : "text-red-600",
               )}
             >
-              {trend > 0 ? "+" : ""}
-              {trend}% so với kỳ trước
+              {trendRate > 0 ? "+" : ""}
+              {trendRate}% so với kỳ trước
             </div>
           )}
         </div>

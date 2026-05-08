@@ -6,6 +6,7 @@ import { ProtectedRoute } from "@/components/shared/layout/protected-route";
 import { appRouteManifest, routes } from "@/config/routes";
 import { LoginPage } from "@/features/auth/pages/login-page";
 import { RegisterPage } from "@/features/auth/pages/register-page";
+import { getBuildingOptions } from "@/features/buildings/data/building.repository";
 import { BuildingDetailPage } from "@/features/buildings/pages/building-detail-page";
 import { ContractCreatePage } from "@/features/contracts/pages/contract-create-page";
 import { ContractDetailPage } from "@/features/contracts/pages/contract-detail-page";
@@ -133,6 +134,8 @@ const ComingSoonPlaceholder = ({ title }: { title: string }) => {
 };
 
 export const AppRoutes = () => {
+  const buildingOptions = getBuildingOptions();
+
   return (
     <Routes>
       <Route element={<AuthLayout />}>
@@ -142,11 +145,11 @@ export const AppRoutes = () => {
       <Route path={routes.onboarding} element={<OnboardingWizardPage />} />
 
       <Route element={<ProtectedRoute />}>
-        <Route element={<DashboardLayout />}>
+        <Route element={<DashboardLayout buildingOptions={buildingOptions} />}>
           {appRouteManifest.map((routeItem) => {
             const RouteComponent = routeItem.component;
             const element =
-              routeItem.implemented && RouteComponent ? (
+              routeItem.isImplemented && RouteComponent ? (
                 <RouteComponent />
               ) : (
                 <ComingSoonPlaceholder

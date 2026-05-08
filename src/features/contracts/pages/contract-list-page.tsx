@@ -2,7 +2,7 @@ import { Download, FileText, Plus } from "lucide-react";
 import { useQueryState } from "nuqs";
 
 import { ListPageHeader, ListPageShell } from "@/components/shared/list";
-import { DEFAULT_PAGINATION_OPTIONS } from "@/components/shared/pagination/pagination-contracts";
+import { defaultPaginationPageSize } from "@/components/shared/pagination/pagination-contracts";
 import {
   DataTableView,
   DataTablePagination,
@@ -12,7 +12,7 @@ import {
 import { Tabs, TabsContent } from "@/components/ui/tabs";
 
 import { ContractCard } from "../components/contract-card";
-import { columns } from "../components/contract-columns";
+import { contractColumns } from "../components/contract-columns";
 import { useContractList } from "../hooks/use-contract-list";
 
 export const ContractListPage = () => {
@@ -24,9 +24,9 @@ export const ContractListPage = () => {
 
   const { table } = useDataTable({
     data,
-    columns,
+    columns: contractColumns,
     getRowId: (row) => row.id,
-    initialPageSize: DEFAULT_PAGINATION_OPTIONS,
+    initialPageSize: defaultPaginationPageSize,
   });
 
   const rows = table.getRowModel().rows;
@@ -61,7 +61,7 @@ export const ContractListPage = () => {
               table={table}
               searchableColumns={searchableColumns}
               filterableColumns={filterableColumns}
-              showViewOptions={activeTab === "table"}
+              isViewOptionsVisible={activeTab === "table"}
             />
           }
           gridContent={
@@ -75,7 +75,7 @@ export const ContractListPage = () => {
               ) : (
                 <DataTableView
                   table={table}
-                  columns={columns}
+                  columns={contractColumns}
                   emptyIcon={FileText}
                   emptyTitle="Không tìm thấy hợp đồng"
                   emptyDescription="Thử thay đổi bộ lọc hoặc từ khóa tìm kiếm để xem kết quả."
@@ -88,12 +88,12 @@ export const ContractListPage = () => {
             <TabsContent value="table" className="mt-0 outline-none">
               <DataTableView
                 table={table}
-                columns={columns}
+                columns={contractColumns}
                 emptyIcon={FileText}
                 emptyTitle="Không tìm thấy hợp đồng"
                 emptyDescription="Thử thay đổi bộ lọc hoặc từ khóa tìm kiếm để xem kết quả."
                 resetFilters={() => table.resetColumnFilters()}
-                enableRowDrag
+                isRowDragEnabled
                 onRowReorder={onRowReorder}
               />
             </TabsContent>

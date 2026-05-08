@@ -1,6 +1,6 @@
 import {
-  DEFAULT_DATA_TABLE_PAGINATION_LABELS,
-  DEFAULT_PAGINATION_PAGE_SIZE_OPTIONS,
+  defaultDataTablePaginationLabels,
+  defaultPaginationPageSizeOptions,
   type DataTablePaginationLabels,
   PaginationBar,
 } from "@/components/shared/pagination";
@@ -16,8 +16,8 @@ interface DataTablePaginationProps<TData> {
 
 export function DataTablePagination<TData>({
   table,
-  pageSizeOptions = DEFAULT_PAGINATION_PAGE_SIZE_OPTIONS,
-  labels = DEFAULT_DATA_TABLE_PAGINATION_LABELS,
+  pageSizeOptions = defaultPaginationPageSizeOptions,
+  labels = defaultDataTablePaginationLabels,
 }: DataTablePaginationProps<TData>) {
   const totalPages = table.getPageCount();
   const currentPage = clampPage(
@@ -61,7 +61,7 @@ export function DataTablePagination<TData>({
       onPageChange={(page) => {
         table.setPageIndex(page - 1);
       }}
-      showFirstLast
+      isFirstLastVisible
       triggerClassName="h-8 w-[70px]"
       pageIndicator={
         <div className="flex items-center text-sm text-muted-foreground">

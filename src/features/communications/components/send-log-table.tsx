@@ -2,8 +2,7 @@ import { CheckCircle2, Clock, XCircle } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-
-import type { SendLog } from "../data/communications.mock";
+import type { SendLog } from "@/types/communications";
 
 interface SendLogTableProps {
   logs: SendLog[];

@@ -30,7 +30,7 @@ interface DataTableToolbarProps<TData> {
   filterableColumns?: DataTableFilterableColumn<TData>[];
   searchableColumns?: DataTableSearchableColumn<TData>[];
   children?: React.ReactNode;
-  showViewOptions?: boolean;
+  isViewOptionsVisible?: boolean;
 }
 
 export function DataTableToolbar<TData>({
@@ -38,7 +38,7 @@ export function DataTableToolbar<TData>({
   filterableColumns = [],
   searchableColumns = [],
   children,
-  showViewOptions = true,
+  isViewOptionsVisible = true,
 }: DataTableToolbarProps<TData>) {
   const isFiltered = table.getState().columnFilters.length > 0;
   const searchFields = searchableColumns
@@ -80,7 +80,7 @@ export function DataTableToolbar<TData>({
         {children}
 
         {/* Column visibility */}
-        {showViewOptions && (
+        {isViewOptionsVisible && (
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="outline" size="sm" className="h-8">

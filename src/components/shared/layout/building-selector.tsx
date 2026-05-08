@@ -7,13 +7,16 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { mockBuildings as rawBuildings } from "@/features/buildings/data/buildings";
 import { useBuildingStore } from "@/stores/building.store";
+import type { BuildingOption } from "@/types/building";
 
-const mockBuildings = [{ id: "all", name: "Tất cả tòa nhà" }, ...rawBuildings];
+interface BuildingSelectorProps {
+  options: BuildingOption[];
+}
 
-export const BuildingSelector = () => {
+export const BuildingSelector = ({ options }: BuildingSelectorProps) => {
   const { selectedBuildingId, setSelectedBuildingId } = useBuildingStore();
+  const selectorOptions = [{ id: "all", name: "Tất cả tòa nhà" }, ...options];
 
   return (
     <div className="w-full">
@@ -27,15 +30,16 @@ export const BuildingSelector = () => {
           <Building2 className="h-4 w-4 shrink-0 text-muted-foreground" />
           <SelectValue>
             {
-              mockBuildings.find((b) => b.id === (selectedBuildingId || "all"))
-                ?.name
+              selectorOptions.find(
+                (item) => item.id === (selectedBuildingId || "all"),
+              )?.name
             }
           </SelectValue>
         </SelectTrigger>
         <SelectContent position="popper" align="end" className="p-1">
-          {mockBuildings.map((building) => (
-            <SelectItem key={building.id} value={building.id}>
-              {building.name}
+          {selectorOptions.map((item) => (
+            <SelectItem key={item.id} value={item.id}>
+              {item.name}
             </SelectItem>
           ))}
         </SelectContent>

@@ -1,10 +1,10 @@
-import { mockBuildings } from "@/features/buildings/data/buildings";
+import { getBuildingById } from "@/features/buildings/data/building.repository";
 
-import { mockSupplierBills } from "../data/supplier-bills.mock";
+import { getSupplierBillById } from "../data/supplier-bill.repository";
 
 export const useSupplierBillDetail = (billId: string) => {
-  const bill = mockSupplierBills.find((item) => item.id === billId);
-  const building = mockBuildings.find((item) => item.id === bill?.buildingId);
+  const bill = getSupplierBillById(billId);
+  const building = bill ? getBuildingById(bill.buildingId) : undefined;
 
   return {
     bill,

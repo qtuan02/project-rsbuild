@@ -1,10 +1,9 @@
-import { useEffect, useMemo, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { useMemo, useState } from "react";
 
-import {
-  getOverdueList,
-  getProfitLossSummary,
-  getReports,
-} from "../data/reports.repository";
+import { getBuildingOptions } from "@/features/buildings/data/building.repository";
+
+import { getReportsDashboardData } from "../data/reports.repository";
 import { defaultReportFilters } from "../domain/reports-filter-params";
 import { filterReports } from "../domain/reports-filters";
 
@@ -13,50 +12,41 @@ import type { ReportFilterParams } from "../domain/reports-filter-params";
 export const useReports = () => {
   const [filters, setFilters] =
     useState<ReportFilterParams>(defaultReportFilters);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    let cancelled = false;
+  const dashboardQuery = useQuery({
+    queryKey: ["reports", "dashboard"],
+    queryFn: getReportsDashboardData,
+  });
 
-    const load = async () => {
-      setIsLoading(true);
-      setError(null);
-      try {
-        await new Promise((resolve) => setTimeout(resolve, 350));
-      } catch {
-        if (!cancelled) {
-          setError("Không thể tải dữ liệu báo cáo.");
-        }
-      } finally {
-        if (!cancelled) {
-          setIsLoading(false);
-        }
-      }
-    };
-
-    void load();
-    return () => {
-      cancelled = true;
-    };
-  }, []);
-
-  const allReports = useMemo(() => getReports(), []);
-  const plSummary = useMemo(() => getProfitLossSummary(), []);
-  const overdueList = useMemo(() => getOverdueList(), []);
-
+  const allReports = useMemo(
+    () => dashboardQuery.data?.reports ?? [],
+    [dashboardQuery.data?.reports],
+  );
   const filteredReports = useMemo(
     () => filterReports(allReports, filters),
     [allReports, filters],
   );
+  const buildingOptions = getBuildingOptions().map((item) => ({
+    value: item.name,
+    label: item.name,
+  }));
 
   return {
+    buildingOptions: [
+      { value: "all", label: "Tất cả tòa" },
+      ...buildingOptions,
+    ],
     reports: filteredReports,
     filters,
     setFilters,
-    plSummary,
-    overdueList,
-    isLoading,
-    error,
+    plSummary: dashboardQuery.data?.plSummary ?? {
+      totalRevenue: 0,
+      totalExpenses: 0,
+      totalProfit: 0,
+      avgOccupancy: 0,
+    },
+    overdueList: dashboardQuery.data?.overdueList ?? [],
+    isLoading: dashboardQuery.isLoading,
+    error: dashboardQuery.error ? "Không thể tải dữ liệu báo cáo." : null,
   };
 };

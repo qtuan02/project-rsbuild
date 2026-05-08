@@ -17,7 +17,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { formatCurrency } from "@/utils/currency";
 
-import { VietQRDialog } from "../components/vietqr-dialog";
+import { VietQrDialog } from "../components/vietqr-dialog";
 import { useInvoiceDetail } from "../hooks/use-invoice-detail";
 
 interface InvoiceDetailPageProps {
@@ -103,7 +103,7 @@ export const InvoiceDetailPage = ({
           </Card>
 
           <InfoCard title="Thông tin khách thuê">
-            <InfoRow label="Tên khách" value={invoice.tenant} highlight />
+            <InfoRow label="Tên khách" value={invoice.tenant} isHighlighted />
             <InfoRow label="Phòng" value={invoice.room} />
             <InfoRow label="Tầng" value={`Tầng ${invoice.floor}`} />
             <Button variant="outline" size="sm" className="w-full mt-3">
@@ -154,7 +154,7 @@ export const InvoiceDetailPage = ({
                 <InfoRow
                   label="Ngày thanh toán"
                   value={invoice.paymentDate}
-                  highlight
+                  isHighlighted
                 />
                 <InfoRow label="Trạng thái" value="Đã thanh toán" />
               </>
@@ -262,7 +262,7 @@ export const InvoiceDetailPage = ({
               <CardTitle className="text-base">Hành động</CardTitle>
             </CardHeader>
             <CardContent className="space-y-2">
-              <VietQRDialog
+              <VietQrDialog
                 amount={invoice.amount}
                 invoiceNumber={invoice.invoiceNumber}
               >
@@ -270,7 +270,7 @@ export const InvoiceDetailPage = ({
                   <QrCode className="h-4 w-4" />
                   Thanh toán VietQR
                 </Button>
-              </VietQRDialog>
+              </VietQrDialog>
               <Button variant="outline" size="sm" className="w-full gap-2">
                 <Download className="h-4 w-4" />
                 Tải PDF

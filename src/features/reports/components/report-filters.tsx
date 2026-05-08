@@ -9,16 +9,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { mockBuildings } from "@/features/buildings/data/buildings";
 
-import { STATUS_OPTIONS } from "../domain/reports-filters";
+import { reportStatusOptions } from "../domain/reports-filters";
 
-const BUILDING_OPTIONS = [
-  { value: "all", label: "Tất cả tòa" },
-  ...mockBuildings.map((b) => ({ value: b.name, label: b.name })),
-];
+import type { ReportFilterParams } from "../domain/reports-filter-params";
 
-const FLOOR_OPTIONS = [
+const floorOptions = [
   { value: "all", label: "Tất cả tầng" },
   { value: "floor-1", label: "Tầng 1" },
   { value: "floor-2", label: "Tầng 2" },
@@ -27,15 +23,15 @@ const FLOOR_OPTIONS = [
   { value: "floor-5", label: "Tầng 5" },
 ];
 
-import type { ReportFilterParams } from "../domain/reports-filter-params";
-
 interface ReportFiltersProps {
+  buildingOptions: { value: string; label: string }[];
   filters: ReportFilterParams;
   onFiltersChange: (filters: ReportFilterParams) => void;
   onClearFilters?: () => void;
 }
 
 export const ReportFilters = ({
+  buildingOptions,
   filters,
   onFiltersChange,
   onClearFilters,
@@ -59,7 +55,7 @@ export const ReportFilters = ({
               <SelectValue placeholder="Tòa" />
             </SelectTrigger>
             <SelectContent>
-              {BUILDING_OPTIONS.map((option) => (
+              {buildingOptions.map((option) => (
                 <SelectItem key={option.value} value={option.value}>
                   {option.label}
                 </SelectItem>
@@ -77,7 +73,7 @@ export const ReportFilters = ({
               <SelectValue placeholder="Tầng" />
             </SelectTrigger>
             <SelectContent>
-              {FLOOR_OPTIONS.map((option) => (
+              {floorOptions.map((option) => (
                 <SelectItem key={option.value} value={option.value}>
                   {option.label}
                 </SelectItem>
@@ -95,7 +91,7 @@ export const ReportFilters = ({
               <SelectValue placeholder="Trạng thái" />
             </SelectTrigger>
             <SelectContent>
-              {STATUS_OPTIONS.map((option) => (
+              {reportStatusOptions.map((option) => (
                 <SelectItem key={option.value} value={option.value}>
                   {option.label}
                 </SelectItem>
@@ -104,6 +100,7 @@ export const ReportFilters = ({
           </Select>
 
           <Button
+            type="button"
             variant="outline"
             size="sm"
             className="h-8 w-full justify-start gap-2 sm:w-auto"

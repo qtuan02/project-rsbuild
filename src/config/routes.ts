@@ -86,7 +86,7 @@ export interface AppRouteManifestItem extends AppRouteMeta {
   routePath: string;
   icon: LucideIcon;
   group: AppNavigationGroup;
-  implemented: boolean;
+  isImplemented: boolean;
   comingSoonTitle?: string;
   component?: ComponentType;
 }
@@ -100,7 +100,7 @@ export const appRouteManifest: AppRouteManifestItem[] = [
     description: "Tổng quan hoạt động quản lý phòng trọ.",
     icon: Home,
     group: "main",
-    implemented: true,
+    isImplemented: true,
     component: DashboardPage,
   },
   {
@@ -111,7 +111,7 @@ export const appRouteManifest: AppRouteManifestItem[] = [
     description: "Quản lý danh sách tòa nhà.",
     icon: Building,
     group: "main",
-    implemented: true,
+    isImplemented: true,
     component: BuildingListPage,
   },
   {
@@ -122,7 +122,7 @@ export const appRouteManifest: AppRouteManifestItem[] = [
     description: "Quản lý danh sách phòng và trạng thái.",
     icon: Building2,
     group: "main",
-    implemented: true,
+    isImplemented: true,
     component: RoomListPage,
   },
   {
@@ -133,7 +133,7 @@ export const appRouteManifest: AppRouteManifestItem[] = [
     description: "Theo dõi thông tin khách thuê.",
     icon: Users,
     group: "main",
-    implemented: true,
+    isImplemented: true,
     component: TenantListPage,
   },
   {
@@ -144,7 +144,7 @@ export const appRouteManifest: AppRouteManifestItem[] = [
     description: "Quản lý hợp đồng cho thuê.",
     icon: ScrollText,
     group: "management",
-    implemented: true,
+    isImplemented: true,
     component: ContractListPage,
   },
   {
@@ -155,7 +155,7 @@ export const appRouteManifest: AppRouteManifestItem[] = [
     description: "Theo dõi thanh toán và công nợ.",
     icon: ReceiptText,
     group: "management",
-    implemented: true,
+    isImplemented: true,
     component: InvoiceListPage,
   },
   {
@@ -166,7 +166,7 @@ export const appRouteManifest: AppRouteManifestItem[] = [
     description: "Quản lý chỉ số điện nước.",
     icon: Droplet,
     group: "management",
-    implemented: true,
+    isImplemented: true,
     component: UtilityListPage,
   },
   {
@@ -177,7 +177,7 @@ export const appRouteManifest: AppRouteManifestItem[] = [
     description: "Quản lý hóa đơn từ nhà cung cấp dịch vụ.",
     icon: ReceiptPoundSterling,
     group: "management",
-    implemented: true,
+    isImplemented: true,
     component: SupplierBillListPage,
   },
   {
@@ -188,7 +188,7 @@ export const appRouteManifest: AppRouteManifestItem[] = [
     description: "Quản lý các khoản chi phí hoạt động.",
     icon: Wallet,
     group: "management",
-    implemented: true,
+    isImplemented: true,
     component: ExpenseListPage,
   },
   {
@@ -199,7 +199,7 @@ export const appRouteManifest: AppRouteManifestItem[] = [
     description: "Đối soát thu chi theo tòa nhà.",
     icon: Banknote,
     group: "management",
-    implemented: true,
+    isImplemented: true,
     component: ReconciliationPage,
   },
   {
@@ -210,7 +210,7 @@ export const appRouteManifest: AppRouteManifestItem[] = [
     description: "Xem các nhiệm vụ cần xử lý.",
     icon: CheckSquare,
     group: "main",
-    implemented: true,
+    isImplemented: true,
     component: TaskCenterPage,
   },
   {
@@ -221,7 +221,7 @@ export const appRouteManifest: AppRouteManifestItem[] = [
     description: "Xem báo cáo doanh thu, chi phí và hiệu suất.",
     icon: BarChart3,
     group: "management",
-    implemented: true,
+    isImplemented: true,
     component: ReportsOverviewPage,
   },
   {
@@ -232,7 +232,7 @@ export const appRouteManifest: AppRouteManifestItem[] = [
     description: "Quản lý khai báo nơi ở và kiểm tra an toàn.",
     icon: Shield,
     group: "system",
-    implemented: true,
+    isImplemented: true,
     component: ComplianceDashboardPage,
   },
   {
@@ -243,7 +243,7 @@ export const appRouteManifest: AppRouteManifestItem[] = [
     description: "Gửi thông báo cho khách thuê.",
     icon: MessageSquare,
     group: "system",
-    implemented: true,
+    isImplemented: true,
     component: CommunicationsPage,
   },
   {
@@ -254,7 +254,7 @@ export const appRouteManifest: AppRouteManifestItem[] = [
     description: "Cấu hình hệ thống.",
     icon: Settings,
     group: "system",
-    implemented: true,
+    isImplemented: true,
     component: SettingsPage,
   },
 ] as const;

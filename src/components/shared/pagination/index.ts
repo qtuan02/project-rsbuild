@@ -3,9 +3,9 @@ export { PaginationBar } from "./pagination-bar";
 export { PaginationNavigation } from "./pagination-navigation";
 export { PaginationPageSizeSelect } from "./pagination-page-size-select";
 export {
-  DEFAULT_DATA_TABLE_PAGINATION_LABELS,
-  DEFAULT_PAGINATION_LABELS,
-  DEFAULT_PAGINATION_PAGE_SIZE_OPTIONS,
+  defaultDataTablePaginationLabels,
+  defaultPaginationLabels,
+  defaultPaginationPageSizeOptions,
 } from "./pagination-contracts";
 export type {
   DataTablePaginationLabels,

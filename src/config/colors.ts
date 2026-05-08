@@ -1,6 +1,6 @@
 import { cn } from "@/libs/cn";
 
-export const STATUS_COLORS = {
+export const statusColors = {
   success: {
     bg: cn("bg-emerald-50 dark:bg-emerald-950/50"),
     text: cn("text-emerald-700 dark:text-emerald-300"),
@@ -39,7 +39,7 @@ export const STATUS_COLORS = {
   },
 } as const;
 
-export const TYPE_COLORS = {
+export const utilityTypeColors = {
   electricity: {
     text: cn("text-amber-600 dark:text-amber-400"),
     bg: cn("bg-amber-100 dark:bg-amber-900/30"),
@@ -52,7 +52,7 @@ export const TYPE_COLORS = {
   },
 } as const;
 
-export function getStatusClassName(status: keyof typeof STATUS_COLORS): string {
-  const colors = STATUS_COLORS[status];
+export function getStatusClassName(status: keyof typeof statusColors): string {
+  const colors = statusColors[status];
   return `${colors.bg} ${colors.text} ${colors.border}`;
 }

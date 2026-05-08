@@ -9,7 +9,7 @@ import {
 import { useQueryState } from "nuqs";
 
 import { ListPageHeader, ListPageShell } from "@/components/shared/list";
-import { DEFAULT_PAGINATION_OPTIONS } from "@/components/shared/pagination/pagination-contracts";
+import { defaultPaginationPageSize } from "@/components/shared/pagination/pagination-contracts";
 import {
   DataTableView,
   DataTablePagination,
@@ -68,7 +68,7 @@ export const TenantListPage = () => {
     data,
     columns: tenantColumns,
     getRowId: (row) => row.id,
-    initialPageSize: DEFAULT_PAGINATION_OPTIONS,
+    initialPageSize: defaultPaginationPageSize,
   });
 
   const rows = table.getRowModel().rows;
@@ -133,7 +133,7 @@ export const TenantListPage = () => {
               table={table}
               searchableColumns={searchableColumns}
               filterableColumns={filterableColumns}
-              showViewOptions={activeTab === "table"}
+              isViewOptionsVisible={activeTab === "table"}
             />
           }
           gridContent={

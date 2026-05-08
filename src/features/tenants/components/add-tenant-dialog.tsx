@@ -87,7 +87,7 @@ export const AddTenantDialog = ({
     }
   };
 
-  const onSubmit = () => {
+  const handleSubmit = () => {
     setOpen(false);
   };
 
@@ -104,7 +104,7 @@ export const AddTenantDialog = ({
         </DialogHeader>
 
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)}>
+          <form onSubmit={form.handleSubmit(handleSubmit)}>
             <Tabs defaultValue="scan" className="mt-4">
               <TabsList className="grid w-full grid-cols-2">
                 <TabsTrigger value="scan">Quét CCCD (OCR)</TabsTrigger>
@@ -129,7 +129,11 @@ export const AddTenantDialog = ({
                     <p className="text-sm text-muted-foreground mb-4">
                       Hệ thống AI sẽ tự động trích xuất thông tin từ ảnh.
                     </p>
-                    <Button onClick={handleScan} disabled={isScanning}>
+                    <Button
+                      type="button"
+                      onClick={handleScan}
+                      disabled={isScanning}
+                    >
                       <Upload className="mr-2 h-4 w-4" />
                       Chọn ảnh (Giả lập)
                     </Button>
@@ -250,7 +254,11 @@ export const AddTenantDialog = ({
             </Tabs>
 
             <DialogFooter className="mt-4">
-              <Button variant="outline" onClick={() => setOpen(false)}>
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => setOpen(false)}
+              >
                 Hủy
               </Button>
               <Button type="submit">Lưu thông tin</Button>

@@ -13,7 +13,7 @@ interface PaginationBarProps {
   onPageSizeChange: (value: number) => void;
   onPageChange: (page: number) => void;
   pageIndicator?: ReactNode;
-  showFirstLast?: boolean;
+  isFirstLastVisible?: boolean;
   pageItems?: (number | "ellipsis")[];
   triggerClassName?: string;
   className?: string;
@@ -29,7 +29,7 @@ export const PaginationBar = ({
   onPageSizeChange,
   onPageChange,
   pageIndicator,
-  showFirstLast = false,
+  isFirstLastVisible = false,
   pageItems,
   triggerClassName,
   className = "flex flex-col items-center justify-between gap-4 px-2 sm:flex-row",
@@ -57,7 +57,7 @@ export const PaginationBar = ({
         totalPages={totalPages}
         onPageChange={onPageChange}
         pageItems={pageItems}
-        showFirstLast={showFirstLast}
+        isFirstLastVisible={isFirstLastVisible}
       />
     </div>
   </div>

@@ -2,7 +2,7 @@ import { InfoCard, InfoRow } from "@/components/shared/cards/info-card";
 import { DetailPageShell } from "@/components/shared/layout/detail-page-shell";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { STATUS_COLORS } from "@/config/colors";
+import { statusColors } from "@/config/colors";
 import { cn } from "@/libs/cn";
 
 import { useBuildingDetail } from "../hooks/use-building-detail";
@@ -56,7 +56,7 @@ export const BuildingDetailPage = ({ buildingId }: BuildingDetailPageProps) => {
                 <p
                   className={cn(
                     "mt-1.5 text-base font-semibold",
-                    STATUS_COLORS.success.text,
+                    statusColors.success.text,
                   )}
                 >
                   {building.availableRooms ?? 0}

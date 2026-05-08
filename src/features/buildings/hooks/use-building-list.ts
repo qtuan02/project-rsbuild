@@ -1,11 +1,11 @@
 import { useMemo } from "react";
 
-import { mockBuildings } from "../data/buildings.mock";
+import { getBuildings } from "../data/building.repository";
 
 export const useBuildingList = () => {
   const buildings = useMemo(
     () =>
-      mockBuildings.map((building) => ({
+      getBuildings().map((building) => ({
         ...building,
         occupancyRate: building.occupancyRate ?? 0,
       })),

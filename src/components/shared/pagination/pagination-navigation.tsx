@@ -15,7 +15,7 @@ interface PaginationNavigationProps {
   totalPages: number;
   onPageChange: (page: number) => void;
   pageItems?: PageItem[];
-  showFirstLast?: boolean;
+  isFirstLastVisible?: boolean;
   labels?: {
     firstPage: string;
     previousPage: string;
@@ -24,7 +24,7 @@ interface PaginationNavigationProps {
   };
 }
 
-const DEFAULT_LABELS = {
+const defaultLabels = {
   firstPage: "Trang đầu",
   previousPage: "Trang trước",
   nextPage: "Trang sau",
@@ -36,8 +36,8 @@ export const PaginationNavigation = ({
   totalPages,
   onPageChange,
   pageItems,
-  showFirstLast = false,
-  labels = DEFAULT_LABELS,
+  isFirstLastVisible = false,
+  labels = defaultLabels,
 }: PaginationNavigationProps) => {
   const resolvedTotalPages = Math.max(1, totalPages);
   const resolvedCurrentPage = clampPage(currentPage, totalPages);
@@ -51,7 +51,7 @@ export const PaginationNavigation = ({
 
   return (
     <div className="flex items-center gap-1">
-      {showFirstLast && (
+      {isFirstLastVisible && (
         <Button
           variant="outline"
           size="icon-sm"
@@ -104,7 +104,7 @@ export const PaginationNavigation = ({
         <ChevronRight className="h-4 w-4" />
       </Button>
 
-      {showFirstLast && (
+      {isFirstLastVisible && (
         <Button
           variant="outline"
           size="icon-sm"

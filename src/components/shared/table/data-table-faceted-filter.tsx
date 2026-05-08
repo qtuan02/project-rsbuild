@@ -32,7 +32,7 @@ interface DataTableFacetedFilterProps<TValue extends string> {
 
 const toSelectedValues = (value: unknown): string[] =>
   Array.isArray(value) ? value.filter((item): item is string => !!item) : [];
-const DEFAULT_LABELS = {
+const defaultLabels = {
   selectedCount: (count: number) => `${count} đã chọn`,
   clearFilter: "Xóa bộ lọc",
 };
@@ -41,7 +41,7 @@ export function DataTableFacetedFilter<TValue extends string>({
   column,
   title,
   options,
-  labels = DEFAULT_LABELS,
+  labels = defaultLabels,
 }: DataTableFacetedFilterProps<TValue>) {
   const facets = column?.getFacetedUniqueValues();
   const selectedValues = new Set(toSelectedValues(column?.getFilterValue()));

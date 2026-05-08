@@ -7,18 +7,19 @@ import type {
 import { useBuildingStore } from "@/stores/building.store";
 import type { Expense } from "@/types/expense";
 
-import { mockExpenses } from "../data/expense.mock";
+import { getExpenses } from "../data/expense.repository";
 
 export const useExpenseList = () => {
   const { selectedBuildingId } = useBuildingStore();
+  const expensesSource = useMemo(() => getExpenses(), []);
 
   const expenses = useMemo(
     () =>
-      mockExpenses.filter(
+      expensesSource.filter(
         (expense) =>
           !selectedBuildingId || expense.buildingId === selectedBuildingId,
       ),
-    [selectedBuildingId],
+    [expensesSource, selectedBuildingId],
   );
 
   const searchableColumns: DataTableSearchableColumn<Expense>[] = [
@@ -30,7 +31,7 @@ export const useExpenseList = () => {
     {
       id: "category",
       title: "Danh mục",
-      options: Array.from(new Set(mockExpenses.map((e) => e.category))).map(
+      options: Array.from(new Set(expensesSource.map((e) => e.category))).map(
         (cat) => ({ label: cat, value: cat }),
       ),
     },

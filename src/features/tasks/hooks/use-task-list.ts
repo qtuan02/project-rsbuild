@@ -41,7 +41,7 @@ export const useTaskList = (): UseTaskListResult => {
     [data, filterState],
   );
 
-  const onFilterChange = React.useCallback(
+  const handleFilterChange = React.useCallback(
     (filterId: string, values: string[]) => {
       setFilterValues((previous) => ({
         ...previous,
@@ -64,7 +64,7 @@ export const useTaskList = (): UseTaskListResult => {
     taskCountByType,
     filterableColumns,
     onSearchChange: setSearchValue,
-    onFilterChange,
+    onFilterChange: handleFilterChange,
     clearFilters,
   };
 };

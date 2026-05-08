@@ -19,7 +19,7 @@ interface EntityActionMenuItem {
   icon?: React.ReactNode;
   link?: string;
   onClick?: () => void;
-  destructive?: boolean;
+  isDestructive?: boolean;
 }
 
 interface EntityActionMenuProps {
@@ -74,7 +74,7 @@ export const EntityActionMenu: React.FC<EntityActionMenuProps> = (props) => {
                 }
                 console.log("No action");
               }}
-              className={item.destructive ? "text-destructive" : undefined}
+              className={item.isDestructive ? "text-destructive" : undefined}
             >
               {item.icon}
               {item.label}

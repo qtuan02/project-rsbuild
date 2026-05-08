@@ -1,7 +1,4 @@
-import type {
-  NotificationTemplate,
-  SendLog,
-} from "../data/communications.mock";
+import type { NotificationTemplate, SendLog } from "@/types/communications";
 
 export interface CommunicationStat {
   label: string;
