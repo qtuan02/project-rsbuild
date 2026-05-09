@@ -1,140 +1,113 @@
 # Frontend
 
-Ứng dụng quản lý vận hành cho thuê, xây bằng React + TypeScript theo kiến trúc feature-based, ưu tiên shared components và clean layering.
+Frontend cho hệ thống quản lý vận hành nhà trọ/tòa nhà cho thuê. Dự án dùng React + TypeScript, kiến trúc theo feature, ưu tiên tái sử dụng qua shared components và tách lớp rõ ràng.
 
-## Documentation map
+## Tài liệu chính
 
-Đây là tài liệu chính để onboarding nhanh. Các tài liệu chi tiết:
+- [README](README.md): onboarding nhanh và quy trình chạy dự án.
+- [Kiến trúc triển khai](docs/architect.md): quy ước tổ chức mã nguồn và layering ở mức code.
+- [Danh sách tính năng](docs/list-features.md): mô tả tính năng đang có theo từng module.
+- [CI/CD](docs/ci-cd.md): pipeline CI, deploy production thủ công qua GitHub Actions + Vercel.
+- [High-level design](docs/high-level-design.md): tài liệu thiết kế tổng quan (giữ nguyên theo phân tích nghiệp vụ).
 
-- [Architecture guide](docs/architect.md): kiến trúc code-level, layering rules và conventions khi phát triển.
-- [High-level design](docs/high-level-design.md): tài liệu phân tích/thiết kế tổng thể hệ thống.
-- [CI/CD guide](docs/ci-cd.md): checklist cấu hình GitHub + Vercel và quy trình deploy production.
+## Công nghệ
 
-## Tech stack
-
-- React 19 + TypeScript
-- Rsbuild (dev/build)
+- React `19`
+- TypeScript (strict)
+- Rsbuild
 - React Router
 - TanStack Query + Axios
 - TanStack Table + dnd-kit
-- Tailwind CSS + Radix UI
-- ESLint + Biome (format)
+- Tailwind CSS + Radix UI + shadcn/ui
+- ESLint + Biome
 
-## Requirements
+## Yêu cầu môi trường
 
 - Node.js `>=22.21.0`
-- Bun `>=1.2.3` (khuyến nghị)
+- Bun `>=1.2.3`
 
-## Quick start
+## Chạy dự án local
 
-1. Cài dependencies
+1. Cài dependency:
 
 ```bash
 bun install
 ```
 
-2. Tạo env local
+2. Tạo file môi trường:
 
 ```bash
 cp .env.template .env
 ```
 
-3. Chạy local
+3. Chạy dev server:
 
 ```bash
 bun run dev
 ```
 
-## Environment variables
+## Biến môi trường
 
-- Rsbuild đọc `.env`, `.env.local` tại root.
-- Chỉ biến có prefix `PUBLIC_` mới được expose lên client.
-- Runtime env được validate ở [`src/config/env.ts`](src/config/env.ts).
+- Dự án dùng biến `PUBLIC_` cho client-side runtime.
+- File mẫu: `.env.template`.
+- Validate và normalize tại [src/config/env.ts](src/config/env.ts).
 
-Chạy command bất kỳ với env:
+Biến đang dùng:
 
-```bash
-bun run with-env -- <command>
-```
+- `PUBLIC_API_BASE_URL`: base URL cho HTTP client.
+- `PUBLIC_STORAGE_SECRET_KEY`: khóa mã hóa cục bộ cho utility crypto phía client.
 
 ## Scripts
 
-- `bun run dev`: chạy dev server
-- `bun run build`: build production
-- `bun run preview`: preview bản build
-- `bun run storybook`: chạy Storybook (`:6006`)
-- `bun run build-storybook`: build static Storybook
-- `bun run build:all`: build app + Storybook (`dist/storybook`)
-- `bun run format`: check format
-- `bun run format:fix`: format + ghi file
-- `bun run lint`: ESLint (`max-warnings=0`)
-- `bun run lint:fix`: ESLint auto-fix
-- `bun run typecheck`: `tsc --noEmit`
-- `bun run with-env`: wrapper nạp `.env`
+- `bun run dev`: chạy local development server.
+- `bun run build`: build production app.
+- `bun run start`: chạy dev server qua lệnh `rsbuild start`.
+- `bun run preview`: preview bản build.
+- `bun run storybook`: chạy Storybook tại cổng `6006`.
+- `bun run build-storybook`: build Storybook tĩnh.
+- `bun run build:all`: build app + Storybook.
+- `bun run lint`: kiểm tra ESLint.
+- `bun run lint:fix`: tự sửa lỗi lint có thể auto-fix.
+- `bun run format`: kiểm tra format bằng Biome.
+- `bun run format:fix`: ghi lại format chuẩn.
+- `bun run typecheck`: kiểm tra kiểu với TypeScript.
 
-## Recommended workflow
-
-Trước khi mở PR:
+## Quy trình trước khi mở PR
 
 ```bash
-bun run format
 bun run lint
+bun run format
 bun run typecheck
 ```
 
-Nếu cần auto-fix:
+Nếu có lỗi format/lint có thể tự sửa:
 
 ```bash
 bun run format:fix
 bun run lint:fix
 ```
 
-## Architecture summary
-
-### Entry points
-
-- [`src/main.tsx`](src/main.tsx): app bootstrap
-- [`src/app.tsx`](src/app.tsx): providers
-- [`src/app-routes.tsx`](src/app-routes.tsx): route tree
-- [`src/config/routes.ts`](src/config/routes.ts): source-of-truth cho route paths/builders
-
-### Source tree
+## Tóm tắt cấu trúc mã nguồn
 
 ```text
 src/
-  features/<feature>/
-    pages/        # route-level composition
-    hooks/        # orchestration state/view-model
-    domain/       # pure business logic
-    data/         # repository/API mapping
-    components/   # feature presentational components
-  components/ui/      # base primitives
-  components/shared/  # reusable app widgets
-  libs/               # framework-agnostic utilities
-  types/              # shared contracts
+  app-routes.tsx             # khai báo route tree của app
+  config/routes.ts           # source-of-truth cho path + manifest điều hướng
+  features/<feature>/        # module nghiệp vụ
+  components/ui/             # base primitives
+  components/shared/         # pattern dùng chung toàn app
+  libs/                      # tích hợp thư viện và helper dùng chung
+  hooks/                     # global hooks
+  stores/                    # Zustand stores
+  types/                     # shared contracts
+  utils/                     # helper thuần
 ```
 
-### Layering conventions
+Quy tắc phụ thuộc chính: `page -> hook -> domain/data`.
 
-- Dependency direction ưu tiên: `pages -> hooks -> domain/data`.
-- `domain` không phụ thuộc UI/network.
-- `components` không gọi API trực tiếp.
-- Reuse trước khi tạo abstraction mới; code dùng chung đưa về `components/shared`, `libs`, `types`.
+## Triển khai
 
-## Deployment (Vercel)
-
-- Build output: `dist`
-- SPA fallback: `/index.html`
-- Build command: `bun run build:all`
-- Env bắt buộc: `PUBLIC_API_BASE_URL`
-
-Chi tiết vận hành/CD:
-
-- [docs/ci-cd.md](docs/ci-cd.md)
-- [.github/CICD_SETUP.md](.github/CICD_SETUP.md)
-
-## References
-
-- [Rsbuild docs](https://rsbuild.rs)
-- [Rsbuild env vars](https://rsbuild.rs/guide/advanced/env-vars)
-- [Storybook Rsbuild](https://storybook.rsbuild.rs)
+- Cấu hình deploy ở [vercel.json](vercel.json).
+- Workflow CI: `.github/workflows/ci.yml`.
+- Workflow CD (manual production deploy): `.github/workflows/cd.yml`.
+- Chi tiết xem tại [docs/ci-cd.md](docs/ci-cd.md).
