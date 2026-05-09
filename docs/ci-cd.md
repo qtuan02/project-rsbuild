@@ -1,77 +1,76 @@
 # CI/CD Guide
 
-Tài liệu này mô tả luồng CI/CD chuẩn cho frontend project, bao gồm phần cấu hình ngoài mã nguồn (GitHub + Vercel) và quy trình deploy production an toàn.
+Tài liệu này mô tả pipeline CI/CD hiện tại của frontend theo cấu hình đang có trong repository.
 
-## Mục tiêu
+## Tổng quan
 
-- CI chạy tự động cho pull request và push lên `main`.
-- Production deploy chạy thủ công qua GitHub Actions.
-- Tránh auto-deploy production ngoài kiểm soát.
+- CI tự động chạy khi `pull_request` và `push` lên branch `main`.
+- CD production chạy thủ công bằng `workflow_dispatch`.
+- Deploy production dùng Vercel CLI trong GitHub Actions.
 
-## Tổng quan pipeline
+## File workflow đang dùng
 
-```text
-PR / Push -> GitHub Actions (CI) -> Lint + Typecheck + Build checks
-Main branch (manual trigger) -> GitHub Actions (Deploy Manual) -> Vercel production
-```
+- `/.github/workflows/ci.yml`
+- `/.github/workflows/cd.yml`
 
-## 1) Thiết lập GitHub secrets
+## CI: kiểm tra chất lượng mã
 
-Vào `Settings -> Secrets and variables -> Actions -> New repository secret`, tạo:
+Workflow `CI` chạy các bước:
+
+1. Checkout source.
+2. Setup Bun.
+3. Restore/cache Bun dependency.
+4. `bun install --frozen-lockfile`.
+5. `bun run lint`.
+6. `bun run format`.
+7. `bun run typecheck`.
+
+Mục tiêu: chặn merge khi code không đạt chuẩn lint/format/typecheck.
+
+## CD: deploy production thủ công
+
+Workflow `CD`:
+
+- Trigger: `workflow_dispatch`.
+- Chỉ chạy khi ref là `refs/heads/main`.
+- Các bước chính:
+  - `bun install --frozen-lockfile`
+  - `bunx vercel@latest pull --yes --environment=production`
+  - `bunx vercel@latest build --prod`
+  - `bunx vercel@latest deploy --prebuilt --prod`
+
+## Secrets bắt buộc
+
+Thiết lập tại GitHub repository secrets:
 
 - `VERCEL_TOKEN`
 - `VERCEL_ORG_ID`
 - `VERCEL_PROJECT_ID`
 
-Các secret này được workflow deploy dùng để gọi `vercel pull/build/deploy`.
+Nếu thiếu một trong ba secret trên, workflow CD sẽ fail.
 
-## 2) Thiết lập branch protection cho `main`
+## Cấu hình Vercel trong repo
 
-Vào `Settings -> Branches -> Add rule` và cấu hình:
+`vercel.json` hiện tại:
 
-- Branch pattern: `main`
-- Bật `Require a pull request before merging`
-- Bật `Require status checks to pass before merging`
-- Chọn check từ workflow CI:
-  - `Lint, Format Check, Typecheck`
-- Bật `Require branches to be up to date before merging` (khuyến nghị)
-- `Restrict who can push to matching branches` theo policy team
+- `installCommand`: `bun install`
+- `buildCommand`: `bun run build:all`
+- `outputDirectory`: `dist`
+- `git.deploymentEnabled.main`: `false` để tắt auto deploy trực tiếp từ Git integration
+- Có route phục vụ Storybook tại `/storybook`
+- Có SPA fallback về `/index.html`
 
-## 3) Cấu hình Vercel
+## Quy trình release đề xuất
 
-Trong Vercel project:
+1. Tạo PR vào `main`.
+2. Đảm bảo workflow CI pass.
+3. Merge PR vào `main`.
+4. Vào tab Actions, chạy thủ công workflow `CD`.
+5. Kiểm tra deployment production trên Vercel.
 
-- `Settings -> Git`
-- Tắt auto production deploy từ branch `main`
+## Checklist khi CD lỗi
 
-Mục tiêu: production chỉ được phát hành qua workflow manual trên GitHub.
-
-## 4) Quy trình deploy production
-
-Khi cần deploy:
-
-1. Vào tab `Actions` của repository.
-2. Chọn workflow `Deploy Manual`.
-3. Bấm `Run workflow`.
-4. Chọn branch `main`.
-5. Xác nhận chạy.
-
-Workflow dự kiến thực thi:
-
-- cài dependencies
-- `vercel pull`
-- `vercel build`
-- `vercel deploy --prebuilt --prod`
-
-## 5) Checklist vận hành
-
-- CI fail thì không merge được vào `main`.
-- Push lên `main` không tự deploy production.
-- `Deploy Manual` chạy thành công và tạo production deployment.
-- URL production hoạt động bình thường sau deploy.
-
-## Troubleshooting nhanh
-
-- **Thiếu secret**: kiểm tra 3 biến `VERCEL_*` đã có trong repo secrets.
-- **Deploy sai project Vercel**: kiểm tra lại `VERCEL_ORG_ID` và `VERCEL_PROJECT_ID`.
-- **Build fail trên CI nhưng local pass**: đồng bộ Node/Bun version theo `package.json -> engines`.
+- Kiểm tra đủ 3 secrets `VERCEL_*`.
+- Kiểm tra workflow chạy từ branch `main`.
+- Kiểm tra lockfile và dependency (`bun.lock`) đồng bộ.
+- Kiểm tra biến môi trường production trên Vercel đã cấu hình đúng.
