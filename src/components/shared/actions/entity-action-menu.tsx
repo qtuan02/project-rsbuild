@@ -63,6 +63,7 @@ export const EntityActionMenu: React.FC<EntityActionMenuProps> = (props) => {
           {items.map((item) => (
             <DropdownMenuItem
               key={item.key}
+              disabled={!item.link && !item.onClick}
               onClick={() => {
                 if (item.link) {
                   navigate(item.link);
@@ -70,9 +71,7 @@ export const EntityActionMenu: React.FC<EntityActionMenuProps> = (props) => {
                 }
                 if (item.onClick) {
                   item.onClick();
-                  return;
                 }
-                console.log("No action");
               }}
               className={item.isDestructive ? "text-destructive" : undefined}
             >

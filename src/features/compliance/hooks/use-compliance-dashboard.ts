@@ -18,6 +18,7 @@ export const useComplianceDashboard = () => {
 
   return {
     isLoading: complianceItemsQuery.isLoading,
+    retry: complianceItemsQuery.refetch,
     error: complianceItemsQuery.error
       ? "Không thể tải dữ liệu tuân thủ."
       : null,

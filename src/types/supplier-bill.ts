@@ -1,6 +1,7 @@
 export interface SupplierBill {
   id: string;
   buildingId: string;
+  buildingName: string;
   type: "electricity" | "water" | "trash" | "internet" | "other";
   supplierName: string;
   billingPeriod: string; // e.g., '2023-10'

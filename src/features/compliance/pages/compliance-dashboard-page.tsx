@@ -16,7 +16,7 @@ const filterByType = (items: ComplianceItem[], type: ComplianceItem["type"]) =>
   items.filter((i) => i.type === type);
 
 export const ComplianceDashboardPage = () => {
-  const { isLoading, error, items, stats } = useComplianceDashboard();
+  const { isLoading, retry, error, items, stats } = useComplianceDashboard();
 
   if (error) {
     return (
@@ -26,7 +26,9 @@ export const ComplianceDashboardPage = () => {
           description={error}
           action={{
             label: "Thử lại",
-            onClick: () => window.location.reload(),
+            onClick: () => {
+              void retry();
+            },
           }}
         />
       </div>

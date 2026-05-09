@@ -1,6 +1,8 @@
 import type { SupplierBill } from "@/types/supplier-bill";
 
-export const mockSupplierBills: SupplierBill[] = [
+export type SupplierBillMockRecord = Omit<SupplierBill, "buildingName">;
+
+export const mockSupplierBills: SupplierBillMockRecord[] = [
   // Building 1 - Trọ Sinh Viên Xanh
   {
     id: "sb1",

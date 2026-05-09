@@ -3,7 +3,7 @@ import { Route, Routes, useNavigate, useParams } from "react-router-dom";
 import { AuthLayout } from "@/components/shared/layout/auth-layout";
 import { DashboardLayout } from "@/components/shared/layout/dashboard-layout";
 import { ProtectedRoute } from "@/components/shared/layout/protected-route";
-import { appRouteManifest, routes } from "@/config/routes";
+import { appRouteManifest, routePatterns, routes } from "@/config/routes";
 import { LoginPage } from "@/features/auth/pages/login-page";
 import { RegisterPage } from "@/features/auth/pages/register-page";
 import { getBuildingOptions } from "@/features/buildings/data/building.repository";
@@ -170,36 +170,60 @@ export const AppRoutes = () => {
             );
           })}
           <Route
-            path="buildings/:buildingId"
+            path={routePatterns.buildingDetail}
             element={<BuildingDetailRoute />}
           />
-          <Route path="rooms/:roomId" element={<RoomDetailRoute />} />
-          <Route path="tenants/create" element={<TenantCreatePage />} />
-          <Route path="tenants/:tenantId" element={<TenantDetailRoute />} />
-          <Route path="contracts/create" element={<ContractCreatePage />} />
           <Route
-            path="contracts/:contractId"
+            path={routePatterns.roomDetail}
+            element={<RoomDetailRoute />}
+          />
+          <Route
+            path={routePatterns.tenantCreate}
+            element={<TenantCreatePage />}
+          />
+          <Route
+            path={routePatterns.tenantDetail}
+            element={<TenantDetailRoute />}
+          />
+          <Route
+            path={routePatterns.contractCreate}
+            element={<ContractCreatePage />}
+          />
+          <Route
+            path={routePatterns.contractDetail}
             element={<ContractDetailRoute />}
           />
           <Route
-            path="contracts/:contractId/renew"
+            path={routePatterns.contractRenew}
             element={<ContractRenewRoute />}
           />
           <Route
-            path="contracts/:contractId/liquidation"
+            path={routePatterns.contractLiquidation}
             element={<ContractLiquidationRoute />}
           />
-          <Route path="invoices/batch" element={<BatchInvoicePage />} />
-          <Route path="invoices/:invoiceId" element={<InvoiceDetailRoute />} />
           <Route
-            path="supplier-bills/:billId"
+            path={routePatterns.invoiceBatch}
+            element={<BatchInvoicePage />}
+          />
+          <Route
+            path={routePatterns.invoiceDetail}
+            element={<InvoiceDetailRoute />}
+          />
+          <Route
+            path={routePatterns.supplierBillDetail}
             element={<SupplierBillDetailRoute />}
           />
-          <Route path="expenses/:expenseId" element={<ExpenseDetailRoute />} />
-          <Route path="utilities/meter-input" element={<MeterInputPage />} />
-          <Route path="utilities/:utilityId" element={<UtilityDetailPage />} />
           <Route
-            path="*"
+            path={routePatterns.expenseDetail}
+            element={<ExpenseDetailRoute />}
+          />
+          <Route path={routePatterns.meterInput} element={<MeterInputPage />} />
+          <Route
+            path={routePatterns.utilityDetail}
+            element={<UtilityDetailPage />}
+          />
+          <Route
+            path={routePatterns.notFound}
             element={<ComingSoonPlaceholder title="Không tìm thấy trang" />}
           />
         </Route>

@@ -56,6 +56,7 @@ export const useCommunications = () => {
 
   return {
     isLoading: dashboardQuery.isLoading,
+    retry: dashboardQuery.refetch,
     error: dashboardQuery.error ? "Không thể tải dữ liệu liên lạc." : null,
     templates,
     sendLogs,

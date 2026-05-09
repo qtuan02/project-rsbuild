@@ -71,6 +71,39 @@ export const routePathBuilders = {
   expenseDetail: (expenseId: string) => `${routes.expenses}/${expenseId}`,
 } as const;
 
+export const routePatterns = {
+  homeIndex: "",
+  buildingsList: "buildings/*",
+  roomsList: "rooms/*",
+  tenantsList: "tenants/*",
+  contractsList: "contracts/*",
+  invoicesList: "invoices/*",
+  utilitiesList: "utilities/*",
+  supplierBillsList: "supplier-bills/*",
+  expensesList: "expenses/*",
+  reconciliation: "reconciliation",
+  tasksList: "tasks/*",
+  reportsList: "reports/*",
+  complianceList: "compliance/*",
+  communicationsList: "communications/*",
+  settingsList: "settings/*",
+  buildingDetail: "buildings/:buildingId",
+  roomDetail: "rooms/:roomId",
+  tenantCreate: "tenants/create",
+  tenantDetail: "tenants/:tenantId",
+  contractCreate: "contracts/create",
+  contractDetail: "contracts/:contractId",
+  contractRenew: "contracts/:contractId/renew",
+  contractLiquidation: "contracts/:contractId/liquidation",
+  invoiceBatch: "invoices/batch",
+  invoiceDetail: "invoices/:invoiceId",
+  supplierBillDetail: "supplier-bills/:billId",
+  expenseDetail: "expenses/:expenseId",
+  meterInput: "utilities/meter-input",
+  utilityDetail: "utilities/:utilityId",
+  notFound: "*",
+} as const;
+
 export type AppRoutePath = (typeof routes)[keyof typeof routes];
 export type AppRouteKey = keyof typeof routes;
 export type AppNavigationGroup = "main" | "management" | "system";
@@ -95,7 +128,7 @@ export const appRouteManifest: AppRouteManifestItem[] = [
   {
     key: "home",
     path: routes.home,
-    routePath: "",
+    routePath: routePatterns.homeIndex,
     title: "Tổng quan",
     description: "Tổng quan hoạt động quản lý phòng trọ.",
     icon: Home,
@@ -106,7 +139,7 @@ export const appRouteManifest: AppRouteManifestItem[] = [
   {
     key: "buildings",
     path: routes.buildings,
-    routePath: "buildings/*",
+    routePath: routePatterns.buildingsList,
     title: "Tòa nhà",
     description: "Quản lý danh sách tòa nhà.",
     icon: Building,
@@ -117,7 +150,7 @@ export const appRouteManifest: AppRouteManifestItem[] = [
   {
     key: "rooms",
     path: routes.rooms,
-    routePath: "rooms/*",
+    routePath: routePatterns.roomsList,
     title: "Phòng trọ",
     description: "Quản lý danh sách phòng và trạng thái.",
     icon: Building2,
@@ -128,7 +161,7 @@ export const appRouteManifest: AppRouteManifestItem[] = [
   {
     key: "tenants",
     path: routes.tenants,
-    routePath: "tenants/*",
+    routePath: routePatterns.tenantsList,
     title: "Khách thuê",
     description: "Theo dõi thông tin khách thuê.",
     icon: Users,
@@ -139,7 +172,7 @@ export const appRouteManifest: AppRouteManifestItem[] = [
   {
     key: "contracts",
     path: routes.contracts,
-    routePath: "contracts/*",
+    routePath: routePatterns.contractsList,
     title: "Hợp đồng",
     description: "Quản lý hợp đồng cho thuê.",
     icon: ScrollText,
@@ -150,7 +183,7 @@ export const appRouteManifest: AppRouteManifestItem[] = [
   {
     key: "invoices",
     path: routes.invoices,
-    routePath: "invoices/*",
+    routePath: routePatterns.invoicesList,
     title: "Hóa đơn",
     description: "Theo dõi thanh toán và công nợ.",
     icon: ReceiptText,
@@ -161,7 +194,7 @@ export const appRouteManifest: AppRouteManifestItem[] = [
   {
     key: "utilities",
     path: routes.utilities,
-    routePath: "utilities/*",
+    routePath: routePatterns.utilitiesList,
     title: "Tiện ích",
     description: "Quản lý chỉ số điện nước.",
     icon: Droplet,
@@ -172,7 +205,7 @@ export const appRouteManifest: AppRouteManifestItem[] = [
   {
     key: "supplierBills",
     path: routes.supplierBills,
-    routePath: "supplier-bills/*",
+    routePath: routePatterns.supplierBillsList,
     title: "Hóa đơn nhà cung cấp",
     description: "Quản lý hóa đơn từ nhà cung cấp dịch vụ.",
     icon: ReceiptPoundSterling,
@@ -183,7 +216,7 @@ export const appRouteManifest: AppRouteManifestItem[] = [
   {
     key: "expenses",
     path: routes.expenses,
-    routePath: "expenses/*",
+    routePath: routePatterns.expensesList,
     title: "Chi phí vận hành",
     description: "Quản lý các khoản chi phí hoạt động.",
     icon: Wallet,
@@ -194,7 +227,7 @@ export const appRouteManifest: AppRouteManifestItem[] = [
   {
     key: "reconciliation",
     path: routes.reconciliation,
-    routePath: "reconciliation",
+    routePath: routePatterns.reconciliation,
     title: "Đối soát chi phí",
     description: "Đối soát thu chi theo tòa nhà.",
     icon: Banknote,
@@ -205,7 +238,7 @@ export const appRouteManifest: AppRouteManifestItem[] = [
   {
     key: "tasks",
     path: routes.tasks,
-    routePath: "tasks/*",
+    routePath: routePatterns.tasksList,
     title: "Trung tâm nhiệm vụ",
     description: "Xem các nhiệm vụ cần xử lý.",
     icon: CheckSquare,
@@ -216,7 +249,7 @@ export const appRouteManifest: AppRouteManifestItem[] = [
   {
     key: "reports",
     path: routes.reports,
-    routePath: "reports/*",
+    routePath: routePatterns.reportsList,
     title: "Báo cáo",
     description: "Xem báo cáo doanh thu, chi phí và hiệu suất.",
     icon: BarChart3,
@@ -227,7 +260,7 @@ export const appRouteManifest: AppRouteManifestItem[] = [
   {
     key: "compliance",
     path: routes.compliance,
-    routePath: "compliance/*",
+    routePath: routePatterns.complianceList,
     title: "Tuân thủ",
     description: "Quản lý khai báo nơi ở và kiểm tra an toàn.",
     icon: Shield,
@@ -238,7 +271,7 @@ export const appRouteManifest: AppRouteManifestItem[] = [
   {
     key: "communications",
     path: routes.communications,
-    routePath: "communications/*",
+    routePath: routePatterns.communicationsList,
     title: "Liên lạc",
     description: "Gửi thông báo cho khách thuê.",
     icon: MessageSquare,
@@ -249,7 +282,7 @@ export const appRouteManifest: AppRouteManifestItem[] = [
   {
     key: "settings",
     path: routes.settings,
-    routePath: "settings/*",
+    routePath: routePatterns.settingsList,
     title: "Cài đặt",
     description: "Cấu hình hệ thống.",
     icon: Settings,
