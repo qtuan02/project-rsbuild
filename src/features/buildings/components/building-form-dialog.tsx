@@ -21,6 +21,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import type { CreateBuildingRequest } from "@/types/building";
 
 const buildingSchema = z.object({
   name: z.string().min(2, "Tên tòa nhà phải có ít nhất 2 ký tự"),
@@ -34,29 +35,46 @@ type BuildingFormValues = z.infer<typeof buildingSchema>;
 
 interface BuildingFormDialogProps {
   onClose: () => void;
+  onSubmit: (
+    createBuildingRequest: CreateBuildingRequest,
+  ) => void | Promise<void>;
 }
 
-export const BuildingFormDialog = ({ onClose }: BuildingFormDialogProps) => {
+export const BuildingFormDialog = ({
+  onClose,
+  onSubmit,
+}: BuildingFormDialogProps) => {
   const form = useForm<BuildingFormValues>({
     resolver: zodResolver(buildingSchema),
     defaultValues: {
+      name: "",
+      address: "",
       totalFloors: "1",
       utilityCycleDay: "1",
+      note: "",
     },
   });
 
-  const handleSubmit = (data: BuildingFormValues) => {
-    const payload = {
-      ...data,
-      totalFloors: Number.parseInt(data.totalFloors, 10),
-      utilityCycleDay: Number.parseInt(data.utilityCycleDay, 10),
-    };
-    console.log(payload);
+  const handleSubmit = async (formValues: BuildingFormValues) => {
+    await onSubmit({
+      name: formValues.name,
+      address: formValues.address,
+      totalFloors: Number.parseInt(formValues.totalFloors, 10),
+      utilityCycleDay: Number.parseInt(formValues.utilityCycleDay, 10),
+      note: formValues.note?.trim() ? formValues.note.trim() : undefined,
+    });
     onClose();
   };
 
   return (
-    <Dialog open onOpenChange={onClose}>
+    <Dialog
+      open
+      onOpenChange={(isOpen) => {
+        if (!isOpen) {
+          onClose();
+        }
+      }}
+    >
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>Thêm tòa nhà mới</DialogTitle>
@@ -101,7 +119,7 @@ export const BuildingFormDialog = ({ onClose }: BuildingFormDialogProps) => {
                     <FormItem>
                       <FormLabel>Số tầng</FormLabel>
                       <FormControl>
-                        <Input type="number" {...field} />
+                        <Input type="number" min="1" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -139,7 +157,9 @@ export const BuildingFormDialog = ({ onClose }: BuildingFormDialogProps) => {
               <Button type="button" variant="outline" onClick={onClose}>
                 Hủy
               </Button>
-              <Button type="submit">Lưu lại</Button>
+              <Button type="submit" disabled={form.formState.isSubmitting}>
+                Lưu lại
+              </Button>
             </DialogFooter>
           </form>
         </Form>

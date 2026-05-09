@@ -17,3 +17,11 @@ export interface BuildingOption {
   id: string;
   name: string;
 }
+
+export interface CreateBuildingRequest {
+  name: string;
+  address: string;
+  totalFloors: number;
+  utilityCycleDay: number;
+  note?: string;
+}

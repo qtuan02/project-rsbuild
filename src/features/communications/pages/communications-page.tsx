@@ -34,6 +34,7 @@ import { useCommunications } from "../hooks/use-communications";
 export const CommunicationsPage = () => {
   const {
     isLoading,
+    retry,
     error,
     templates,
     sendLogs,
@@ -64,7 +65,9 @@ export const CommunicationsPage = () => {
           description={error}
           action={{
             label: "Thử lại",
-            onClick: () => window.location.reload(),
+            onClick: () => {
+              void retry();
+            },
           }}
         />
       </div>

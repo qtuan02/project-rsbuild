@@ -22,7 +22,7 @@ import { useBuildingList } from "../hooks/use-building-list";
 export const BuildingListPage = () => {
   const navigate = useNavigate();
   const [isFormOpen, setIsFormOpen] = useState(false);
-  const { buildings } = useBuildingList();
+  const { buildings, handleCreateBuilding } = useBuildingList();
 
   return (
     <div className="space-y-6">
@@ -118,7 +118,10 @@ export const BuildingListPage = () => {
       </div>
 
       {isFormOpen && (
-        <BuildingFormDialog onClose={() => setIsFormOpen(false)} />
+        <BuildingFormDialog
+          onClose={() => setIsFormOpen(false)}
+          onSubmit={handleCreateBuilding}
+        />
       )}
     </div>
   );

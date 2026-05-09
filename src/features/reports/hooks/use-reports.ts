@@ -1,8 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { useMemo, useState } from "react";
 
-import { getBuildingOptions } from "@/features/buildings/data/building.repository";
-
 import { getReportsDashboardData } from "../data/reports.repository";
 import { defaultReportFilters } from "../domain/reports-filter-params";
 import { filterReports } from "../domain/reports-filters";
@@ -26,10 +24,15 @@ export const useReports = () => {
     () => filterReports(allReports, filters),
     [allReports, filters],
   );
-  const buildingOptions = getBuildingOptions().map((item) => ({
-    value: item.name,
-    label: item.name,
-  }));
+  const buildingOptions = useMemo(() => {
+    const uniqueBuildingNames = [
+      ...new Set(allReports.map((item) => item.building)),
+    ];
+    return uniqueBuildingNames.map((buildingName) => ({
+      value: buildingName,
+      label: buildingName,
+    }));
+  }, [allReports]);
 
   return {
     buildingOptions: [
@@ -47,6 +50,7 @@ export const useReports = () => {
     },
     overdueList: dashboardQuery.data?.overdueList ?? [],
     isLoading: dashboardQuery.isLoading,
+    retry: dashboardQuery.refetch,
     error: dashboardQuery.error ? "Không thể tải dữ liệu báo cáo." : null,
   };
 };

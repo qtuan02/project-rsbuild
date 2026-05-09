@@ -1,6 +1,8 @@
 import type { Expense } from "@/types/expense";
 
-export const mockExpenses: Expense[] = [
+export type ExpenseMockRecord = Omit<Expense, "buildingName">;
+
+export const mockExpenses: ExpenseMockRecord[] = [
   {
     id: "exp-1",
     buildingId: "b1",

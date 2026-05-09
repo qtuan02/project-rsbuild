@@ -37,6 +37,7 @@ export const ReportsOverviewPage = () => {
     overdueList,
     isLoading,
     error,
+    retry,
   } = useReports();
 
   const [activeTab, setActiveTab] = useQueryState("tab", {
@@ -57,7 +58,9 @@ export const ReportsOverviewPage = () => {
           description={error}
           action={{
             label: "Thử lại",
-            onClick: () => window.location.reload(),
+            onClick: () => {
+              void retry();
+            },
           }}
         />
       </div>
